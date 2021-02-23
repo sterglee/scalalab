@@ -1,0 +1,346 @@
+
+import scalaSci.math.array.DoubleArray
+import java.util._
+import Jama._
+
+
+// this class provides Matrix operations, for Complex numbers using zero-indexed values
+// we avoid to keep each complex number as an object for efficiency reasons.
+// Instead we store the real parts and the imaginary parts in consecutive locations at the same row of 
+// a 2-d Java double array.
+// In this way, the access of each complex number involves two operations on consecutive row locations,
+// and since Java stores 2-d arrays by rows it is efficient.
+
+class ComplexMatrix( n: Int, m: Int)   
+{ 
+// getters for size
+  var  Nrows =  n // keeps  the number of rows of the Matrix
+  var  Ncols =  m   //  keeps  the number of columns of the Matrix
+     // the default constructor allocates a double array of size n x (2*m)
+     // therefore, the representation of the data is a two-dimensional Java double array
+  var  v = Array.ofDim[Double](Nrows, (Ncols*2))  // i.e. v(0:n-1, 0:m-1)
+
+  def numRows() = Nrows
+  def numColumns() = Ncols
+  def length() = Nrows*Ncols   // total number of elements
+  def size() = (Nrows, Ncols) 
+  
+  // getv() returns the data representation 
+  def getv() = {
+    v
+}
+
+  // the scalaSci.Mat does not wrap a Matrix class of a specific library, thus return simply the data representation  
+def getNativeMatrixRef() =   v // the scalaSci.Mat does not wrap a Matrix class of a specific library, thus return simply the data representation
+def matFromNative() = new Mat(v)
+def matFromNative(v: Array[Array[Double]]) = new Mat(v)
+  
+def  setv(values: Array[Array[Double]], n: Int, m: Int) = { v = values; Nrows = n; Ncols = m }
+
+//import ComplexMatrix._
+  
+  // set the corresponding Complex number
+def  set(row: Int, column: Int, re: Double, im: Double) =   {  v(row)(2*column) = re;  v(row)(2*column+1) = im }
+
+  
+def  get(row: Int, column: Int) =  (v(row)(2*column), v(row)(2*column+1)) 
+
+def this(tuple: (Int, Int)) = this(tuple._1,  tuple._2) 
+
+def this(m: ComplexMatrix) = {
+        this(m.Nrows, m.Ncols)
+    }
+
+// indexes the corresponding Matrix element without updating automatically sizes for fast access
+  def apply(n: Int, m: Int) = {
+        //(v(n)(2*m), v(n)(2*m+1))
+        new Complex(v(n)(2*m), v(n)(2*m+1))
+ }
+
+  
+  
+  
+// construct a ComplexMatrix from a zero-indexed double [][] array
+def this(vals: Array[Array[Double]]) = {
+     this(vals.length, vals(0).length)  // allocate memory with the default constructor
+    var i=0; var j=0
+    while (i<vals.length) {
+        j=0
+        while (j<vals(0).length) {
+       v(i)(j) = vals(i)(j)
+       j+=1
+        }
+        i+=1
+     }
+ }
+
+
+def this(Nrows: Int, Ncols: Int, df: Double) = {   // initializes to a default value
+     this(Nrows, Ncols)  // allocate memory with the default constructor
+    var i=0; var j=0
+    while (i<v.length) {
+        j=0
+        while (j<v(1).length) {
+       v(i)(j) = df
+       j+=1
+        }
+        i+=1
+     }
+ }
+
+    // construct a ComplexMatrix from an one-indexed double [][] array
+def this(vals: Array[Array[Double]], flag: Boolean) = {
+    this(1,1)
+    v = vals
+    Nrows = vals.length
+    Ncols = vals(0).length
+ }
+
+  // construct a ComplexMatrix from a one-indexed double [] array
+def this( vals: Array[Double]) = {
+    this(1, vals.length)   // keep the array as a row of the Matrix
+    var i=0
+    while (i<vals.length)  {
+       v(0)(i) = vals(i)
+       i+=1
+   }
+  }
+  
+    
+def +(that: ComplexMatrix) = {   
+    var res = new ComplexMatrix(Nrows, Ncols)
+    var i=0; var j=0
+    while (i<v.length) {
+        j=0
+        while (j<v(1).length) {
+       res.v(i)(j) =v(i)(j)+that.v(i)(j)
+       j+=1
+        }
+        i+=1
+     }
+     res
+ }
+
+
+def -(that: ComplexMatrix) = {   
+    var res = new ComplexMatrix(Nrows, Ncols)
+    var i=0; var j=0
+    while (i<v.length) {
+        j=0
+        while (j<v(1).length) {
+       res.v(i)(j) =v(i)(j)-that.v(i)(j)
+       j+=1
+        }
+        i+=1
+     }
+     res
+ }
+  
+override  def  toString(): String = {
+    import java.text.DecimalFormat
+    import java.text.DecimalFormatSymbols
+    import java.util._
+    import scalaSci.PrintFormatParams._
+    
+ if  (scalaSci.PrintFormatParams.getVerbose==true)  {
+    var formatString = "0."
+    for (k<-0 until  matDigitsPrecision)
+       formatString += "0"
+    var digitFormat = new DecimalFormat(formatString)
+    digitFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(new Locale("us")))
+     
+    var rowsToDisplay = v.length
+    var colsToDisplay = v(0).length
+    var truncated = false
+
+    var truncationIndicator = ""
+    if  ( matMxRowsToDisplay < rowsToDisplay ) {
+        rowsToDisplay = matMxRowsToDisplay
+        truncationIndicator = " ... "
+        truncated = true
+      }
+     if  (matMxColsToDisplay < colsToDisplay) {
+        colsToDisplay  = matMxColsToDisplay
+        truncationIndicator = " ... "
+      }
+     var i=0; var j=0;
+     var sb = new StringBuilder("\n")
+    while (i < rowsToDisplay) {
+        j=0
+        while (j < colsToDisplay ) {
+            if (v(i)(j+1) >= 0)
+       sb.append(digitFormat.format(v(i)(j))+"+"+digitFormat.format(v(i)(j+1))+"i  ")
+        else
+       sb.append(digitFormat.format(v(i)(j))+digitFormat.format(v(i)(j+1))+"i  ")
+       
+       j+=2
+        }
+      sb.append(truncationIndicator+"\n")
+     i+=1
+    }
+   if (truncated)     // handle last line
+    sb.append( ".........................................................................................................................................")
+
+     sb.toString
+ }
+ else ""
+  }
+  
+    // updating a single element of the Complex Matrix
+def  update(n: Int, m: Int, cn: Complex) {
+         v(n)(2*m) = cn.re
+         v(n)(2*m+1) =  cn.im 
+     }
+
+   def  update(n: Int, m: Int, cn: Array[Double]) {
+         v(n)(2*m) = cn(0)
+         v(n)(2*m+1) =  cn(1) 
+     }
+   
+   
+
+
+    def  cos() =  {
+        var cosMat = new ComplexMatrix(Nrows, Ncols)  // the result matrix
+      var r = 0; var c = 0
+      while (r < Nrows) {
+          c = 0
+          while (c < Ncols) {
+              var re = v(r, 2*c)  // the real part
+              var im = v(r, 2*c+1)  // the imaginary part
+              var newre =  Math.cos(re) * Math.cosh(im)
+              var newim = -Math.sin(re) * Math.sinh(im)
+              cosMat.v(r, 2*c) = newre
+              cosMat.v(r, 2*c+1) = newim
+              c += 1
+              }
+              r+=1
+            }
+        cosMat    
+              
+    }
+
+  def sqrt() = this map scalaSci.Complex.sqrt
+  def abs() = this mapd scalaSci.Complex.abs
+  def sin() = this map scalaSci.Complex.sin
+  def asin() =  this map scalaSci.Complex.asin
+  def sinh() = this map scalaSci.Complex.sinh
+  def acos() = this map scalaSci.Complex.acos
+  def cosh() = this map scalaSci.Complex.cosh
+  def tan() = this map scalaSci.Complex.tan
+  def atan() = this map scalaSci.Complex.atan
+  def tanh() = this map scalaSci.Complex.tanh
+  def sqrt1z() = this map scalaSci.Complex.sqrt1z
+  def exp() = this map scalaSci.Complex.exp
+  def log() = this map scalaSci.Complex.log
+  def getArg() = this mapd scalaSci.Complex.getArg
+  def getArgument() = this mapd scalaSci.Complex.getArgument
+  
+  
+  def map(f : Complex => Complex) = {
+        var resMat = new ComplexMatrix(Nrows, Ncols)  // the result matrix
+      var r = 0; var c = 0
+      while (r < Nrows) {
+          c = 0
+          while (c < Ncols) {
+            resMat(r, c) = f(this(r, c) )
+            c += 1
+            }
+            r += 1
+            }
+  resMat
+     }
+
+      def mapd(f : Complex => Double) = {
+        var resMat = new ComplexMatrix(Nrows, Ncols)  // the result matrix
+      var r = 0; var c = 0
+      while (r < Nrows) {
+          c = 0
+          while (c < Ncols) {
+            resMat.v(r,2* c) = f(this(r, c) )
+            resMat.v(r,2* c+1) = 0.0
+            c += 1
+            }
+            r += 1
+            }
+  resMat
+     }
+     
+    }
+    
+
+     
+
+// ComplexMatrix's companion object
+  object ComplexMatrix  {
+
+ var digitsPrecision = 4  // controls pecision in toString()  
+ var mxRowsToDisplay = 6  
+ var mxColsToDisplay = 6
+ 
+  def setDigitsPrecision(n: Int) = {digitsPrecision = n}
+  def setRowsToDisplay(nrows: Int) = {mxRowsToDisplay = nrows }
+  def setColsToDisplay(ncols: Int) = {mxColsToDisplay = ncols }
+  
+  
+ 
+  // a conveniency constructor that allows to construct a matrix e.g. as
+  //   var x = ComplexMatrix(3,7) instead of  var x = new ComplexMatrix(3, 7)
+ def apply(nrows: Int, ncols: Int) = new ComplexMatrix(nrows, ncols) 
+  
+    /* e.g.
+var xx = 3.4
+var a = ComplexMatrix( 2, 4,
+   3.4, 5.6, -6.7, -xx,
+   -6.1,  2.4, -0.5, cos(0.45*xx)) 
+*/    
+/// !!!date= 29 Mar
+ def apply(values: Double*)  = {
+    val   nrows = values(0).toInt  //   number of rows
+    val   ncols = values(1).toInt   // number of cols
+    val   dvalues = values.toArray
+    var   cpos = 2  // current position in array
+    var   sm = new ComplexMatrix( nrows, ncols)  // create a Mat
+    for (r<-0 until nrows)
+      for (c<-0 until ncols)
+         {
+           sm.v(r)( c) = values(cpos)  // copy value
+           cpos += 1
+         }
+
+    sm  // return the constructed matrix
+
+  }
+  
+
+}
+
+var N=1500
+var x = new ComplexMatrix(N,N)
+var f = 6+4*i  // create a scalaSci complex object
+x(0,1) = f  // assign the complex number to  element 0, 1 of the Complex Matrix
+x
+x(0,0)= Array(0.2, -0.7)   //  assign to 0, 0 element the complex number 0.2-0.7i
+
+var yy = x(0,1)
+
+x.cos
+var xx = x+x+x
+var f00 = xx(0,0)
+f00-8
+x
+x(0,1) = x(0,1) - 90
+x(0,1)
+
+tic
+x.cos
+var tm = toc
+
+tic
+x map cos
+var tm2 = toc
+
+
+var x 
+  
+  

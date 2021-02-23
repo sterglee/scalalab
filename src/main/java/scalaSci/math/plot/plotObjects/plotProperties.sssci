@@ -1,0 +1,17 @@
+var t = inc(0, 0.01, 10)
+var x = sin(4.5*t)
+
+figure(1)
+plot(t,x)
+
+var xaxs = getXAxis   // get the X-axes
+xaxs.setLegend("t-axis")   // same as xlabel("t-axis")
+
+var yaxs = getYAxis  // get the Y-axes
+yaxs.setLegend("sin(4.5*t)")  // same as ylabel("sin(4.5*t)")
+
+
+// use xlabel(), ylabel()
+figure(2)
+plot(t,x)
+xlabel("t-axis"); ylabel("sin(4.5*t)")

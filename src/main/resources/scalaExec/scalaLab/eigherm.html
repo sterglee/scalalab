@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110101;14590900">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>eighrm</B></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">for</SPAN> details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+import java.text.DecimalFormat;
+import numal.*;
+
+public class Test_eighrm extends Object {
+	
+	public static void main(String args[]) {
+
+    int i;
+    double val[] = new double[2]; 
+    double em[] = new double[10];
+    double a[][] = new double[5][5];
+    double vecr[][] = new double[5][2];
+    double veci[][] = new double[5][2];
+    
+    Basic.inimat(1,4,1,4,a,0.0);
+    a[1][1]=a[2][2]=3.0;
+    a[1][2]=a[3][3]=a[3][4]=a[4][4]=1.0;
+    a[3][2]=2.0;  a[4][1] = -2.0;
+    em[0]=5.0e-6;
+    em[2]=1.0e-5;
+    em[4]=0.01;
+    em[6]=1.0e-5;
+    em[8]=5.0;
+    Linear_algebra.eighrm(a,4,1,val,vecr,veci,em);
+    Basic.sclcom(vecr,veci,4,1,1);
+    DecimalFormat threeDigit = new DecimalFormat(&quot;0.000&quot;);
+    DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);
+    System.out.println(&quot;Largest eigenvalue:  &quot; +
+      fiveDigit.format(val[1]) + &quot;\n\nCorresponding eigenvector:&quot;);
+    for (i=1; i&lt;=4; i++)
+      System.out.println(&quot;  &quot; + threeDigit.format(vecr[i][1]) +
+        &quot;  &quot; + threeDigit.format(veci[i][1]) + &quot;*I&quot;);
+    System.out.println(&quot;\nEM[1]:  &quot; + fiveDigit.format(em[1]) +
+      &quot;\nEM[3]:  &quot; + fiveDigit.format(em[3]) +
+      &quot;\nEM[5]:  &quot; + fiveDigit.format(em[5]) +
+      &quot;\nEM[7]:  &quot; + fiveDigit.format(em[7]) +
+      &quot;\nEM[9]:  &quot; + fiveDigit.format(em[9]));
+	}
+}
+</PRE>
+</BODY>
+</HTML>

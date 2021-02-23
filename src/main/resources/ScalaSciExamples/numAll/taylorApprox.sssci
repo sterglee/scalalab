@@ -1,0 +1,35 @@
+
+def f(x: Double) = exp(x)*sin(x)    // define the function
+def f(x: Vec): Vec = { 
+   var N= x.length
+   var v = new Vec(N)
+   for (k<-0 until N)
+     v(k) = f(x(k))
+  v
+}
+  
+     
+
+def  p(x: Double) = x+x*x+(x*x*x)/3   // the approximating Taylor polynomial to the function
+def p(x: Vec): Vec = { 
+   var N= x.length
+   var v = new Vec(N)
+   for (k<-0 until N)
+     v(k) = p(x(k))
+  v
+}
+  
+     
+
+var low = -4
+var high = 4
+var dt = 0.01
+var t = inc(low, dt, high)
+
+var fx = f(t)
+var px = p(t)
+
+figure(1);
+plot(t, fx, Color.RED, "Original function")
+plot(t, px, Color.GREEN, "Taylor approximation")
+

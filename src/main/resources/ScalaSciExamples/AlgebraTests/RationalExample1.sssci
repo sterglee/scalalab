@@ -1,0 +1,62 @@
+
+// this is the Apache Commons imports, these imports can be found from "Imports" -> "Apache Commons Library Imports: Directly" menu option
+
+import edu.jas.arith._  
+import edu.jas.poly._  
+import edu.jas.integrate._  
+
+
+var br = new BigRational(0)
+var vars = Array[String]("x")
+var fac =  new GenPolynomialRing[BigRational](br, vars.length, new TermOrder(TermOrder.INVLEX), vars)
+
+var  eIntegrator = new ElementaryIntegration[BigRational](br)
+
+var a = fac.parse("x^7 - 24 x^4 - 4 x^2 + 8 x - 8")
+println("A: " + a.toString())
+var d = fac.parse("x^8 + 6 x^6 + 12 x^4 + 8 x^2")
+println("D: " + d.toString())
+var gcd = a.gcd(d)
+gcd = a.gcd(d)
+
+var ret = eIntegrator.integrateHermite(a, d)
+println("Result: " + ret(0) + " , " + ret(1))
+
+println("-----")
+
+
+ a = fac.parse("10 x^2 - 63 x + 29")
+ println("A: " + a.toString())
+ 
+ d = fac.parse("x^3 - 11 x^2 + 40 x -48")
+ println("D: " + d.toString())
+ 
+ gcd = a.gcd(d)
+ println("GCD: " + gcd.toString())
+ 
+ ret = eIntegrator.integrateHermite(a, d)
+ println("Result: " + ret(0) + " , " + ret(1))
+
+ println("-----")
+
+ a = fac.parse("x+3")
+ println("A: " + a.toString());
+ d = fac.parse("x^2 - 3 x - 40")
+ println("D: " + d.toString())
+ gcd = a.gcd(d)
+ println("GCD: " + gcd.toString())
+ ret = eIntegrator.integrateHermite(a, d)
+ println("Result: " + ret(0) + " , " + ret(1))
+
+ println("-----")
+
+ a = fac.parse("10 x^2+12 x + 20")
+ println("A: " + a.toString())
+ d = fac.parse("x^3 - 8")
+ println("D: " + d.toString())
+ gcd = a.gcd(d)
+ println("GCD: " + gcd.toString())
+ ret = eIntegrator.integrateHermite(a, d)
+ println("Result: " + ret(0) + " , " + ret(1))
+
+ println("------------------------------------------------------\n")

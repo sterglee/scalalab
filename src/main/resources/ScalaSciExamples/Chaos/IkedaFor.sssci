@@ -1,0 +1,37 @@
+
+    
+    
+    
+// Ikeda map
+close("all")
+val R = 1; val C1 = 0.4; val C2 = 0.9; val C3 = 6
+
+
+tic;
+var N=2500000;
+
+var x = new Array[Double]( N)
+var y = new Array[Double]( N)
+x(0)=0.12; y(0) = 0.2;
+
+ var km = 0;
+var tau=0.0; var sintau=0.0; var costau=0.0
+
+for ( k<-1 until N) {
+
+  km= k -1
+  tau = C1-C3/(1+x(km)*x(km)+y(km)*y(km))
+  sintau = sin(tau); costau = cos(tau);
+  x(k) = R+C2*(x(km)*costau-y(km)*sintau)
+  y(k) = C2*(x(km)*sintau+y(km)*costau)
+ 
+ }
+ 
+
+var tm = toc();
+scatterPlotsOn();  // display points only, not the connecting lines
+plot(x, y);
+title("Scala Time for Ikeda map "+tm);
+
+// P7: 0.665 sec
+

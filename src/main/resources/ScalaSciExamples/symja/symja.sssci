@@ -1,0 +1,31 @@
+
+
+ 
+ class symja {
+import org.matheclipse.core.eval.EvalUtilities
+import org.matheclipse.core.expression.F
+import org.matheclipse.core.form.output.OutputFormFactory
+import org.matheclipse.core.form.output.StringBufferWriter
+import org.matheclipse.core.interfaces.IExpr
+
+     
+  // static initialization of the MathEclipse engine    
+     F.initSymbols(null)
+     
+     var util = new EvalUtilities()
+     
+     def eval(input: String) = {
+         var buf = new StringBufferWriter
+         var result = util.evaluate(input)
+         OutputFormFactory.get().convert(buf, result)
+         buf.toString
+         }
+         }
+         
+         
+         
+         var se = new symja
+         
+         var rr = se.eval("Expand[(AX^2+BX)^2]")
+         
+          

@@ -1,0 +1,28 @@
+ // Type ScalaLab code here.
+// Press  F6 or 'Ctrl+Shift + E' to execute selected text  or current line.
+ // Mouse Double Click on an identifier: Displays its value
+//  Press F2 to execute code up to cursor position     
+  // Select a keyword (e.g. "fft") and press F1 for obtaining help on the selected identifier using Java reflection 
+
+import org.apache.commons.math.ode._
+import org.apache.commons.math.ode.nonstiff._
+
+class CircleODE(var c: Array[Double], omega: Double)  extends AnyRef with FirstOrderDifferentialEquations {
+     
+      def getDimension = 2
+      
+      def computeDerivatives(t: Double, y: Array[Double], yDot: Array[Double]) = {
+          yDot(0) = omega*(c(1) - y(1))
+          yDot(1) = omega*(y(0)-c(0))
+          }
+        
+     }
+          
+          
+          
+ var  dp853 =  new DormandPrince853Integrator(1.0e-8, 100.0, 1.0e-10, 1.0e-10)
+ var ode = new CircleODE( Array(1.0, 1.0), 0.1)
+ var y = Array(0.0, 1.0)  // initial state
+ dp853.integrate(ode, 0.0, y, 16.0, y)
+ 
+ y 

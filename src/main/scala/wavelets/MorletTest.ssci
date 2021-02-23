@@ -1,0 +1,13 @@
+
+// evalute and plot the Morelet Wavelet
+var LBstr = JOptionPane.showInputDialog(null, "Lower bound for Morlet", "-4");
+var LB = LBstr.toDouble
+
+var UBstr = JOptionPane.showInputDialog(null, "Upper bound for Morlet", "4");
+var UB = UBstr.toDouble
+
+var Nstr = JOptionPane.showInputDialog(null, "Number of points to evaluate the Morlet Wavelet", "1000");
+var N = Nstr.toInt
+
+ var out = JSci.maths.wavelet.morlet.Morlet.eval( LB, UB, N);
+figure(1); plot( out); title("Morlet Wavelet evaluated from "+LB+"  up to "+UB+" with a regular grid of "+N+" points"); 

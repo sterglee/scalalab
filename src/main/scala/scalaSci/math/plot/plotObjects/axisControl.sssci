@@ -1,0 +1,18 @@
+
+var t=inc(0,0.01, 10)
+var pf = plot(t, sin(0.45*t))
+
+
+
+// get the axis handle
+var yax1 = pf.getAxis(1)   //  axis 1 is the y-axis
+
+yax1.setVisible(false)   // set y-axis to non-visible
+pf.repaint()  // repaint the figure in order the axis visibility to apply
+
+yax1.setVisible(true)   // set y-axis to visible
+pf.repaint()  // repaint the figure in order the axis visibility to apply
+
+yax1.setColor(Color.GREEN); pf.repaint()  // set the color of the axis
+yax1.setLegend("Y-axis");  pf.repaint()   // set the legend of the axis
+

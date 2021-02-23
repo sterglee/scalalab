@@ -1,0 +1,19 @@
+
+import java.awt.image.BufferedImage
+import java.io.File
+import java.io.IOException
+import javax.imageio.ImageIO
+import com.github.sarxos.webcam.Webcam
+//  Example of how to take single picture.
+// adapted from  Bartosz Firyn (SarXos)
+
+
+var webcam = Webcam.getDefault()
+webcam.open()
+// get image
+var  image = webcam.getImage()
+// save image to PNG file
+ImageIO.write(image, "PNG", new File("test.png"))
+}
+}
+ 

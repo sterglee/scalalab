@@ -1,0 +1,26 @@
+
+var n=10
+
+var x = rand(n,n)
+
+
+var REPS=1000000
+
+var k=0
+tic
+while (k<REPS) {
+    var xx = x*x
+    k+=1
+    }
+var tm=toc
+   
+   
+    tic 
+    k=0
+    while (k<REPS) {
+        var xy = x *** x
+        k+=1
+        }
+        var tmblas=toc
+        
+        

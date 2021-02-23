@@ -1,0 +1,18 @@
+
+
+// demonstrates multithreaded FFT of a random matrix
+var N = 2^^^12
+var x = Rand(N,N)
+
+// serial FFT of all the rows of the matrix
+tic
+var fxs = fft(x)
+var tms = toc
+
+// mutlithreaded FFT 
+tic
+var fxp = fftp(x)
+var tmp = toc // time for multithreaded FFT
+
+var fxRe = fxp._1  // real part
+var fxIm = fxp._2  // imaginary part

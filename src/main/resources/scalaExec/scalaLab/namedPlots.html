@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20111025;16594800">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P><FONT SIZE=6 STYLE="font-size: 22pt"><U><B>Named Plotting routines</B></U></FONT></P>
+<P><BR><BR>
+</P>
+<P>def nplot(xvec: Vec=null, yvec: Vec=null, xdd: Array[Double] =
+null, ydd: Array[Double] = null, 
+</P>
+<P>name: String = &quot;x-y plot&quot;, plotType: String = &quot;l&quot;,
+</P>
+<P>color: Color = Color.GREEN, lineWidth: Int=1 ) = 
+</P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P><U>Example</U></P>
+<P><A NAME="__DdeLink__0_68552131"></A><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">var t = inc(0, 0.05, 10)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">var x = sin(0.6*t)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">var y = sin(2.6*t)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">figure(1)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">subplot(2,1,1)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">nplot(xvec=t,  yvec=x)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">subplot(2,1,2)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">nplot(xvec=t,  yvec=x,
+lineWidth=8)</FONT></P>
+<P> 
+</P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">figure(2)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">var td = Inc(0, 0.1, 30)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">var xd = sin(0.3*td)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">subplot(3,1,1)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">nplot(xdd=td, ydd=xd,
+color=Color.BLUE)</FONT></P>
+<P> 
+</P>
+<P> 
+</P>
+<P>  <FONT SIZE=2 STYLE="font-size: 11pt">figure(3)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">subplot(3,1,1)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">nplot(xvec=t,  yvec=x,
+plotType=&quot;.&quot;)</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">subplot(3,1,2)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">nplot(xvec=t,  yvec=x,
+plotType=&quot;x&quot;)</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">// demonstrate that we can
+change the order of named parameters</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">subplot(3,1,3) </FONT>
+</P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">nplot(yvec=x,  xvec=t,
+plotType=&quot;*&quot;)</FONT></P>
+<P><BR><BR>
+</P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">figure(4)</FONT></P>
+<P> <FONT SIZE=2 STYLE="font-size: 11pt">nplot2(x=t, y=x, z = y)</FONT></P>
+<P> 
+</P>
+</BODY>
+</HTML>

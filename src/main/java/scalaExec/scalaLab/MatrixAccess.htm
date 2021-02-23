@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1253">
+	<TITLE>ScalaSci</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20130430;9220056">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21.01cm 29.69cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H1 ALIGN=CENTER>Convenient Matrix Access Operations</H1>
+<P ALIGN=CENTER><BR><BR>
+</P>
+<P ALIGN=LEFT><FONT SIZE=4 STYLE="font-size: 16pt"><B>Accessing the
+internal implemenation:</B></FONT></P>
+<P ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">Let
+create a matrix:</FONT></P>
+<P ALIGN=LEFT><FONT SIZE=4 STYLE="font-size: 16pt"><B>var  myMat =
+rand0(50, 50)</B></FONT></P>
+<P ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">The
+<B>Array[Array[Double]] v</B> keeps the Matrix internally and can be
+accessed as:</FONT></P>
+<P ALIGN=LEFT><FONT SIZE=4 STYLE="font-size: 16pt"><I><B>var ddArr =
+myMat.getv</B></I></FONT></P>
+<P ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">Matrix
+number of rows and columns and can be retrieved as:</FONT></P>
+<P ALIGN=LEFT><FONT SIZE=4 STYLE="font-size: 16pt"><B>myMat.numRows</B></FONT></P>
+<P ALIGN=LEFT><FONT SIZE=4 STYLE="font-size: 16pt"><B>myMat.numColumns</B></FONT></P>
+<P ALIGN=LEFT><FONT SIZE=4 STYLE="font-size: 16pt"><B>myMat.Nrows</B></FONT></P>
+<P ALIGN=LEFT><FONT SIZE=4 STYLE="font-size: 16pt"><B>myMat.Ncols</B></FONT></P>
+<P ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">Matrix
+length i.e. the total number of elements:</FONT></P>
+<P ALIGN=LEFT><FONT SIZE=4 STYLE="font-size: 16pt"><B>myMat.length</B></FONT></P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><FONT SIZE=4><B>Matlab-like operations:</B></FONT></P>
+<P ALIGN=LEFT><I><B>a. Row selection</B></I></P>
+<UL>
+	<LI><P ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=4>Rows from
+	Matrix <I>M</I> <SPAN STYLE="font-style: normal">can be selected as
+	</SPAN><I><B>M(fromRow, toRow, ::)</B></I><I>, </I><SPAN STYLE="font-style: normal">where
+	</SPAN><I>fromRow</I> <SPAN STYLE="font-style: normal">is the
+	starting row, </SPAN><I>toRow</I> <SPAN STYLE="font-style: normal">is
+	the ending row, e.g.</SPAN></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=4><I>var
+	mr2_5 = myMat(2, 5, ::) // select rows 2 to 5, all columns, i.e.
+	Matlab's myMat(2:5,:)</I></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=4><I>var
+	mr25 = myMat(2::5, ::)</I></FONT></P>
+	<LI><P ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=4>Order of
+	row selection is <B>reversed</B> if <I>fromRow &gt; toRow, e</I><SPAN STYLE="font-style: normal">.</SPAN><I>g</I><SPAN STYLE="font-style: normal">.</SPAN></FONT></P>
+	<P ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=4><I>var mr5_2
+	= myMat(5, 2, ::) // select rows 5 downto, all columns, i.e.
+	Matlab's myMat(5:-1:2.:)</I></FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">
+	<FONT SIZE=4>Step to skip rows can be specified as <I><B>M(fromRow,
+	incR, toRow, ::),</B></I> where <I>fromRow</I> is the starting row,
+	<I>incRow </I>is the step with which the selection of rows proceeds
+	and <I>toRow</I> is the ending row, e.g.</FONT></P>
+	<P ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=4><I>var
+	mr2_2_8 = myMat(2, 2, 8, ::) // select starting from row 2,
+	increment row index by 2 and ending at row 8, select all columns,
+	i.e. Matlab's myMat(2:2:8, :)</I></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=4><I>var
+	mr9_2_3 = myMat(9, -2, 3, ::) // i.e. Matlab's myMat(9:-2:3,:)</I></FONT></P>
+	<LI><P ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=4>Columns
+	from Matrix <I>M</I> <SPAN STYLE="font-style: normal">can be
+	selected as </SPAN><I><B>M(::, fromCol, toCol)</B></I><SPAN STYLE="font-style: normal">,
+	where </SPAN><I>fromCol</I> <SPAN STYLE="font-style: normal">is the
+	starting column, </SPAN><I>toCol</I> <SPAN STYLE="font-style: normal">is
+	the ending column, e.g.</SPAN></FONT></P>
+	<P ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=4><I>var mc3_6
+	= myMat(::, 3, 6) // select columns 3 to 6, all rows, i.e. myMat(:,
+	3:6)</I></FONT></P>
+	<LI><P ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=4><SPAN STYLE="font-style: normal">Order
+	of column selection is </SPAN><SPAN STYLE="font-style: normal"><B>reversed
+	</B></SPAN><SPAN STYLE="font-style: normal">if </SPAN><I>fromCol &gt;
+	toCol, e</I><SPAN STYLE="font-style: normal">.</SPAN><I>g</I><SPAN STYLE="font-style: normal">.</SPAN></FONT></P>
+	<P ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=4><I>var mc6_3
+	= myMat(::, 6, 3) // select columns 6 downto 3, all rows, i.e.
+	myMat(:, 6:-1:3)</I></FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">
+	<FONT SIZE=4>Step to skip columns can be specified as <I><B>M(::,
+	fromCol, incC, toCol),</B></I> where <I>fromCol</I> is the starting
+	column, <I>incC </I>is the step with which the selection of columns
+	proceeds and <I>toCol</I> is the ending column, e.g.</FONT></P>
+	<P ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=4><I>var
+	mc3_2_8 = myMat(::, 3, 2, 9) // select starting from column 3,
+	increment column index by 2 and ending at column 9, select all rows</I></FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">
+	<FONT SIZE=4>Selection of a compact rectangular range of the Matrix
+	can be specified as <I><B>M(fromRow, toRow, fromCol, toCol), </B></I>e.g.
+	</FONT>
+	</P>
+	<P ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=4><I>var
+	m2_5_4_7 =myMat(2, 5, 4, 7) // i.e. Matlab's myMat(2:5, 4:7)</I></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=4><I>var
+	m5_2_4_7 =myMat(5, 2, 4, 7) // reversing rows, i.e. myMat(5:-1:2,
+	4:7)</I></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=4><I>var
+	m2_5_7_4 = myMat(2,5,7,4) // reversing columns, i.e. myMat(2:5,
+	7:-1:4)</I></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="font-weight: medium"><FONT SIZE=4><I>var
+	m5_2_7_4 = myMat(5,2,7,4) // reversing both rows and columns, i.e.
+	myMat(5:-1:2, 7:-1:4)</I></FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">
+	<FONT SIZE=4>Selection of a Matrix subrange specifying inrement at
+	both rows and columns:</FONT></P>
+	<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium"><FONT SIZE=4>var
+	mR = myMat(2, 2, 7, 8, -2, 4) // i.e. Matlab's myMat(2:2:7, 8:-2:4)</FONT></P>
+</UL>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=LEFT><FONT SIZE=4 STYLE="font-size: 16pt"><B>Basic Matrix
+Routines</B></FONT></P>
+<UL>
+	<LI><P ALIGN=LEFT STYLE="font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt"><B>ones(N:
+	Int)</B> &ndash; returns a NXN Matrix filled with ones, <B>ones(N:
+	Int, M: Int)</B> &ndash; returns a NXM Matrix filled with ones</FONT></P>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt"><B>zeros(N:
+	Int)</B> &ndash; returns a NXN Matrix filled with zeros, <B>zeros(N:
+	Int, M: Int)</B> &ndash; returns a NXM Matrix filled with ones</FONT></P>
+	<LI><P ALIGN=LEFT><FONT SIZE=4 STYLE="font-size: 16pt"><B>diag(N) &ndash;
+	</B><SPAN STYLE="font-weight: medium">returns an NXN diagonal matrix
+	with ones at the diagonal</SPAN></FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium">
+	<FONT SIZE=4 STYLE="font-size: 16pt"><B>fill(N: Int, val: Double)</B>
+	&ndash; returns a NXN Matrix filled with <B>val</B>, <B>fill(N: Int,
+	M: Int)</B> &ndash; returns a NXM Matrix filled with ones</FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt"><B>sin(a:
+	Matrix): Matrix, cos(a: Matrix): Matrix, tan(a: Matrix): Matrix,
+	sinh(a: Matrix): Matrix, cosh(a: Matrix): Matrix, tanh(a: Matrix):
+	Matrix, asin(a: Matrix): Matrix, acos(a: Matrix): Matrix, atan(a:
+	Matrix): Matrix:</B> <SPAN STYLE="font-weight: medium">trigonometrical
+	routines</SPAN></FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt"><B>abs(a:
+	Matrix): Matrix, round(a: Matrix): Matrix, floor(a: Matrix): Matrix,
+	ceil(a: Matrix): Matrix, sqrt(a: Matrix): Matrix, pow(a: Matrix,
+	val: Double): Matrix, log(a: Matrix): Matrix, log2(a: Matrix):
+	Matrix, log10(a: Matrix): Matrix, exp(a: Matrix): Matrix,
+	toDegrees(a: Matrix): Matrix, toRadians(a: Matrix)</B></FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt"><B>dot(a:
+	Matrix, b: Matrix): Matrix: </B><SPAN STYLE="font-weight: medium">dot
+	product of the two matrices, can be written also as: </SPAN><B>a . b</B></FONT></P>
+</UL>
+<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><FONT SIZE=5><B>Aggregation
+Routines</B></FONT></P>
+<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><BR>
+</P>
+<UL>
+	<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Columnwise
+	Sum, sum(a: Matrix): Array[Double]</B></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">returns
+	the columnwise sums as an Array[Double], e.g.</FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">var
+	a = ones(4, 8)</FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">var
+	ac = sum(a)</FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">ac:
+	Array[Double] = Array(0.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0)</FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Columnwise
+	Mean, mean(a: Matrix): Array[Double]</B></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">returns
+	the columnwise means as an Array[Double], e.g.</FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">var
+	a = ones(4, 8)</FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">var
+	acm = mean(a)</FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">acm:
+	Array[Double] = Array(0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)</FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Columnwise
+	Product, prod(a: Matrix): Array[Double]</B></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">returns
+	the columnwise products as an Array[Double]</FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Columnwise
+	Mins, min(a: Matrix): Array[Double]</B></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">returns
+	the columnwise minimums as an Array[Double]</FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Columnwise
+	Maxs, max(a: Matrix): Array[Double]</B></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">returns
+	the columnwise maximums as an Array[Double]</FONT></P>
+</UL>
+<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><BR>
+</P>
+<UL>
+	<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Rowwise
+	Sum, sumR(a: Matrix): Array[Double]</B></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">returns
+	the rowwise sums as an Array[Double]</FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Rowwise
+	Mean, meanR(a: Matrix): Array[Double]</B></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">returns
+	the rowwise means as an Array[Double], e.g.</FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">var
+	a = ones(4, 8)</FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">var
+	acm = mean(a)</FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">acm:
+	Array[Double] = Array(0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)</FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Rowwise
+	Product, prodR(a: Matrix): Array[Double]</B></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">returns
+	the rowwise products as an Array[Double]</FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Rowwise
+	Mins, minR(a: Matrix): Array[Double]</B></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">returns
+	the rowwise minimums as an Array[Double]</FONT></P>
+	<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Rowwise
+	Maxs, maxR(a: Matrix): Array[Double]</B></FONT></P>
+	<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm; font-weight: medium"><FONT SIZE=4 STYLE="font-size: 16pt">returns
+	the rowwise maximums as an Array[Double]</FONT></P>
+</UL>
+<P ALIGN=JUSTIFY STYLE="margin-bottom: 0cm"><BR>
+</P>
+</BODY>
+</HTML>

@@ -1,0 +1,25 @@
+
+t = inc(-30, 0.01, 30);
+N = (int) pow(2, 12);
+filterType=1;
+
+
+x = 5*sin(0.3*t);
+x2 = x[1..N];   // take signal as a Matrix
+
+x2 = x2+rand(1, N);  // add random noisy
+xv =  x2.getArray()[0];
+
+xTrans = new double[N+1];
+for (k in 0..N-1) xTrans[k]=xv[k];    // perform a copy since the transform will be in place
+
+JSci.maths.wavelet.cdf2_4.FastCDF2_4.transform(xv, N-filterType);  // transformation one stage only
+
+figure(1); subplot(2,1,1); plot(xTrans, "Original Signal");
+subplot(2,1,2); plot(xv, "FastCDF2_4 Wavelet - First stage");
+
+CDF2_4Obj = new JSci.maths.wavelet.cdf2_4.FastCDF2_4();   // create a Wavelet object
+CDF2_4Obj.transform(xTrans);  // transformation over all scales, in place
+
+figure(2); subplot(2,1,1); plot(x2, "Original Signal");
+subplot(2,1,2); plot(xTrans, "FastCDF2_4 Wavelet - All scales");

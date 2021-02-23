@@ -1,0 +1,23 @@
+
+close all  // closes any previous figures
+
+// plots a sigmoid
+var a = 1.7159
+var b=2.0/3.0
+var u = inc(-2, 0.001, 2)
+
+var fu = a*tanh(b*u)
+for (k<-0 to 20) {
+ if (k<5)
+   plot(u, fu, new Color(k*20, 0, 0));
+ else {
+ if (k<10)
+   plot(u, fu, new Color(100, k*20, 0));
+ else
+   plot(u, fu, new Color(0, 10*k, k*10));
+}
+
+hold("on")
+   b=1.4*b
+   fu = a*tanh(b*u)
+  }

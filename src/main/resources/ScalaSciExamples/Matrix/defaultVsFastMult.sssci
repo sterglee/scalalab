@@ -1,0 +1,19 @@
+
+// the fast multiplication operator *& uses native BLAS combined with Java multithreading
+// however, for small matrices the default multiplication operator * that uses 
+// a serial implementation in pure Java is faster.
+
+var N=3000
+
+var x = rand(N,N)
+
+
+
+tic
+var xx = x*x    // default multiplication
+var tmd = toc
+
+
+tic
+var xxf = x *& x   // fast multiplication using JBLAS and Java multithreading
+var tmfast = toc

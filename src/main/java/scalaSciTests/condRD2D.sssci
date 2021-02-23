@@ -1,0 +1,12 @@
+// evaluates the condition number of a matrix A
+//   cond(A) = K(A) = normInf(A)* normInf( inv(A)) 
+
+var A = Mat(3, 3,  2, -1, 0, 2, -4, -1, -1, 0, 2)
+var Ainv = inv(A)
+//  we have cond(A) = ||A|| ||inv(A)||, we verify it
+var K = norm2(A)*norm2(Ainv)
+var cK = cond(A) 
+var shouldBeAlmostZero = K-cK
+
+
+

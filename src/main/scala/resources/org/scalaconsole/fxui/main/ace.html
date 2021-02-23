@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ACE in Action</title>
+    <style type="text/css" media="screen">
+        #editor {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div id="editor"></div>
+
+<script src="ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    var editor = ace.edit("editor");
+
+    editor.commands.addCommand({
+          name: 'Paste',
+          bindKey: {win: 'Ctrl-V|Shift-Insert', mac: 'Command-V|Shift-Insert'},
+          exec: function(editor){
+            editor.insert(javaBridge.getClipboardContent(), true)
+          }
+      });
+    editor.commands.addCommand({
+          name: 'Copy',
+          bindKey: {win: 'Ctrl-C|Ctrl-Insert', mac: 'Command-C|Ctrl-Insert'},
+          exec: function(editor){
+            var range = editor.getSelectionRange();
+            if(range.isEmpty()){
+                editor.navigateLineStart();
+                editor.getSelection().selectLineEnd();
+            }
+            var selected = editor.session.getTextRange(editor.getSelectionRange());
+            javaBridge.setClipboardContent(selected)
+          }
+      });
+    editor.commands.addCommand({
+          name: 'Cut',
+          bindKey: {win: 'Ctrl-X|Shift-Delete', mac: 'Command-X|Shift-Delete'},
+          exec: function(editor){
+            var range = editor.getSelectionRange();
+            if(range.isEmpty()){
+                editor.navigateLineStart();
+                editor.getSelection().selectLineEnd();
+            }
+            var selected = editor.session.getTextRange(editor.getSelectionRange());
+            javaBridge.setClipboardContent(selected);
+            editor.remove(range)
+          }
+      });
+    editor.commands.addCommand({
+          name: 'Delete Line',
+          bindKey: {win: 'Ctrl-Y', mac: 'Command-Y'},
+          exec: function(editor){editor.removeLines();},
+          scrollIntoView: "cursor",
+          multiSelectAction: "forEachLine"
+      });
+    editor.commands.addCommand({
+          name: 'Duplicate Selection',
+          bindKey: {win: 'Ctrl-D', mac: 'Command-D'},
+          exec: function(editor){editor.duplicateSelection();},
+          scrollIntoView: "cursor",
+          multiSelectAction: "forEach"
+      });
+    editor.commands.addCommand({
+          name: 'Create Tab',
+          bindKey: {win: 'Ctrl-T', mac: 'Command-T'},
+          exec: function(editor){
+              javaBridge.createTab();
+          }
+      });
+    editor.commands.addCommand({
+          name: 'Reset REPL',
+          bindKey: {win: 'Ctrl-Shift-E', mac: 'Command-Shift-E'},
+          exec: function(editor){
+              javaBridge.resetREPL();
+          }
+      });
+    editor.commands.addCommand({
+          name: 'Run in Paste Mode',
+          bindKey: {win: 'Ctrl-P'},
+          exec: function(editor){
+              javaBridge.runInPasteMode();
+          }
+      });
+    editor.commands.addCommand({
+          name: 'Run Selected in Paste Mode',
+          bindKey: {win: 'Ctrl-Shift-P'},
+          exec: function(editor){
+              javaBridge.runSelectedInPasteMode();
+          }
+      });
+
+    editor.getSession().setMode("ace/mode/scala");
+    editor.getSession().setTabSize(2);
+    editor.renderer.setScrollMargin(2, 2, 2, 2);
+    editor.setHighlightActiveLine(false);
+    editor.focus();
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+var N=2000; var M = 2000
+tic
+var a = rand(N, M)
+var sm = 0.0
+var r=0
+while (r<N) {
+  sm = 0.0
+ var c=0
+  while (c<M) {
+      a(r, c) = 1.0/(r+c+1)
+      sm += a(r,c)-7.8*a(r,c)
+      c += 1
+      }
+      r += 1
+      }
+   
+   
+   var tm = toc   
+// 0.28 sec, 0.16 sec fast script
+
+
+
+ N=2000;  M = 2000
+tic()
+a = rand(N, M)
+sm = 0.0
+ r=0
+while (r<N) {
+  sm = 0.0
+ c=0
+  while (c<M) {
+      a[r][c]= 1.0/(r+c+1)
+      sm += a[r][c]-7.8*a[r][c]
+      c ++
+      }
+      r ++
+      }
+   
+   
+    tm = toc()
+// 2.7 sec. indy, 3.5 sec prim.ops
+
+
+N=2000; M = 2000
+tic
+a = rand(N, M);
+sm = 0.0;
+for r =1:N,
+ sm = 0.0;
+  for c=1: M,
+     a(r, c) = 1.0/(r+c+1);
+     sm = sm+ a(r,c)-7.8*a(r,c);
+   end 
+ end
+ tm = toc   
+// 0.55 sec Matlab 8

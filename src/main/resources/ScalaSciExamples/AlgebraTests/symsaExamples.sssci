@@ -1,0 +1,14 @@
+
+// this is a subset of "Computer algebra Imports"
+import org.matheclipse.core.eval.EvalUtilities;
+import org.matheclipse.core.expression.F;
+import org.matheclipse.core.form.output.StringBufferWriter;           
+import org.matheclipse.core.form.output.OutputFormFactory;
+           
+F.initSymbols(null)
+var util = new EvalUtilities()
+var input = "Expand[(AX^2+BX)^2]"
+var result = util.evaluate(input)
+
+var buf = new StringBufferWriter
+OutputFormFactory.get().convert(buf, result)

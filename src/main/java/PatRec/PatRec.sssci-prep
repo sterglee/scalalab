@@ -1,0 +1,21 @@
+import  PatRec.PatternRecognition._
+ // Example 1.3.1
+val m = AAD("0.0 ; 1.0")
+val S = eye(2, 2)
+val x1 = AAD("0.2; 1.3")
+val x2 = AAD("2.2; -1.3")
+val pg1 = comp_gauss_dens_val(m, S, x1)
+val pg2 = comp_gauss_dens_val(m, S, x2)
+// pg1 == 0.149, pg2 = 0.001
+
+// Example 1.3.2
+val P1 = 0.5; val  P2 =0.5
+val m1 = AAD("1 1")~ ;   val m2 = AAD("3 3")~; val S = eye(2, 2);  val x = AAD("1.8 1.8")~
+val p1 = P1*comp_gauss_dens_val(m1, S, x);  
+val p2 = P2*comp_gauss_dens_val(m2, S, x);  
+// p1==0.042, p2==0.019 
+
+var mv = AD("-3.0 1.0 7.0")
+var cv = AAD("0.3 0.2 0.3; 0.56 1.2 1.6; 0.9 0.45 1.1")
+var Nvecs=1000
+var vecs = mvnrnd(mv, cv, Nvecs)

@@ -1,0 +1,7 @@
+
+
+var A = AAD(" 3.3 5.5 -0.2; 4.5 -0.4 9.5; 5.6 4.4 0.2; 0.4 0.5 0.66")
+
+var ejmlA = new scalaSci.EJML.Mat(A)
+
+var pA = ejmlA.pinv

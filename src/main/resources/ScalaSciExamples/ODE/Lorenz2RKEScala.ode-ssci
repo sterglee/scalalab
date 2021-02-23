@@ -1,0 +1,55 @@
+import java.util.Vector 
+
+
+class   IntegrationObject  extends Object       with AP_rke_methods 
+  { 
+def der(n: Int, t: Double, y: Array[Double]):Unit = 
+{ 
+  var    xx=y(1);   var   yy=y(2);    var zz=y(3); 
+
+    y(1) = 10*(yy-xx);  
+    y(2) = -xx*zz+143*xx - yy;  
+    y(3) = xx*yy - 2.66667*zz;  
+  } 
+ 
+
+def  out(n: Int, t: Array[Double], te: Array[Double], 
+              y: Array[Double],  data: Array[Double]):Unit =  {  } 
+}
+ 
+ var  n= 3;  // the number of equations of the system
+var  x = new Array[Double](1)     // entry:   x(0) is the initial value of the independent variable  
+var  xe = new Array[Double](1)    //  entry:  xe(0) is the final value of the independent variable    
+var y = new Array[Double](n+1)   // entry: the dependent variable, the initial values at x = x0 
+var data = new Array[Double](7)   // in array data one should give: 
+                    //     data(1):   the relative tolerance
+                    //      data(2):  the absolute tolerance
+                    // after each step data(3:6) contains:
+                    //      data(3):  the steplength used for the last step
+                    //      data(4):  the number of integration steps performed
+                    //      data(5):  the number of integration steps rejected
+                    //      data(6):  the number of integration steps skipped
+                    // if upon completion of rke data(6) > 0, then results should be considered most criticallly
+                                        
+ fi = true;                        // if fi is true then the integration starts at x0 with a trial step xe-x0;  
+                                        // if fi is false then the integration is continued with a step length data(3)* sign(xe-x0) 
+data(1) = 1.0e-6;  data(2) = 1.0e-6; 
+
+var xOut:Vector[Array[Double]] = new Vector();  
+var yOut:Vector[Array[Double]] = new Vector();  
+
+ var xStart = 0.0;
+ var xEnd =  140.0;   // start and end values of integration 
+ 
+y(1) = 0.4; y(2) = 0.4; y(3) = 0.5;   x(0) = xStart;    xe(0) = xEnd; 
+
+ var integrationObj  = new IntegrationObject 
+tic() 
+var fi = true 
+
+Analytic_problems.rke(x, xe, n, y, integrationObj,  data, fi,  xOut, yOut); 
+
+ var timeCompute = toc() 
+var plotTitle = "Lorenz attractor in ScalaSci, time =  "+timeCompute+ " Runge-Kutta (rke()),  integrating from "+xStart+", to tEnd= "+xEnd  
+var color = Color.RED 
+  figure3d(1); plotV(yOut, color, plotTitle) 

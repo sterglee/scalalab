@@ -1,0 +1,17 @@
+
+import org.apache.commons.math.linear._
+
+// Create a real matrix with two rows and three columns
+var  matrixData = Array(Array(1.0, 2.0, 3.0), Array(2.0, 5.0, 3.0))
+var  m = new Array2DRowRealMatrix(matrixData)
+
+// One more with three rows, two columns
+var  matrixData2 = Array( Array(1.0, 2.0), Array(2.0, 5.0), Array(1.0, 7.0))
+var  n = new Array2DRowRealMatrix(matrixData2)
+
+var  p = m.multiply(n)
+
+println(p.getRowDimension())    // 2
+println(p.getColumnDimension()) // 2
+
+var  pInverse = new LUDecompositionImpl(p).getSolver().getInverse()

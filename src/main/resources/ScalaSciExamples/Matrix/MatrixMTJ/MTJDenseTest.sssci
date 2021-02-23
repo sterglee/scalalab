@@ -1,0 +1,32 @@
+
+import no.uib.cipr.matrix.DenseLU
+import no.uib.cipr.matrix.DenseMatrix
+import no.uib.cipr.matrix.Matrices
+import no.uib.cipr.matrix.Matrix
+import no.uib.cipr.matrix.Utilities
+
+// Tests the LU decomposition
+ 
+var  n = 100
+       
+// create an appropriate band matrix
+var A = new DenseMatrix(n, n)
+Utilities.populate(A)
+
+tic
+
+// perform an LU decomposition
+var lu = new DenseLU(n, n)
+// factorize matrix A
+lu.factor(A.copy())
+
+
+// make a DenseMatrix of size nXn
+var I = Matrices.identity(n)
+var solution = lu.solve(I)
+
+var tmLUSolveDense = toc()
+
+var J = I.multAdd(1.0, A, new DenseMatrix(n, n))
+
+

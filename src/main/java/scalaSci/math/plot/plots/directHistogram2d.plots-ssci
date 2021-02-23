@@ -1,0 +1,10 @@
+
+  var  X = new Array[Double](500);
+  for (i <- 0 to X.length-1)
+	X(i) = Math.random+Math.random;
+	
+	var p = new Plot2DPanel("SOUTH");
+	p.addHistogramPlot("test", X, 10);
+	new FrameView(p);
+
+   var g2 = p.getGraphics().asInstanceOf[Graphics2D]

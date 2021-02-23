@@ -1,0 +1,37 @@
+
+
+import com.nr.RealValueFun
+import com.nr.min.Powell
+
+// function to minimize with Powell method
+// we define a function of two  variables
+class funcToMinimize extends RealValueFun {
+	def funk( x: Array[Double]) = {
+		cos(x(0)*x(0))-sin(x(1)*x(1))- 8.7
+	   }
+	}
+
+  var  p = new Array[Double](2)
+    
+    
+    // Test Powell
+   var funcToMinimizeObj = new funcToMinimize()   //  create an instance of the function to minimize
+   var   pow1 = new Powell(funcToMinimizeObj)  // use the Powell minimizer for that particular function
+    p(0) = 2.0;  p(1) = 5.0;  //  a starting initial condition
+    var p0 = pow1.minimize(p)  //  minimize that with Powell method
+    var minPowell = funcToMinimizeObj.funk(p0)
+
+   
+   // define the  function being optimized, conveniently  for plotiing
+   def f(x: Double, y: Double) = {
+   	var xa =  new Array[Double](2)
+   	xa(0) = x
+   	xa(1) = y
+     funcToMinimizeObj.funk(xa)	
+   }
+
+      // plot now the function in order the minima to be evident
+close("all")
+figure3d; fplot2d(f, 3.0, 3.5,  4.2, 4.8, Color.RED, true);
+title("minimum at "+p0(0) +" , "+p0(1))
+	

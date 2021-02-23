@@ -1,0 +1,45 @@
+initMatlabConnection  // init connection to MATLAB
+
+var N=200
+var x = Rand(N,N)  // a Java random 2D double array 
+
+
+var svdc = "[u, s, v] = svd(x);"   //  the MATLAB script for SVD computation
+
+var inParams = Array("x")
+var outParams = Array("u", "s", "v")
+
+// call MATLAB to evaluate the svd
+// the first parameter of meval(), i.e. svdc, is the MATLAB script to evaluate
+// the second parameter of meval() is  the array of input parameters from ScalaLab to MATLAB
+// the third parameter of meval() is the array of output parameters from MATLAB to ScalaLab
+@MATLAB
+tic
+meval( svdc, inParams, outParams)
+var tmMatlab = toc  // 2.41 sec 
+@MATLAB
+
+var shouldBeZero = u*s*(v~)-x  // from the definition of SVD
+
+
+// perform SVD with Java
+tic
+var svdJ = svd(x)
+var tmJava = toc()  // 221.78 sec
+
+// a second SVD
+var N2 = 100
+var x2 = Rand(N2,N2)
+var svdc2 = "[u2, s2, v2] = svd(x2);"   //  the MATLAB script for SVD computation
+
+var inParams2 = Array("x2")
+var outParams2 = Array("u2", "s2", "v2")
+
+@MATLAB
+tic
+meval( svdc2, inParams2, outParams2)
+var tmMatlab2 = toc  // 2.41 sec 
+@MATLAB
+
+
+var shouldBeZero2 = u2*s2*(v2~)-x2  // from the definition of SVD

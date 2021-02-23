@@ -1,0 +1,46 @@
+// X = pinv(A) produces a matrix X of the same dimensions
+  //  as A' so that A*X*A = A, X*A*X = X and A*X and X*A  are Hermitian.
+
+// create the 2-D double array
+var d = AAD("7.8 -4 0.55; 8.9 -0.344 9.66; -0.55 6.7 8.9; 0.6 0.8 -1.4") 
+
+//var d = Rand(800, 800)
+//  create from the same random array Matrices of different types
+
+ 
+// EJML
+var ed  = new scalaSci.EJML.Mat(d)
+tic
+var pinvejml=scalaSci.EJML.StaticMathsEJML.pinv(ed)
+var ejmltm = toc
+
+// test
+var shouldBeZero1 = ed*pinvejml*ed - ed
+var shouldBeZero2 = pinvejml*ed*pinvejml - pinvejml
+
+
+var nd  = new scalaSci.Matrix(d)
+tic
+var pinvnumal = scalaSci.StaticMaths.pinv(nd)
+var numaltm = toc
+
+var nmd = new scalaSci.Mat(d)
+tic
+var pinvjama = scalaSci.StaticMaths.pinv(nmd)
+var tm=toc
+
+var md  = new scalaSci.MTJ.Mat(d)
+tic
+var pinvmtj=scalaSci.MTJ.StaticMathsMTJ.pinv(md)
+var tmmtj = toc
+
+var rrdd = new scalaSci.RichDouble2DArray(d)
+tic
+var pinvrdda = scalaSci.StaticMaths.pinv(rrdd)
+var tmrddda = toc
+
+
+var ad  = new scalaSci.CommonMaths.Mat(d)
+tic
+var pinvcm=scalaSci.CommonMaths.StaticMathsCommonMaths.pinv(ad)
+var tmCommonMaths = toc

@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15054700">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>Overdetermined
+nonlinear systems</B></FONT></P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>Least
+squares – With Jacobian matrix</B></FONT></P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>gssnewton</B></FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=4>Calculates the least square solution of
+an overdetermined system of nonlinear equations with the Gauss-Newton
+method.</FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=4><B>Example: Can be run with F9 within
+the ScalaLab Editor  </B></FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><A NAME="__DdeLink__0_1891728768"></A><FONT SIZE=2 STYLE="font-size: 11pt">import
+java.text.DecimalFormat;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">import numal.*;</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public class Test_gssnewton
+extends Object</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">implements
+AP_gssnewton_methods {</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">static double x[] = new
+double[7];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">static double y[] = new
+double[7];</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public static void
+main(String args[]) {</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double in[] = new double[8];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double out[] = new
+double[10];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double g[] = new double[7];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double par[] = new double[4];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double v[][] = new
+double[4][4];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">Test_gssnewton testgssnewton
+= new Test_gssnewton();</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">DecimalFormat fiveDigit = new
+DecimalFormat(&quot;0.00000E0&quot;);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">DecimalFormat oneDigit = new
+DecimalFormat(&quot;0.0&quot;);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">in[0]=1.0e-6;
+in[1]=in[2]=1.0e-6; in[5]=75.0; in[4]=1.0e-6;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">in[6]=14.0; in[7]=1.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">x[1] = -5.0; x[2] = -3.0;
+x[3] = -1.0; x[4]=1.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">x[5]=3.0; x[6]=5.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">y[1]=127.0; y[2]=151.0;
+y[3]=379.0; y[4]=421.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">y[5]=460.0; y[6]=426.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">par[1]=580.0; par[2] =
+-180.0; par[3] = -0.160;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">Analytic_problems.gssnewton(6,3,par,g,v,testgssnewton,in,out);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">System.out.println(&quot;Parameters:\n
+&quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(par[1]) + &quot;
+&quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(par[2]) + &quot;
+&quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(par[3]) +
+&quot;\n\nOUT:\n &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(out[6]) +
+&quot;\n &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(out[2]) +
+&quot;\n &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(out[3]) +
+&quot;\n &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(out[4]) +
+&quot;\n &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(out[5]) +
+&quot;\n &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(out[1]) +
+&quot;\n &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(out[7]) +
+&quot;\n &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(out[8]) +
+&quot;\n &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(out[9]) + </FONT>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">&quot;\n\nLast residual
+vector:\n &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(g[1]) + &quot;
+&quot; + oneDigit.format(g[2]) +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">&quot; &quot; +
+oneDigit.format(g[3]) + &quot; &quot; + </FONT>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(g[4]) + &quot;
+&quot; + oneDigit.format(g[5]) +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">&quot; &quot; +
+oneDigit.format(g[6]));</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public boolean funct(int m,
+int n, double par[], double g[])</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">{</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">int i;</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">for (i=1; i&lt;=m; i++) {</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">if (par[3]*x[i] &gt; 680.0)
+return false;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">g[i]=par[1]+par[2]*Math.exp(par[3]*x[i])-y[i];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">return true;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public void jacobian(int m,
+int n, double par[],</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double g[], double jac[][])</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">{</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">int i;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double ex;</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">for (i=1; i&lt;=m; i++) {</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">jac[i][1]=1.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">jac[i][2]=ex=Math.exp(par[3]*x[i]);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">jac[i][3]=x[i]*par[2]*ex;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+</BODY>
+</HTML>

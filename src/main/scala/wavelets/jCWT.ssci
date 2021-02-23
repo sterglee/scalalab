@@ -1,0 +1,39 @@
+
+
+var fs = 600; // 2050; 
+var dt = 1.0/fs 
+var t =  inc(1, dt, 2)
+
+var PI = 3.1415926
+var PI2 = 2*PI
+var y = sin(PI2*10*t)+4*cos(PI2*4*t)
+var rv = rand(y.length)  // a random vector of the same size as y
+var summedVec = 4*y+rv
+figure(1); plot(summedVec); title("Signal and Noise")
+
+var fstart = 1  // frequency to start
+var fmax = fs/2.0
+var maxNf = 20
+
+var  linlog = "log"
+var stepfac=16
+var df0=3
+
+
+var ycwt = new wavelets.CWT(y.getv,  fs, fmax, maxNf, linlog, stepfac, df0)
+var ed = ycwt.ed()  // energy density coefficients as a double[][] vector
+
+figure(2); plot(ed); title("Continuous Wavelet Transform")
+ 
+
+
+var edm = new Matrix(ed);
+//subsampledEdm = edm.resample(5, 1);  // subsample matrix before displaying it in contour plot
+figure(1); 
+subplot(2,1,1);
+plot(y); title("signal");
+subplot(2,1,2);
+plot2d_scalogram(ed, "scalogram");
+ //plot2d_scalogram(subsampledEdm, "scalogram");
+//figure(2);
+//plot2d_contour(subsampledEdm, "contour")

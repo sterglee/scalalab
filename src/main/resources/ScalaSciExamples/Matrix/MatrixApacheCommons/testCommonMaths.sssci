@@ -1,0 +1,26 @@
+
+import scalaSci.CommonMaths.Mat
+import scalaSci.CommonMaths.Mat._
+
+import org.apache.commons.math.linear. Array2DRowRealMatrix
+
+ // construct a CommonMaths matrix
+var myArr = new Array2DRowRealMatrix(3,4)
+myArr.setEntry(2,2, 2.3)
+var myMat = new Mat(myArr)
+
+// myMat supports the general Scala collections framework, so test some routines
+
+var myMatList = myMat toList
+var myMatCos = myMat  map java.lang.Math.cos
+
+var testAdd = myMat+myMat
+
+var rnd = random(9,9)
+var sinrnd = sin(rnd)
+
+// test some range selections
+
+var a = rnd(2, 5, ::)
+
+var m = rnd(2,3, 4, 6)

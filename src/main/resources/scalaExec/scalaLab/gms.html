@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101228;15572100">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>gms</B></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US">Solves an initial value problem, given as an autonomous system of  first order differential equations by means of a third order, exponentially fitted, generalized multistep method with automatic stepsize control.</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">public class Test_gms extends Object</SPAN></FONT>
+                      <FONT SIZE=3><SPAN LANG="en-US">implements AP_gms_methods {</SPAN></FONT>
+   
+<FONT SIZE=3><SPAN LANG="en-US">	public static void main(String args[]) {</SPAN></FONT>
+  
+    <FONT SIZE=3><SPAN LANG="en-US">int n[] = new int[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">int jev[] = new int[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">int lu[] = new int[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double x[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double y[] = new double[3];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double delta[] = new double[1];</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">Test_gms testgms = new Test_gms();</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot;The results with GMS are:\n&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y[1]=y[2]=1.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">x[0]=0.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">delta[0]=0.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">Analytic_problems.gms(x,50.0,2,y,0.01,0.001,0.5,delta,</SPAN></FONT>
+                      <FONT SIZE=3><SPAN LANG="en-US">testgms,1.0e-5,1.0e-5,n,jev,lu,0,false);</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">	}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void derivative(int r, double y[], double delta[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double y1,y2;</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">y1=y[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y2=y[2];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y[1] = -1000.0*y1*(y1+y2-1.999987);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y[2] = -2500.0*y2*(y1+y2-2.0);</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void jacobian(int r, double j[][], double y[],</SPAN></FONT>
+                       <FONT SIZE=3><SPAN LANG="en-US">double delta[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double y1,y2;</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">y1=y[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y2=y[2];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">j[1][1] = 1999.987-1000.0*(2.0*y1+y2);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">j[1][2] = -1000.0*y1;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">j[2][1] = -2500.0*y2;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">j[2][2] = 2500.0*(2.0-y1-2.0*y2);</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void out(double x[], double xe, int r, double y[],</SPAN></FONT>
+                  <FONT SIZE=3><SPAN LANG="en-US">double delta[], int n[], int jev[], int lu[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double ye1,ye2;</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat twoDigit = new DecimalFormat(&quot;0.00E0&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">if (x[0] == 50.0) {</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">ye1=0.5976546988;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">ye2=1.4023434075;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot; X = &quot; + (int)x[0] + </SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">&quot;    N = &quot; + n[0] + &quot;    JEV = &quot; + jev[0] +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">&quot;    LU = &quot; + lu[0] + &quot;\n\n Y1 = &quot; + </SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">fiveDigit.format(y[1]) + &quot;     REL.ERR. = &quot; + </SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">twoDigit.format(Math.abs((y[1]-ye1)/ye1)) +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">&quot;\n Y2 = &quot; + fiveDigit.format(y[2]) + </SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">&quot;      REL.ERR. = &quot; + </SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">twoDigit.format(Math.abs((y[2]-ye2)/ye2)));</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT></PRE>
+</BODY>
+</HTML>

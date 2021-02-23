@@ -1,0 +1,27 @@
+
+var N=4000
+var x = rand(N, N)
+import java.util.function.DoubleUnaryOperator
+
+def f(x: Double) = x*x*x
+
+class af extends AnyRef with java.util.function.DoubleUnaryOperator {
+   def  applyAsDouble(x: Double) = x*x*x
+   }
+
+var afo = new af
+
+tic
+var xx = x psmap afo
+for (k<-0 until 10)
+  xx = x psmap afo
+ var tmLamdas = toc  // 0.35 sec
+
+
+
+tic
+var xx = x pmap f
+for (k<-0 until 10)
+  xx = x pmap f
+ var tmScalaFunctions = toc  // 0.42 sec
+

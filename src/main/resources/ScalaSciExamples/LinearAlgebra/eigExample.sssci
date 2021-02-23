@@ -1,0 +1,15 @@
+
+var myMat = M("10 -6 -4;  -6 11 2; -4 2 6")
+
+var (realEivs, ImEivs, leftEvs, rightEvs) = leig(myMat) 
+
+var altEigs = eig(myMat)
+
+var dd = Rand(9)
+var revs = new Array[Double](1)
+var imevs = new Array[Double](1)
+var leftevs = Array.ofDim[Double](1,1)
+var rightevs = Array.ofDim[Double](1,1)
+
+var rr = Eig(dd) 
+ revs, imevs, leftevs, rightevs)

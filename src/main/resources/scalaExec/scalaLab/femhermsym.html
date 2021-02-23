@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101229;14553700">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>femhermsym</B></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US">Solves a fourth order <SPAN STYLE="font-style: normal">se</SPAN><SPAN STYLE="font-style: normal">lf</SPAN><SPAN STYLE="font-style: normal">-adjoint linear two point boundary value problem by means of  Galerkin's method with continous piecewise polynomials.</SPAN></SPAN></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+
+<SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN>
+<SPAN LANG="en-US">import numal.*;</SPAN>
+
+<SPAN LANG="en-US">public class Test_femhermsym extends Object</SPAN>
+                             <SPAN LANG="en-US">implements AP_femhermsym_methods {</SPAN>
+
+<SPAN LANG="en-US">	public static void main(String args[]) {</SPAN>
+ 
+    <SPAN LANG="en-US">int n,i,order;</SPAN>
+    <SPAN LANG="en-US">double rho1,rho2,d1,d2;</SPAN>
+    <SPAN LANG="en-US">double x[] = new double[11];</SPAN>
+    <SPAN LANG="en-US">double y[] = new double[19];</SPAN>
+    <SPAN LANG="en-US">double e[] = new double[5];</SPAN>
+
+    <SPAN LANG="en-US">Test_femhermsym testfemhermsym = new Test_femhermsym();</SPAN>
+    <SPAN LANG="en-US">DecimalFormat twoDigit = new DecimalFormat(&quot;0.00E0&quot;);</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;FEMHERMSYM delivers:\n&quot;);</SPAN>
+    <SPAN LANG="en-US">for (n=5; n&lt;=10; n += 5) {</SPAN>
+      <SPAN LANG="en-US">e[1]=e[3]=0.0;  e[2]=1.0;  e[4] = -1.0;</SPAN>
+      <SPAN LANG="en-US">for (i=0; i&lt;=n; i++) x[i]=Math.PI*i/n;</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;N=&quot; + n);</SPAN>
+      <SPAN LANG="en-US">for (order=4; order&lt;=8; order += 2) {</SPAN>
+        <SPAN LANG="en-US">Analytic_problems.femhermsym(x,y,n,testfemhermsym,order,e);</SPAN>
+        <SPAN LANG="en-US">rho1=rho2=0.0;</SPAN>
+        <SPAN LANG="en-US">for (i=1; i&lt;=n-1; i++) {</SPAN>
+          <SPAN LANG="en-US">d1=Math.abs(y[2*i-1]-Math.sin(x[i]));</SPAN>
+          <SPAN LANG="en-US">if (rho1 &lt; d1) rho1=d1;</SPAN>
+          <SPAN LANG="en-US">d2=Math.abs(y[2*i]-Math.cos(x[i]));</SPAN>
+          <SPAN LANG="en-US">if (rho2 &lt; d2) rho2=d2;</SPAN>
+        <SPAN LANG="en-US">}</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;     ORDER=&quot; + order +</SPAN>
+          <SPAN LANG="en-US">&quot;\n            MAX. ABS(Y[2*I-1]-Y(X[I])) = &quot; +</SPAN>
+          <SPAN LANG="en-US">twoDigit.format(rho1) +</SPAN>
+          <SPAN LANG="en-US">&quot;\n            MAX. ABS(Y[2*I]-Y'(X[I]))  = &quot; +</SPAN>
+          <SPAN LANG="en-US">twoDigit.format(rho2));</SPAN>
+      <SPAN LANG="en-US">}</SPAN>
+    <SPAN LANG="en-US">}</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public double p(double x)</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">return 1.0;</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public double q(double x)</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">return Math.cos(x);</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public double r(double x)</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">return Math.exp(x);</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public double f(double x)</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">return Math.sin(x)*(1.0+Math.exp(x)+2.0*Math.cos(x));</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+<SPAN LANG="en-US">}</SPAN></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110201;12150200">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>ark</B></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US">Solves an initial value problem for a system of first order ordinary differential equations which is obtained from semi-discretization of an initial boundary value problem for a parabolic or hyperbolic quation, based on stabilized, explicit Runge-Kutta methods of low-order, with limited storage requirements.</SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US"><B>Example 1 – Scala Code</B></SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US"><B>Can be run by pasting the code over ScalaLab's console</B></SPAN></FONT>
+
+<A NAME="__DdeLink__295_598821882"></A><A NAME="__DdeLink__247_598821882"></A><A NAME="__DdeLink__219_598821882"></A><A NAME="__DdeLink__191_598821882"></A><A NAME="__DdeLink__138_598821882"></A><A NAME="__DdeLink__112_598821882"></A><A NAME="__DdeLink__99_598821882"></A><A NAME="__DdeLink__67_598821882"></A><A NAME="__DdeLink__57_598821882"></A><A NAME="__DdeLink__51_598821882"></A><A NAME="__DdeLink__31_598821882"></A><A NAME="__DdeLink__17_598821882"></A>
+<A NAME="__DdeLink__125_598821882"></A><A NAME="__DdeLink__37_598821882"></A><A NAME="__DdeLink__25_598821882"></A><FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">import java.text.DecimalFormat</SPAN></FONT></FONT>
+<FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">import numal._</SPAN></FONT></FONT>
+<A NAME="__DdeLink__77_598821882"></A>
+<A NAME="__DdeLink__85_598821882"></A><FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">objec</SPAN><SPAN LANG="en-US">t </SPAN><SPAN LANG="en-US"> </SPAN><SPAN LANG="en-US">test_ar</SPAN><SPAN LANG="en-US">k</SPAN><SPAN LANG="en-US"> extends AnyRef  </SPAN><SPAN LANG="en-US">w</SPAN><SPAN LANG="en-US">i</SPAN><SPAN LANG="en-US">t</SPAN><SPAN LANG="en-US">h </SPAN><SPAN LANG="en-US"> AP_ark_methods {</SPAN></FONT></FONT>
+ 
+<FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">def  </SPAN><SPAN LANG="en-US">test()</SPAN><SPAN LANG="en-US">  </SPAN><SPAN LANG="en-US">= </SPAN><SPAN LANG="en-US"> {</SPAN></FONT></FONT>
+<A NAME="__DdeLink__1_598821882"></A>     <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">var </SPAN><SPAN LANG="en-US"> dat1= </SPAN><SPAN LANG="en-US">Array(</SPAN><SPAN LANG="en-US">3.0, 3.0, 1.0, 1.0, 1.0e-3, 1.0e-6,</SPAN>  <SPAN LANG="en-US">1.0e-6, 0.0, 0.0, 0.0, 1.0, 0.5, 1.0/6.0</SPAN><SPAN LANG="en-US">)</SPAN></FONT></FONT>
+     <FONT FACE="Arial, sans-serif"><FONT SIZE=2>var  data = new Array[Double](15)  </FONT></FONT>
+     <FONT FACE="Arial, sans-serif"><FONT SIZE=2>var  m0 = new Array[Int](1)</FONT></FONT>
+     <FONT FACE="Arial, sans-serif"><FONT SIZE=2>var  m = new Array[Int](1)</FONT></FONT>
+<A NAME="__DdeLink__3_598821882"></A>     <FONT FACE="Arial, sans-serif"><FONT SIZE=2>var  t  = new Array[Double](1)</FONT></FONT></PRE><P STYLE="margin-bottom: 0in">
+     <FONT FACE="Arial, sans-serif"><FONT SIZE=2>var  te  = new
+Array[Double](1)</FONT></FONT></P>
+<PRE>     <FONT FACE="Arial, sans-serif"><FONT SIZE=2>var  y = new Array[Double](2)</FONT></FONT>
+
+    <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">for (i</SPAN><SPAN LANG="en-US">&lt;-</SPAN><SPAN LANG="en-US">1 </SPAN><SPAN LANG="en-US">to </SPAN><SPAN LANG="en-US">13) data</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">i</SPAN><SPAN LANG="en-US">) </SPAN><SPAN LANG="en-US">= dat1</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">i-1</SPAN><SPAN LANG="en-US">)</SPAN></FONT></FONT>
+
+    <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">t</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">=0.0; </SPAN>    <SPAN LANG="en-US">y</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">1</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">=1.0; </SPAN>    <SPAN LANG="en-US">te</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">=1.0;  </SPAN>   <SPAN LANG="en-US">m0</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">) </SPAN><SPAN LANG="en-US">= </SPAN><SPAN LANG="en-US">1; </SPAN><SPAN LANG="en-US">m</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">=1;</SPAN></FONT></FONT>
+    <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">Analytic_problems.ark(t, te, m0, m, y, test_ark, data)</SPAN></FONT></FONT>
+        <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">}</SPAN></FONT></FONT>
+
+
+<FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">def </SPAN><SPAN LANG="en-US">derivative(m0: </SPAN><SPAN LANG="en-US">Array[Int]</SPAN><SPAN LANG="en-US">, m: </SPAN><SPAN LANG="en-US">Array[Int</SPAN><SPAN LANG="en-US">], t: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Double</SPAN><SPAN LANG="en-US">], v: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Double</SPAN><SPAN LANG="en-US">]): </SPAN><SPAN LANG="en-US">Unit</SPAN><SPAN LANG="en-US"> </SPAN><SPAN LANG="en-US">= </SPAN></FONT></FONT>
+      <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">v</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">1</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US"> -= 2.0*(t</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">)/v</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">1</SPAN><SPAN LANG="en-US">)</SPAN></FONT></FONT>
+  
+
+<FONT FACE="Arial, sans-serif"><FONT SIZE=2>def  <SPAN LANG="en-US">out(m0: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Int</SPAN><SPAN LANG="en-US">], m: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Int</SPAN><SPAN LANG="en-US">], t</SPAN><SPAN LANG="en-US">: Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Double</SPAN><SPAN LANG="en-US">], te: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Double</SPAN><SPAN LANG="en-US">], y: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Double</SPAN><SPAN LANG="en-US">], data: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Double</SPAN><SPAN LANG="en-US">]): </SPAN><SPAN LANG="en-US">Unit = </SPAN></FONT></FONT>
+  <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">{</SPAN></FONT></FONT>
+    <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">var </SPAN><SPAN LANG="en-US">fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;)</SPAN></FONT></FONT>
+    <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">if (t</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US"> == te</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">)  {</SPAN></FONT></FONT>
+      <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">if (t</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US"> == 1.0)</SPAN></FONT></FONT>
+          <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">println(&quot;\nProblem 1\n\n&quot; +</SPAN>         <SPAN LANG="en-US">&quot; x   integration steps   y(computed)    y(exact)&quot;)</SPAN></FONT></FONT>
+     <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">println(&quot; &quot; + t</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">).asInstanceOf[Int]</SPAN><SPAN LANG="en-US"> + &quot;           &quot; +</SPAN>    <SPAN LANG="en-US">data</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">8</SPAN><SPAN LANG="en-US">).asInstanceOf[Int]</SPAN><SPAN LANG="en-US"> + &quot;          &quot; + fiveDigit.format(y</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">1</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">) +</SPAN>  <SPAN LANG="en-US">&quot;      &quot; + fiveDigit.format(Math.sqrt(2.0*(t</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">)+1)))</SPAN></FONT></FONT>
+      <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">te</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US"> = 2.0;</SPAN></FONT></FONT>
+
+    <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">}</SPAN></FONT></FONT>
+  <FONT FACE="Arial, sans-serif"><FONT SIZE=2><SPAN LANG="en-US">} </SPAN><SPAN LANG="en-US"> // object test_ark</SPAN></FONT></FONT>
+<FONT FACE="Arial, sans-serif"><FONT SIZE=2>}</FONT></FONT>
+
+<FONT SIZE=2><SPAN LANG="en-US">// execute now the test() method of the object test_ark in the Scala Interpreter</SPAN></FONT>
+<A NAME="__DdeLink__142_598821882"></A><A NAME="__DdeLink__129_598821882"></A><A NAME="__DdeLink__116_598821882"></A><A NAME="__DdeLink__89_598821882"></A><A NAME="__DdeLink__71_598821882"></A><A NAME="__DdeLink__39_598821882"></A><FONT SIZE=2><SPAN LANG="en-US">test_ark.test()</SPAN></FONT>
+
+
+<FONT SIZE=3><SPAN LANG="en-US"><B>Example 1 – Java Code</B></SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US"><B>Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+<A NAME="__DdeLink__59_598821882"></A>
+<FONT SIZE=3><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">public class Test_ark_1 extends Object</SPAN></FONT>
+                        <FONT SIZE=3><SPAN LANG="en-US">implements AP_ark_methods {</SPAN></FONT>
+ 
+        <FONT SIZE=3><SPAN LANG="en-US">public static void main(String args[]) {</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">int i;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double dat1[]={3.0, 3.0, 1.0, 1.0, 1.0e-3, 1.0e-6,</SPAN></FONT>
+                     <FONT SIZE=3><SPAN LANG="en-US">1.0e-6, 0.0, 0.0, 0.0, 1.0, 0.5, 1.0/6.0};</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double data[] = new double[15];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">int m[] = new int[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">int m0[] = new int[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double t[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double te[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double y[] = new double[2];</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">Test_ark_1 testark = new Test_ark_1();</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">for (i=1; i&lt;=13; i++) data[i]=dat1[i-1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">t[0]=0.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y[1]=1.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">te[0]=1.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">m0[0]=m[0]=1;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">Analytic_problems.ark(t,te,m0,m,y,testark,data);</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void derivative(int m0[], int m[], double t[], double v[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">v[1] -= 2.0*(t[0])/v[1];</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void out(int m0[], int m[], double t[], double te[],</SPAN></FONT>
+                  <FONT SIZE=3><SPAN LANG="en-US">double y[], double data[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">if (t[0] == te[0]) {</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">if (t[0] == 1.0)</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot;\nProblem 1\n\n&quot; +</SPAN></FONT>
+          <FONT SIZE=3><SPAN LANG="en-US">&quot; x   integration steps   y(computed)    y(exact)&quot;);</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot; &quot; + (int)t[0] + &quot;           &quot; +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">(int)data[8] + &quot;          &quot; + fiveDigit.format(y[1]) +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">&quot;      &quot; + fiveDigit.format(Math.sqrt(2.0*(t[0])+1)));</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">te[0] = 2.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+
+
+<FONT SIZE=3><SPAN LANG="en-US"><B>Example 2 – Scala Code (paste it at the ScalaLab's console)</B></SPAN></FONT>
+<A NAME="__DdeLink__333_598821882"></A><A NAME="__DdeLink__308_598821882"></A><A NAME="__DdeLink__298_598821882"></A>
+<A NAME="__DdeLink__331_598821882"></A><A NAME="__DdeLink__329_598821882"></A><A NAME="__DdeLink__321_598821882"></A><A NAME="__DdeLink__318_598821882"></A><A NAME="__DdeLink__316_598821882"></A><A NAME="__DdeLink__304_598821882"></A><A NAME="__DdeLink__302_598821882"></A><A NAME="__DdeLink__300_598821882"></A>
+<A NAME="__DdeLink__336_598821882"></A><FONT SIZE=2><SPAN LANG="en-US">import java.text.DecimalFormat</SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US">import numal._</SPAN></FONT>
+
+<FONT SIZE=2><SPAN LANG="en-US">object test</SPAN><SPAN LANG="en-US">A</SPAN><SPAN LANG="en-US">rk2</SPAN><SPAN LANG="en-US"> extends AnyRef with  </SPAN><SPAN LANG="en-US">AP_ark_methods {</SPAN></FONT>
+ 
+     <FONT SIZE=2>def  test()  =  <SPAN LANG="en-US">{</SPAN></FONT>
+ <FONT SIZE=2><SPAN LANG="en-US">	</SPAN><SPAN LANG="en-US">var  dat2 = Array(</SPAN><SPAN LANG="en-US">4.0, 3.0, 0.0, 500.0/3.0, 0.0, -1.0, -1.0,</SPAN></FONT>
+                   <FONT SIZE=2><SPAN LANG="en-US">0.0, 0.0, 0.0, 1.0, 0.5, 1.0/6.0, 1.0/24.0</SPAN><SPAN LANG="en-US">)</SPAN></FONT>
+<FONT SIZE=2>	var <SPAN LANG="en-US">data = new </SPAN><SPAN LANG="en-US">Array[D</SPAN><SPAN LANG="en-US">ouble</SPAN><SPAN LANG="en-US">](</SPAN><SPAN LANG="en-US">15</SPAN><SPAN LANG="en-US">)</SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US">	var m = </SPAN><SPAN LANG="en-US">new </SPAN><SPAN LANG="en-US">Array[Int](1)</SPAN></FONT>
+<FONT SIZE=2>	var m0 = new Array[Int](1)</FONT>
+<FONT SIZE=2><SPAN LANG="en-US">	var t = new Array[Double](1)</SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US">	var t</SPAN><SPAN LANG="en-US">e</SPAN><SPAN LANG="en-US"> = new Array[Double](1)</SPAN></FONT>
+<FONT SIZE=2>	var y = new Array[Double](2)</FONT>
+<FONT SIZE=2><SPAN LANG="en-US">	var u = new Array[Double](301)</SPAN></FONT>
+    
+    <FONT SIZE=2><SPAN LANG="en-US">for (i</SPAN><SPAN LANG="en-US">&lt;-</SPAN><SPAN LANG="en-US">1 </SPAN><SPAN LANG="en-US">to </SPAN><SPAN LANG="en-US">14)  data</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">i</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">=dat2</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">i-1</SPAN><SPAN LANG="en-US">)</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">data</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">3</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">=Math.sqrt(8.0)</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">data</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">5</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">=data</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">3</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">/data</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">4</SPAN><SPAN LANG="en-US">)</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">m0</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US"> = 0</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">m</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">) </SPAN><SPAN LANG="en-US">= 300</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">t</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">) </SPAN><SPAN LANG="en-US">= 0.0</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">u</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">150</SPAN><SPAN LANG="en-US">) </SPAN><SPAN LANG="en-US">= 1.0</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">for (</SPAN><SPAN LANG="en-US">i &lt;- </SPAN><SPAN LANG="en-US">1 to 1</SPAN><SPAN LANG="en-US">50) </SPAN><SPAN LANG="en-US">{</SPAN></FONT>
+      <FONT SIZE=2><SPAN LANG="en-US">u</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">i+150</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US"> = Math.exp(-(0.003*i)*(0.003*i))</SPAN></FONT>
+     <FONT SIZE=2><SPAN LANG="en-US">u</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">150-i</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US"> = </SPAN><SPAN LANG="en-US">u(i+150)</SPAN><SPAN LANG="en-US"> </SPAN></FONT>
+        <FONT SIZE=2><SPAN LANG="en-US">}</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">te</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">=0.6</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">Analytic_problems.ark(t, te, m0, m, u, test</SPAN><SPAN LANG="en-US">A</SPAN><SPAN LANG="en-US">rk</SPAN><SPAN LANG="en-US">2</SPAN><SPAN LANG="en-US">, data)</SPAN></FONT>
+        <FONT SIZE=2><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+<FONT SIZE=2><SPAN LANG="en-US">def  </SPAN><SPAN LANG="en-US">derivative(m0: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Int</SPAN><SPAN LANG="en-US">],  m: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Int</SPAN><SPAN LANG="en-US">], t: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Double</SPAN><SPAN LANG="en-US">],  v: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Double</SPAN><SPAN LANG="en-US">]) </SPAN><SPAN LANG="en-US">= </SPAN></FONT>
+  <FONT SIZE=2><SPAN LANG="en-US">{</SPAN></FONT>
+   <FONT SIZE=2><SPAN LANG="en-US">var </SPAN> <SPAN LANG="en-US">v2=v</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">m0</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">))</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">m0</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">) += 1</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">m</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">) -= 1</SPAN></FONT>
+    <FONT SIZE=2>var <SPAN LANG="en-US">v3=v</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">m0</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">))</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">for (j </SPAN><SPAN LANG="en-US">&lt;- </SPAN><SPAN LANG="en-US">m0</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">) to  </SPAN><SPAN LANG="en-US">m</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">) {</SPAN></FONT>
+      <FONT SIZE=2>var <SPAN LANG="en-US">v1=v2</SPAN></FONT>
+      <FONT SIZE=2><SPAN LANG="en-US">v2=v3</SPAN></FONT>
+      <FONT SIZE=2><SPAN LANG="en-US">v3=v</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">j+1</SPAN><SPAN LANG="en-US">)</SPAN></FONT>
+      <FONT SIZE=2><SPAN LANG="en-US">v</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">j</SPAN><SPAN LANG="en-US">) </SPAN><SPAN LANG="en-US">= 250.0*(v3-v1)/3.0</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">}</SPAN></FONT>
+  <FONT SIZE=2><SPAN LANG="en-US">}</SPAN></FONT>
+
+<FONT SIZE=2>def   <SPAN LANG="en-US">out(m0: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Int</SPAN><SPAN LANG="en-US">],  m: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Int</SPAN><SPAN LANG="en-US">],  t: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Double</SPAN><SPAN LANG="en-US">],  te: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Double</SPAN><SPAN LANG="en-US">],  u: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Double</SPAN><SPAN LANG="en-US">],  data: </SPAN><SPAN LANG="en-US">Array</SPAN><SPAN LANG="en-US">[</SPAN><SPAN LANG="en-US">Double</SPAN><SPAN LANG="en-US">])</SPAN></FONT>
+  <FONT SIZE=2><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=2>var  <SPAN LANG="en-US">fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;)</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">if (Math.abs((t</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">0</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">)-0.6) &lt; 1.0e-5)</SPAN></FONT>
+          <FONT SIZE=2><SPAN LANG="en-US">println(&quot;\n\nProblem 2\n\nderivative &quot; + &quot;calls   u(.6,0)(computed)   u(.6,0)exact\n  &quot; +</SPAN></FONT>
+        <FONT SIZE=2><SPAN LANG="en-US">data</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">1</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">*data</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">8</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US"> + &quot;            &quot; + </SPAN>     <SPAN LANG="en-US">fiveDigit.format(u</SPAN><SPAN LANG="en-US">(</SPAN><SPAN LANG="en-US">150</SPAN><SPAN LANG="en-US">)</SPAN><SPAN LANG="en-US">) + &quot;          &quot; +</SPAN></FONT>
+        <FONT SIZE=2><SPAN LANG="en-US">fiveDigit.format(Math.exp(-0.09)))</SPAN></FONT>
+  <FONT SIZE=2><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US">// call now the method test() of the Scala object</SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US">testArk2.test()</SPAN></FONT>
+
+
+
+
+<FONT SIZE=3><SPAN LANG="en-US"><B>Example 2 – Java Code  - Execute with Java Compile and Execute (F9) in ScalaLab's editor</B></SPAN></FONT>
+
+
+<FONT SIZE=2><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=2><SPAN LANG="en-US">public class Test_ark_2 extends Object</SPAN></FONT>
+                        <FONT SIZE=2><SPAN LANG="en-US">implements AP_ark_methods {</SPAN></FONT>
+ 
+        <FONT SIZE=2><SPAN LANG="en-US">public static void main(String args[]) {</SPAN></FONT>
+
+    <FONT SIZE=2><SPAN LANG="en-US">int i;</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">double dat2[]={4.0, 3.0, 0.0, 500.0/3.0, 0.0, -1.0, -1.0,</SPAN></FONT>
+                   <FONT SIZE=2><SPAN LANG="en-US">0.0, 0.0, 0.0, 1.0, 0.5, 1.0/6.0, 1.0/24.0};</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">double data[] = new double[15];</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">int m[] = new int[1];</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">int m0[] = new int[1];</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">double t[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">double te[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">double y[] = new double[2];</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">double u[] = new double[301];</SPAN></FONT>
+    
+    <FONT SIZE=2><SPAN LANG="en-US">Test_ark_2 testark = new Test_ark_2();</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">for (i=1; i&lt;=14; i++) data[i]=dat2[i-1];</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">data[3]=Math.sqrt(8.0);</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">data[5]=data[3]/data[4];</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">m0[0] = 0;</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">m[0]=300;</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">t[0]=0.0;</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">u[150]=1.0;</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">for (i=1; i&lt;=150; i++)</SPAN></FONT>
+      <FONT SIZE=2><SPAN LANG="en-US">u[i+150]=u[150-i]=Math.exp(-(0.003*i)*(0.003*i));</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">te[0]=0.6;</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">Analytic_problems.ark(t,te,m0,m,u,testark,data);</SPAN></FONT>
+        <FONT SIZE=2><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=2><SPAN LANG="en-US">public void derivative(int m0[], int m[], double t[], double v[])</SPAN></FONT>
+  <FONT SIZE=2><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">int j;</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">double v1,v2,v3;</SPAN></FONT>
+
+    <FONT SIZE=2><SPAN LANG="en-US">v2=v[m0[0]];</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">m0[0]++;</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">m[0]--;</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">v3=v[m0[0]];</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">for (j=m0[0]; j&lt;=m[0]; j++) {</SPAN></FONT>
+      <FONT SIZE=2><SPAN LANG="en-US">v1=v2;</SPAN></FONT>
+      <FONT SIZE=2><SPAN LANG="en-US">v2=v3;</SPAN></FONT>
+      <FONT SIZE=2><SPAN LANG="en-US">v3=v[j+1];</SPAN></FONT>
+      <FONT SIZE=2><SPAN LANG="en-US">v[j]=250.0*(v3-v1)/3.0;</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">}</SPAN></FONT>
+  <FONT SIZE=2><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=2><SPAN LANG="en-US">public void out(int m0[], int m[], double t[], double te[],</SPAN></FONT>
+                  <FONT SIZE=2><SPAN LANG="en-US">double u[], double data[])</SPAN></FONT>
+  <FONT SIZE=2><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN></FONT>
+    <FONT SIZE=2><SPAN LANG="en-US">if (Math.abs((t[0])-0.6) &lt; 1.0e-5)</SPAN></FONT>
+      <FONT SIZE=2><SPAN LANG="en-US">System.out.println(&quot;\n\nProblem 2\n\nderivative &quot; + </SPAN></FONT>
+        <FONT SIZE=2><SPAN LANG="en-US">&quot;calls   u(.6,0)(computed)   u(.6,0)exact\n  &quot; +</SPAN></FONT>
+        <FONT SIZE=2><SPAN LANG="en-US">data[1]*data[8] + &quot;            &quot; + </SPAN></FONT>
+        <FONT SIZE=2><SPAN LANG="en-US">fiveDigit.format(u[150]) + &quot;          &quot; +</SPAN></FONT>
+        <FONT SIZE=2><SPAN LANG="en-US">fiveDigit.format(Math.exp(-0.09)));</SPAN></FONT>
+  <FONT SIZE=2><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US">}</SPAN></FONT></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,31 @@
+
+
+close("all");  // closes any open figures
+var t = inc(-30, 0.01, 30);
+var N = (2**12).asInstanceOf[Int]
+
+
+var x = 5*sin(0.3*t);
+var x2 = x(1,N);   // take signal as a Matrix
+
+x2 = x2+rand(1, N);  // add random noisy
+xv =  x2.getArray()[0];
+
+xvVals = new double[N];
+for (k in 0..N-1) xvVals[k]=xv[k];    // perform a copy since the transform will be in place
+
+JSci.maths.wavelet.daubechies2.FastDaubechies2.transform(xvVals, N);
+
+figure(1);       subplot(2,1,1); plot(xv, "Original Signal");
+                       subplot(2,1,2); plot(xvVals, "Daubechies2 Wavelet Transformed - First Stage"); 
+
+
+xvVals2 = new double[N];
+for (k in 0..N-1) xvVals2[k]=xv[k];    // perform a copy since the transform will be in place
+
+myDaub2 =  new JSci.maths.wavelet.daubechies2.FastDaubechies2();
+
+myDaub2.transform(xvVals2);
+
+figure(2);       subplot(2,1,1); plot(xv, "Original Signal");
+                       subplot(2,1,2); plot(xvVals2, "Daubechies2 Wavelet Transformed"); 

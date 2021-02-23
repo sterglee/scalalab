@@ -1,0 +1,24 @@
+
+var dt=0.01
+var t = inc(0, dt, 1)
+
+var flow = 10
+var fhigh = 10*flow
+var x1 = sin(flow*t) :: cos(fhigh*t)  // append high frequency at the end
+var x2 = sin(flow*t) ::: cos(fhigh*t)  // prepend high frequency at the start
+
+figure(1); subplot(2,1,1);  plot( x1); title("appending high fequency at the end");
+subplot(2,1,2);  plot(x2); title("prepending high fequency at the start");
+
+
+// compute the analysis wavelet
+var analWavelet = new JSci.maths.wavelet.daubechies2.Daubechies2();
+
+var signal1 = new JSci.maths.wavelet.Signal(x1);  // represent the matrix as a Signal
+
+// transform
+signal1.setFilter(analWavelet);  // set the analysis filter for this  
+var NLevels=1;
+var sCoef = signal1.fwt(NLevels); // for some level int
+var myCoefs = sCoef.getCoefs();
+

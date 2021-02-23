@@ -1,0 +1,5 @@
+
+// tests the '\' operator for solving system Ax = b
+var A = AAD("1 2 4; 1 3 9; 1 4 9")
+var b = AD("2 4 7")
+var x = A \ b

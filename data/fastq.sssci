@@ -1,0 +1,22 @@
+
+
+import org.biojava.nbio.sequencing.io.fastq._
+
+import java.io.File
+import java.io.IOException
+import java.io.InputStream
+import java.io.StringReader
+import java.net.URL
+import java.util.Iterator
+
+
+var fastqReader = new IlluminaFastqReader()
+
+var df = new File("sanger_93.fastq")
+
+var myData = fastqReader.read())
+
+var idata = myData.iterator
+idata.hasNext
+
+var firstData = idata.next.getDescription

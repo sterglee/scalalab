@@ -1,0 +1,43 @@
+  
+ import java.util.Vector 
+
+ import scalaExec.Interpreter.GlobalValues
+
+import numal._
+
+val tol =  0.0000000000004
+
+var  aeta = tol;  var reta = tol;
+
+val n = 3;   // the number of equations of the system
+var x = new Array[Double](1)   // entry:   x(0) is the initial value of the independent variable
+var y = new Array[Double](n+1)   // entry: the dependent variable, the initial values at x = x0
+aeta = tol  // aeta: required absolute precision in the integration process
+reta = tol // reta: required relative precision in the integration process
+var s = new Array[Double](n+1)
+     
+var h0=0.000001  // h0: the initial step to be taken
+
+ var xOut:Vector[Array[Double]] = new Vector()
+ var yOut:Vector[Array[Double]] = new Vector()
+ 
+y(1)=0.4; y(2)= -0.3; y(3)=0.9;
+
+x(0) = 0
+var xe = 720
+var javaClassName = "scalaExec.Functions.Chaotic.DoubleScrollDiffSys"
+
+var  invocationObject = Class.forName(javaClassName, false, GlobalValues.extensionClassLoader).newInstance()
+
+var diffSysObject = invocationObject.asInstanceOf[AP_diffsys_methods]
+
+tic()
+Analytic_problems.diffsys(x, xe, n, y, diffSysObject, aeta, reta , s, h0, xOut, yOut)
+var timeCompute = toc()
+
+var plotTitle = "Double Scroll attractor with ScalaSci, time "+timeCompute+ " end point = "+xe
+
+var color = Color.RED
+
+  figure3d(1); plotV(yOut, color, plotTitle);
+  

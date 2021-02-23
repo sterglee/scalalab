@@ -1,0 +1,27 @@
+
+// fit the data (-1.0, 1.0), (-0.5, 0.5), (0.0, 0.0), (0.5, 0.5), (1.0, 2.0)
+// using a quadratic polynomial
+
+var  nrows = 5  // number of rows (each row corresponds to an observation)
+var  ncols = 3   // number of columns (each column corresponds to a basis function) 
+var  datax = Array(-1.0,  -0.5, 0.0, 0.5, 1.0)  
+var  datay = Array(1.0, 0.5, 0.0, 0.5, 2.0)
+var  DMatrix = new Mat(nrows, ncols)  // the design matrix
+// form the design matrix
+// the basis functions for a quadratic polynomial p(x) = a0 + a1*x + a2*x*x
+// are 1, x, x*x
+// the rows design matrix consists of tha basis functions evaluated at each data point
+
+for (obsv <-0 until nrows)  // for each data point (observation)
+    {   
+   DMatrix(obsv, 0) = 1  // x^0
+   DMatrix(obsv, 1) = datax(obsv)  // x^1
+   DMatrix(obsv, 2) = datax(obsv)*datax(obsv) // x^2
+  }
+  
+  var pm = pinv(DMatrix)
+  
+  var x = pm*datay  // the solution
+  
+  DMatrix
+  (DMatrix~)*DMatrix*x-(DMatrix~)*datay

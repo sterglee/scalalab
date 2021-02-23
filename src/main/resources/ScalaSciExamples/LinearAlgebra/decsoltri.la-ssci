@@ -1,0 +1,68 @@
+// NUMAL related imports
+     import _root_.java.util.Vector ; 
+    import _root_.numal._ ; 
+    import _root_.numal.Algebraic_eval._;
+    import _root_.numal.Analytic_eval._
+    import _root_.numal.Analytic_problems._
+    import _root_.numal.Approximation._
+    import _root_.numal.Basic._;
+    import _root_.numal.FFT._;
+    import  _root_.numal.Linear_algebra._; 
+    import _root_.numal.Special_functions._;
+    import java.text.DecimalFormat 
+
+// decsoltri:
+//   Given the nXn tridiagonal matrix T, attempts to obtain a lower bidiagonal matrix L and unit
+//   upper bidiagonal matrix U such that T=LU and, if successful in so doing,
+//   solves the system of equations Tx=b. The triangular decomposition of the given matrix is done by calling dectri and the forward and
+//   back substitution by calling soltri
+
+// Procedure parameters:
+//          void  decsoltri( sub, diag, supre, n, aux, b)
+//    sub:   double  sub[1:n-1]
+//          entry:   the subdiagonal of the given matrix T, T_{i+1, i} should be gievn in sub[i], i=1,..., n-1
+//          exit:  the lower bidiagonal matrix, the value L_{i+1, i} will be delivered in sub[i], i=1, ..., aux[3]-1
+//    diag:   double  diag[1:n];
+//          entry:  the diagonal of T, value of T_{i,i} in diag[i]
+//          exit:  L_{i,i} will be delivered in diag[i], i=-1, ..., aux[3]
+//   supre:  double supre[1:n-1];
+//         entry: the superdiagonal of T, value of T_{i, i+1} in supre[i] i=1, ..., n-1
+//         U_{i, i+1} will be delivered in supre[i], i=1, .., ux[3]-1
+//   n: int
+//        entry: the order of the matrix
+//  aux:  double aux[2:5]
+//          entry: aux[2]:  a relative tolerance; a reasonable choice for this value is an estimate of the relative precision of the matrix elements
+//          exit:  aux[3]:  the number of elimination steps performed
+//                    aux[5]:  if aux[3]=n then aux[5] will be equal to the infinity norm of the matrix,
+//                                else aux[5] is set equal to the value of that element which causes the breakdown of the decomposition
+//  b:   double b[1:n]
+//       entry:  the right-hand side of the linear system;
+//       exit:    if aux[3]=n then the solution of the linear system is overwritten on b, else b remains unaltered
+
+
+// Example:  Solve the system of equations Ax=b, where A is a 30X30 tridiagonal matrix for which
+//    A_{i+1, i} = 2*i, A_{i, i} = i+10, A_{i, i+1} = i, and b is the second column of A (the solution is given by the second unit vector)
+
+var  d = new Array[Double](31)
+var  sub = new  Array[Double](31)
+var  supre = new Array[Double](31)
+var  b = new Array[Double](31)
+var   aux = new Array[Double](6)
+
+    for (i<-1 to 30) {
+      sub(i)=i*2
+      supre(i)=i
+      d(i)=i+10
+      b(i)=0.0
+    }
+    b(1)=1.0;  b(2)=12.0;  b(3)=4.0;
+    aux(2)=1.0e-6;
+    
+  decsoltri(sub,d,supre,30,aux,b)
+
+    b(2) = b(2)-1
+    var fiveDigit = new java.text.DecimalFormat("0.00000E0")
+    println("AUX(3) and AUX(5):  " + fiveDigit.format(aux(3)) + "  " +
+      fiveDigit.format(aux(5)) + "\nError in the solution:  " +  fiveDigit.format(Math.sqrt(Basic.vecvec(1,30,0,b,b))))
+ 
+

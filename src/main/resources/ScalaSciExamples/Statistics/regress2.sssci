@@ -1,0 +1,18 @@
+import org.apache.commons.math.stat.regression.SimpleRegression
+
+var data = Array(Array(1.0, 3.0), Array(2.0, 5.0), Array(3, 7.0), Array(4.0, 14), Array(5.0, 11.0))
+
+var regression = new SimpleRegression()
+
+regression.addData(data)
+
+// estimate regression model based on data
+
+// displays the intercept of regression line
+println(regression.getIntercept())
+
+// displays slope of regression line
+println(regression.getSlope())
+
+// displays slope standard error
+println(regression.getSlopeStdErr()) 

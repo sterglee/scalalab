@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110101;15173800">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>Generalized eigenvalue problem</B></FONT>
+
+<B><FONT SIZE=5><SPAN LANG="en-US">qzival</SPAN></FONT></B>
+
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">Solves the generalized eigenvalue problem by means of QZ iteration,</SPAN></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">for</SPAN> details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+import java.text.DecimalFormat;
+import numal.*;
+
+public class Test_qzival extends Object {
+	
+	public static void main(String args[]) {
+
+    int k;
+    int iter[] = new int[5];
+    double alfr[] = new double[5];
+    double alfi[] = new double[5];
+    double beta[] = new double[5];
+    double em[] = new double[2];
+    double a[][] = new double[5][5];
+    double b[][] = new double[5][5];
+  
+    a[1][1]=2.0;  a[1][2]=3.0;     a[1][3] = -3.0;   a[1][4]=4.0;
+    a[2][1]=1.0;  a[2][2] = -1.0;  a[2][3]=5.0;      a[2][4]=1.0;
+    a[3][1]=0.0;  a[3][2]=2.0;     a[3][3]=6.0;      a[3][4]=8.0;
+    a[4][1]=1.0;  a[4][2]=1.0;     a[4][3]=0.0;      a[4][4]=4.0;
+    b[1][1]=1.0;  b[1][2]=5.0;     b[1][3]=9.0;      b[1][4]=0.0;
+    b[2][1]=2.0;  b[2][2]=6.0;     b[2][3]=10.0;     b[2][4]=2.0;
+    b[3][1]=3.0;  b[3][2]=7.0;     b[3][3]=11.0;     b[3][4] = -1.0;
+    b[4][1]=4.0;  b[4][2]=8.0;     b[4][3]=12.0;     b[4][4]=3.0;
+    em[0]=1.0e-35;
+    em[1]=1.0e-6;
+    Linear_algebra.qzival(4,a,b,alfr,alfi,beta,iter,em);
+    DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);
+    for (k=1; k&lt;=4; k++)
+      System.out.println(&quot;ITER[&quot; + k + &quot;] =  &quot; + iter[k]);
+    System.out.println(&quot;\nALFA(real part)\tALFA(imaginary part)\tBETA&quot;);
+    for (k=1; k&lt;=4; k++)
+      System.out.println(fiveDigit.format(alfr[k]) + &quot;\t&quot; + 
+        fiveDigit.format(alfi[k]) + &quot;\t\t&quot; + 
+        fiveDigit.format(beta[k]));
+    System.out.println(&quot;\nLAMBDA(real part)\tLAMBDA(imaginary part)&quot;);
+    for (k=1; k&lt;=4; k++)
+      if (beta[k] == 0.0)
+        System.out.println(&quot;  INFINITE\t\tINDEFINITE&quot;);
+      else
+        System.out.println(fiveDigit.format(alfr[k]/beta[k]) +
+          &quot;\t\t&quot; + fiveDigit.format(alfi[k]/beta[k]));
+	}
+}
+</PRE>
+</BODY>
+</HTML>

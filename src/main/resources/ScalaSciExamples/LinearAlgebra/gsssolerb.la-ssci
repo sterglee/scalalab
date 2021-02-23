@@ -1,0 +1,30 @@
+// NUMAL related imports
+     import _root_.java.util.Vector ; 
+    import _root_.numal._ ; 
+    import _root_.numal.Algebraic_eval._;
+    import _root_.numal.Analytic_eval._
+    import _root_.numal.Analytic_problems._
+    import _root_.numal.Approximation._
+    import _root_.numal.Basic._;
+    import _root_.numal.FFT._;
+    import  _root_.numal.Linear_algebra._; 
+    import _root_.numal.Special_functions._;
+    import java.text.DecimalFormat 
+
+
+ var  b = new Array[Double](5)
+ var  aux = new Array[Double](12)
+ var  a  = Array.ofDim[Double](5,5)
+   
+    for (i <- 1 to 4) {
+       for (j <- 1 to  4) a(i)(j)=1.0/(i+j-1)
+       b(i) = a(i)(3)
+    }
+    aux(0) = 1.0e-14; aux(2) = 1.0e-14; aux(6) = 1.0e-14; aux(4) = 8
+    Linear_algebra.gsssolerb(a, 4, aux, b)
+    
+println("Solution:  " + b(1) +  "  " + b(2) + "  " +b(3) + "  " +b(4))
+println("Sign(Det) = " +  aux(1).asInstanceOf[Int] +  "\nNumber of eliminations = " + aux(3).asInstanceOf[Int] + 
+    "\nMax(abs(a[i,j])) = " + aux(5).asInstanceOf[Int] +  "\nUpper bound growth = " + aux(7).asInstanceOf[Int] +
+      "\n1-norm of the inverse matrix = " + aux(9) + "\nUpper bound rel. error in the calc. solution = " + aux(11))
+

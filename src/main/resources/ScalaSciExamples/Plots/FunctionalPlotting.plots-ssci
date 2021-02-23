@@ -1,0 +1,57 @@
+
+      
+  import  _root_.JFplot._;
+  import _root_.JFplot.jFigure._;
+
+ import _root_.scalaSci.math.plot.PlotFunctional._
+ import _root_.scalaSci.math.plot.PlotAdaptiveFunctional._
+            
+close all;  // closes any previous figures
+
+// Demonstrates functional style plotting in ScalaLab
+
+// define and plot the corresponding 1-D function
+def  fx(x:Double) = { x - sin(3.7*x)*x }
+var (low, high, color, linePlotting, numPoints) = (1.0, 10.0, Color.BLUE, true, 4000)  // limits of plotting
+fplot(fx,  low, high, color, linePlotting, numPoints)
+var pointSize = 20
+var textX = (high-low)/2
+var textY = high/2
+setLatexColor(Color.RED)
+latexLabel("x - x*sin(3.7*x)", pointSize, textX, textY)
+
+
+// plot two functions
+def f1x(x: Double) = { x * cos(2.3*x) }
+def f2x(x: Double) = { x - 30*sin(0.12*x) }
+figure(2)
+fplot(f1x, 1, 20, Color.BLUE)
+setLatexColor(Color.BLUE)
+latexLabel( "x*cos(2.3*x)",   15, 2.0, 1.0)
+hold on;
+fplot(f2x, 1, 20, Color.GREEN )
+setLatexColor(Color.GREEN)
+latexLabel( "x - 30*sin(0.12*x)",  15, 2.0, -2.0)
+
+// define as String and plot the corresponding 1-D function
+figure(3)
+var  textOfFunction = getString("Specify function of x", "sin(3.3*x)+4.5*cos(2.8*x)")
+splot(textOfFunction, 1, 5)
+
+// plot with VISAD
+// vsplot("sin(x)*cos(5.6*x)", 1, 5)
+
+// plot with JFreeChart
+ jsplot("sin(x*cos(5.6*x))", 1, 5)
+
+ // surface plots
+ def  fxy1(x:Double, y: Double) = { x*sin(x)+x*y*cos(y) }
+ figure3d(4)
+ fplot2d(fxy1,  1, 10, 1, 5, Color.BLUE, false )
+ def fxy2(x: Double, y: Double) = { x*y*cos(x*y)-x*sin(x) }
+ figure3d(5)
+ fplot2d(fxy2, 1, 10, 1, 5, Color.RED, true)
+
+// define directly as a String and plot the corresponding 1-D function
+ figure3d(6); splot2d("x*y*Math.cos(x*y)", -4, 4, -10, 10)
+

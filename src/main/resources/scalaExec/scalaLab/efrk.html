@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15051100">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>efrk</B></FONT>
+
+<SPAN LANG="en-US"><FONT SIZE=4>Solves an initial value problem for a system of first order ordinary differential equations by means of an exponentially fitted explicit Runge-Kutta method of first, second or third order.</FONT></SPAN>
+
+<FONT SIZE=4><B>Example: Can be run with F9 within the ScalaLab Editor  </B></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">public class Test_efrk extends Object</SPAN></FONT>
+                       <FONT SIZE=3><SPAN LANG="en-US">implements AP_efrk_methods {</SPAN></FONT>
+
+  <FONT SIZE=3><SPAN LANG="en-US">static int passes;</SPAN></FONT>
+   
+        <FONT SIZE=3><SPAN LANG="en-US">public static void main(String args[]) {</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">int r,l,i,kk;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">int k[] = new int[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double xe,step;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double y[] = new double[3];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double beta[] = new double[7];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double x[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double sigma[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double phi[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double diameter[] = new double[1];</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">Test_efrk testefrk = new Test_efrk();</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot;The results with EFRK are:\n\n&quot; +</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">&quot;  R   L    K   DER.EV.     Y[1]         Y[2]&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">phi[0]=Math.PI;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">xe=0.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">beta[0]=beta[1]=1.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">for (r=1; r&lt;=3; r++)</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">for (l=1; l&lt;=3; l++) {</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">for (kk=2; kk&lt;=r; kk++) beta[kk]=beta[kk-1]/kk;</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">for (i=1; i&lt;=2; i++) {</SPAN></FONT>
+          <FONT SIZE=3><SPAN LANG="en-US">step = ((i == 1) ? 1.0 : 0.1);</SPAN></FONT>
+          <FONT SIZE=3><SPAN LANG="en-US">passes=k[0]=0;</SPAN></FONT>
+          <FONT SIZE=3><SPAN LANG="en-US">x[0]=y[2]=0.0;</SPAN></FONT>
+          <FONT SIZE=3><SPAN LANG="en-US">y[1]=1.0;</SPAN></FONT>
+          <FONT SIZE=3><SPAN LANG="en-US">testefrk.output(1,2,x,xe,y,sigma,phi,</SPAN></FONT>
+                          <FONT SIZE=3><SPAN LANG="en-US">diameter, k,step,r,l);</SPAN></FONT>
+          <FONT SIZE=3><SPAN LANG="en-US">Analytic_problems.efrk(x,50.0,1,2,y,sigma,phi,</SPAN></FONT>
+            <FONT SIZE=3><SPAN LANG="en-US">diameter,testefrk,k,step,r,l,beta,r&gt;=3,1.0e-3);</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">System.out.println();</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void derivative(int m0, int m, double x, double y[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double y1,y2;</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">y1=y[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y2=y[2];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y[1]=(y1+0.99)*(y2-1.0)+0.99;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y[2]=1000.0*((1.0+y1)*(1.0-y2)-1.0);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">passes++;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void output(int m0, int m, double x[], double xe,</SPAN></FONT>
+                     <FONT SIZE=3><SPAN LANG="en-US">double y[], double sigma[], double phi[],</SPAN></FONT>
+                     <FONT SIZE=3><SPAN LANG="en-US">double diameter[], int k[], double step,</SPAN></FONT>
+                     <FONT SIZE=3><SPAN LANG="en-US">int r, int l)</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double s;</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">s=(-1000.0*y[1]-1001.0+y[2])/2.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">sigma[0]=Math.abs(s-Math.sqrt(s*s+10.0*(y[2]-1.0)));</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">diameter[0]=2.0*step*Math.abs(1000.0*</SPAN></FONT>
+                <FONT SIZE=3><SPAN LANG="en-US">(1.99*y[2]-2.0*y[1]*(1.0-y[2])));</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">if (x[0] == 50.0)</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot;  &quot; + r + &quot;   &quot; + l + &quot;   &quot; + k[0] +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">&quot;\t&quot; + passes + &quot;\t&quot; + fiveDigit.format(y[1]) + &quot;   &quot; +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">fiveDigit.format(y[2]));</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT></PRE>
+</BODY>
+</HTML>

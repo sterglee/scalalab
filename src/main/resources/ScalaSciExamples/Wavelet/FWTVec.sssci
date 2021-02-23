@@ -1,0 +1,7 @@
+var t = linspace(0, 10, 4*2048 )
+
+var (f1, f2) = (0.123, 8.8)
+var (a1, a2) = (1.3, 5.8)
+var x =  a1*sin(f1*t)+a2*sin(f2*t)
+
+var fwtCoeffs = fwt(x)

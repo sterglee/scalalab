@@ -1,0 +1,22 @@
+
+
+var N = 1700
+var M  = 1800
+
+var x = ones(N, M)
+var x0 = ones0(N,M)
+
+
+var xx = x+x
+var xx0 = x0+x0
+
+tic
+for (k<-0 until 1000)
+  xx = x+x
+var tmp=toc  
+
+
+tic
+for (k<-0 until 1000)
+  xx0 = x0+x0
+var tms=toc  

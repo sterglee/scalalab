@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="663.0"
+      prefWidth="1024.0" stylesheets="@../scalaconsole.css" xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <HBox prefHeight="24.0" prefWidth="600.0">
+            <children>
+                <MenuBar>
+                    <menus>
+                        <Menu mnemonicParsing="false" text="Script">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#onRun" text="Run">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="R" control="UP" meta="UP" shift="UP"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#onRunSelected" text="Run Selected">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="R" control="UP" meta="UP" shift="DOWN"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#onRunInPasteMode" text="Run In Paste Mode">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="P" control="UP" meta="UP" shift="UP"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#onRunSelectedInPasteMode"
+                                          text="Run Selected In Paste Mode">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="P" control="UP" meta="UP" shift="DOWN"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                <MenuItem mnemonicParsing="false" onAction="#onNewTab" text="New Tab">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="T" control="UP" meta="UP" shift="UP"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#onCloseTab" text="Close Tab">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="F4" control="UP" meta="UP" shift="UP"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                <MenuItem mnemonicParsing="false" onAction="#onNewWindow" text="New Window">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="N" control="UP" meta="UP" shift="UP"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+
+                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                <MenuItem mnemonicParsing="false" onAction="#onPostAnonymousGist"
+                                          text="Post Anonymous Gist">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="G" control="UP" meta="UP" shift="DOWN"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#onPostGistWithAccount"
+                                          text="Post Gist with Account">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="G" control="UP" meta="UP" shift="UP"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Repl">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#onReplClear" text="Clear">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="E" control="UP" meta="UP" shift="UP"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#onReplReset" text="Reset">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="E" control="UP" meta="UP" shift="DOWN"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#onSetCommandlineOptions"
+                                          text="Command Line Options"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Edit">
+                            <items>
+
+                                <MenuItem mnemonicParsing="false" onAction="#onShowAceSettings" text="Ace Settings">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="COMMA" control="UP" meta="UP" shift="UP"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#onSetFont" text="Set Font ..."/>
+                                <MenuItem mnemonicParsing="false" onAction="#onToggleSplitterOrientation"
+                                          text="Toggle Splitter Orientation">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="W" control="UP" meta="UP" shift="UP"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Dependencies">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#onDependencySearch" text="Search">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="I" control="UP" meta="UP" shift="UP"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#onDependencyManually" text="Manually">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="I" control="UP" meta="UP" shift="DOWN"
+                                                            shortcut="DOWN"/>
+                                    </accelerator>
+                                </MenuItem>
+                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                <MenuItem mnemonicParsing="false" onAction="#onDependencyReduce" text="Reduce"/>
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+            </children>
+        </HBox>
+        <SplitPane fx:id="splitPane" dividerPositions="0.618" prefHeight="350.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+            <items>
+                <TabPane fx:id="tabPane">
+                    <tabs>
+                        <Tab closable="false" text="Default">
+                            <content>
+                                <WebView fx:id="scriptArea" prefHeight="604.0" prefWidth="628.0"
+                                         AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <children>
+                        <TextArea id="output-area" fx:id="outputArea" editable="false" focusTraversable="false"
+                                  prefHeight="341.0" prefWidth="259.0" scrollTop="1.0" text="" wrapText="true"
+                                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                  AnchorPane.topAnchor="0.0">
+                            <font>
+                                <Font name="Monospaced Regular" size="12.0"/>
+                            </font>
+                        </TextArea>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+        <HBox id="statusBar" prefHeight="28.0" prefWidth="600.0">
+            <children>
+                <Label fx:id="statusBar" prefHeight="30.0" prefWidth="1024.0" text="Label" HBox.hgrow="ALWAYS">
+                    <padding>
+                        <Insets left="6.0"/>
+                    </padding>
+                </Label>
+            </children>
+        </HBox>
+    </children>
+</VBox>

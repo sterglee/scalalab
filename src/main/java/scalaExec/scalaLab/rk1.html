@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15093100">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>Differential
+equations – Initial value problems </B></FONT>
+</P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>rk1</B></FONT></P>
+<P><FONT SIZE=4>Sollves an initial value problem for a single first
+order ordinary differential equation, dy/dx = f(x, y) by means of a
+5-th order Runge-Kutta method.</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4><B>Example: Can be run with F9 within the ScalaLab
+Editor  </B></FONT></P>
+<P><A NAME="__DdeLink__0_1970316106"></A><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">import
+java.text.DecimalFormat;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">import numal.*;</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">import java.util.Vector;</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public class Test_rk1 extends
+Object</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">implements AP_rk1_method {</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public static void
+main(String args[]) {</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">boolean first;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double x[] = new double[1];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double y[] = new double[1];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double d[] = new double[5];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double e[] = new double[3];</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">Test_rk1 testrk1 = new
+Test_rk1();</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">DecimalFormat fiveDigit = new
+DecimalFormat(&quot;0.00000E0&quot;);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">e[1]=e[2]=1.0e-4;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">first=true;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">Vector xOut = new Vector();</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">Vector yOut = new Vector();</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">long start =
+System.currentTimeMillis();</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">Analytic_problems.rk1(x,0.0,10,y,1.0,testrk1,e,d,first,
+xOut, yOut);</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">long end =
+System.currentTimeMillis();</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">long runTime = end-start;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">int compVecLen = yOut.size();</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">for (int k=0;
+k&lt;yOut.size();k++) {</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">System.out.print(
+((double[])(yOut.elementAt(k)))[0]+&quot; &quot;);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">System.out.println() ;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public double fxy(double x[],
+double y[])</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">{</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">return -y[0];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+</BODY>
+</HTML>

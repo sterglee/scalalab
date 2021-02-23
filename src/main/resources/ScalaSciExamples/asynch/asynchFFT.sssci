@@ -1,0 +1,9 @@
+
+
+// demonstrating asynchronous FFT
+var x = vrand(20000).getv   // construct a random array
+
+var y = asynchfft(x)   // perform asynchronous FFT
+
+
+var yx = y.get  // get the results

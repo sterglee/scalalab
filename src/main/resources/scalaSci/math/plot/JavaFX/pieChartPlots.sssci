@@ -1,0 +1,22 @@
+import scalaSci.math.plot.JavaFX.javaFXPlotLine._
+
+
+var x = 0::0.01::20
+
+var y = sin(0.56*x)
+
+setlinePlotTitlefx("A sine function  plotted with JavaFX")
+
+setlinePlotNamefx(" sin function")
+lineplotfx(x, y)
+
+var languages = Array("Scala", "Java", "Groovy", "C/C++", "C#")
+
+var speedIndex = Array(0.8, 0.82, 0.6, 0.95, 0.81)
+
+setpieChartTitlefx("Speed indexes of some languages")
+
+setpieChartNamefx("Speed of languages")
+
+
+pieChartfx(languages, speedIndex)

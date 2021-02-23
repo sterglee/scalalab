@@ -1,0 +1,158 @@
+
+// import all the material from Apache Commons
+
+import  org.apache.commons.math.optimization.general.LevenbergMarquardtOptimizer
+import  org.apache.commons.math.analysis.DifferentiableMultivariateVectorialFunction
+import  org.apache.commons.math.analysis.MultivariateMatrixFunction
+
+
+//  construct a Polynomial model with the correct order, i.e. 3nd degree
+class PolynomialProblem( x: Array[Double], y: Array[Double])
+   extends AnyRef with DifferentiableMultivariateVectorialFunction {
+  
+    def jacobian( variables: Array[Double]) = {
+        var jac = Array.ofDim[Double](x.length, 3)
+        for (i <- 0  until x.length) {
+            jac(i)(0) = x(i)*x(i)
+            jac(i)(1) = x(i)
+            jac(i)(2) = 1.0
+         }
+         jac
+      }
+      
+     def  value( variables: Array[Double]) = {
+         var values = new Array[Double](x.length)
+         for (i <- 0 until values.length)
+           values(i) = (variables(0)*x(i)+variables(1))*x(i) + variables(2)
+       values
+       }
+       
+     def jacobian() = {
+         new MultivariateMatrixFunction() {
+             def value( point: Array[Double] ) =
+               jacobian( point )
+               }
+            }            
+      }
+      
+      
+          
+//  construct a Higher-Order Polynomial model than the correct order, i.e. a fourth degree instead of three
+class HOPolynomialProblem( x: Array[Double], y: Array[Double])
+   extends AnyRef with DifferentiableMultivariateVectorialFunction {
+  
+// the jacobian of the 4th-degree polynomial
+    def jacobian( variables: Array[Double]) = {
+        var jac = Array.ofDim[Double](x.length, 4)
+        for (i <- 0  until x.length) {
+            jac(i)(0) = x(i)*x(i)*x(i)
+            jac(i)(1) = x(i)*x(i)
+            jac(i)(2) = x(i)
+            jac(i)(3) = 1.0
+         }
+         jac
+      }
+      
+// the evaluated value of the 4th-degree polynomial
+     def  value( variables: Array[Double]) = {
+         var values = new Array[Double](x.length)
+         for (i <- 0 until values.length)
+           values(i) = variables(0)*x(i)*x(i)*x(i)+variables(1)*x(i)*x(i) + variables(2)*x(i) + variables(3)
+       values
+       }
+       
+     def jacobian() = {
+         new MultivariateMatrixFunction() {
+             def value( point: Array[Double] ) =
+               jacobian( point )
+               }
+            }            
+      }
+      
+      // the model function of the data
+def  avalue(x: Double) =  4.5*x*x -  3.7*x+5.6
+
+var nP  = 20
+var x = linspace(0, 2, nP)   
+var ay = new Vec(nP)   // the actual values
+var dy = new Vec(nP)   // the measured data values
+
+for (k<-0 until nP) {
+  ay(k) = avalue(x(k))  // actual value
+  dy(k) = ay(k)+14*(Math.random-0.5)   // add some noise for the measured data value
+}
+
+// construct  now test points
+var tx = linspace(2, 4, nP)     
+var aty = new Vec(nP)   // the actual values
+
+for (k<-0 until nP) 
+  aty(k) = avalue(tx(k))  // actual value
+  
+var cmy = new Vec(nP)   // the correct model predicted values
+
+var optimizer = new LevenbergMarquardtOptimizer()
+
+// initial solution and weight vector
+var weights = new Array[Double](nP)
+for (k<-0 until nP) weights(k)=1.0
+var initialSolutionCorrectModel = Array(1.0, 1.0, 1.0)   // initial solution for the uknown parameters for the correct model
+var initialSolutionComplexModel = Array(1.0, 1.0, 1.0, 1.0)   // initial solution for the uknown parameters for the complex model
+
+
+//  construct an optimization problem using the correct model of the data
+var  optCorrectModelProblem = new PolynomialProblem(x, ay)
+
+
+//  construct an optimization problem using a more complex model of the data
+var  optComplexModelProblem = new HOPolynomialProblem(x, ay)
+
+var optimumCorrectModel = optimizer.optimize(100, optCorrectModelProblem, ay, weights, initialSolutionCorrectModel)
+var optimumComplexModel = optimizer.optimize(100, optComplexModelProblem, ay, weights, initialSolutionComplexModel)
+
+var oV = optimumCorrectModel.getPoint  // get correct model parameters
+var oVCM = optimumComplexModel.getPoint    // get complex model parameters
+
+
+// evaluate models on train data
+var yrecoverTrainCorrectModel = new Vec(nP)
+for (k<-0 until nP)
+  yrecoverTrainCorrectModel(k) = oV(0)*x(k)*x(k)+oV(1)*x(k)+oV(2)
+
+var yrecoverTrainComplexModel = new Vec(nP)
+for (k<-0 until nP)
+  yrecoverTrainComplexModel(k) = oVCM(0)*x(k)*x(k)*x(k)+oVCM(1)*x(k)*x(k)+oVCM(2)*x(k)+oVCM(3)
+
+
+figure(1)
+hold("on")
+linePlotsOn
+plot(x, yrecoverTrainCorrectModel, "Correct Model", Color.BLUE )  
+plot(x, yrecoverTrainComplexModel, "Complex Model", Color.GRAY)
+plot(x,ay,  "Actual", Color.RED) 
+ 
+scatterPlotsOn
+plot(x, dy, "Measured points", Color.GREEN)
+
+//  evaluate models on test data
+var yactualData = new Vec(nP)
+for (k<-0 until nP)
+  yactualData(k) = avalue(tx(k))
+
+var yrecoverTestCorrectModel = new Vec(nP)
+for (k<-0 until nP)
+  yrecoverTestCorrectModel(k) = oV(0)*tx(k)*tx(k)+oV(1)*tx(k)+oV(2)
+
+var yrecoverTestComplexModel = new Vec(nP)
+for (k<-0 until nP)
+  yrecoverTestComplexModel(k) = oVCM(0)*tx(k)*tx(k)*tx(k)+oVCM(1)*tx(k)*tx(k)+oVCM(2)*tx(k)+oVCM(3)
+
+figure(2)
+hold("on")
+plot(tx, yactualData, "Actual Data", Color.RED)
+linePlotsOn
+plot(tx, yrecoverTestCorrectModel, "Recovered with Correct Model", Color.BLUE)
+plot(tx, yrecoverTestComplexModel, "Recovered with Complex Model", Color.GRAY)
+ 
+
+      

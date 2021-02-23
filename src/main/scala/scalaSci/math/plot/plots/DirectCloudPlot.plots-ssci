@@ -1,0 +1,21 @@
+
+ var p = new Plot3DPanel();
+
+ //triangular random cloud (as sum of two uniform random numbers)
+ var cloud = Array.ofDim[Double](1000,3);
+ for ( i <- 0 to cloud.length-1) {
+	cloud(i)(0) = Math.random + Math.random;
+	cloud(i)(1) = Math.random + Math.random;
+	cloud(i)(2) = Math.random + Math.random;
+	  }
+    p.addCloudPlot("cloud", Color.RED, cloud, 3, 3, 3);
+
+  var  cloud2 = Array.ofDim[Double](1000,3);
+  for ( i<- 0 to cloud.length-1) {
+	cloud2(i)(0) = 2 + Math.random + Math.random;
+	cloud2(i)(1) = 2 + Math.random + Math.random;
+	cloud2(i)(2) = 2 + Math.random + Math.random;
+       }
+  p.addCloudPlot("cloud2", Color.GREEN, cloud2, 3, 3, 3);
+  p.setLegendOrientation(PlotPanel.SOUTH);
+  new FrameView(p)

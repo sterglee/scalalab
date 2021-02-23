@@ -1,0 +1,9 @@
+
+  var  XY = Array.ofDim[Double](500,2);
+  for ( i <-  0 to XY.length-1) {
+	 XY(i)(0) = Math.random+Math.random;
+	 XY(i)(1) = Math.random+Math.random;
+	}
+	var p = new Plot3DPanel("SOUTH");
+	p.addHistogramPlot("test", XY, 4, 6);
+	new FrameView(p);

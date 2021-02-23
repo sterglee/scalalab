@@ -1,0 +1,15 @@
+
+
+// plot digamma function
+var t = inc(0.1, 0.001, 1)
+var x = t map digamma
+
+figure(1)
+plot(t, x, "Digamma function")
+
+t = inc(-5, 0.01, 5)
+var sx = t map sigmoid
+figure(2)
+plot(t, sx, "Sigmoid")
+
+

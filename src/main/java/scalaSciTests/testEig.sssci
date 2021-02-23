@@ -1,0 +1,12 @@
+var myMat = RD2D(3,3, 5, 3, -1, 4, 3, 2, -4, -1.2, 4) // create an one -indexed Matrix
+var (eigsVec, eigsVal) = eig(myMat)
+
+
+// verify eigenvalue equation,
+//  myMat*eigsVec == eigsVec*eigsVal
+
+var ev0 =  eigsVec(::,0)   // first eigenvector
+var xeVal1 = myMat*ev1
+var xeVal2 = eigsVal(0)*ev1
+
+var  diff = xeVal1 - xeVal2  // should be zero

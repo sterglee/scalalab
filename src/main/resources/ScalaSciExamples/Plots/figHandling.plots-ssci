@@ -1,0 +1,52 @@
+import _root_.javax.swing._ 
+
+        close all;   // closes any previous figures
+
+         var t = 0::0.01::20 
+         var x = sin(0.2*t)
+         figure(1); title("Demonstrating ploting multiple plots at the same figure")
+         plot(t, x, Color.GREEN, "sin(0.2*t)")
+// the xlabel(), ylabel() here refer to the axis of the current plot (i.e. PlotPanel object)
+         xlabel("t-Time axis")
+         ylabel("y=f(x) axis")
+         var  y = sin(0.2*t)+5*cos(0.23*t)
+         hold on; 
+         plot(t,y, new Color(0, 0, 30), "sin(0.2*t)+5*cos(0.23*t)" )
+
+
+          t = 0::0.01::20
+          y = sin(0.32*t)+5*cos(0.23*t)
+          var z = sin(1.2*t)+0.5*cos(0.23*t)
+          var fig = figure3d(2)
+          plot(t,y, z,  Color.BLUE, "Ploting in 3-D")
+// specify labels explicitly for the fig PlotPanel object
+         fig.xlabel("t - Time axis ")
+         fig.ylabel("y - sin(0.2*t)+5*cos(0.23*t)")
+         fig.zlabel("sin(1.2*t)+0.5*cos(0.23*t);")
+         title("A 3-D plot")
+
+ 
+         var zcross = z cross z   // take the cross product
+         fig = figure3d(3)  // the 3nd figure handle
+         plot(t,y, zcross)
+// specify labels explicitly for the fig PlotPanel object
+         xlabel("x - Time axis ")
+         ylabel("y - sin(0.2*t)+5*cos(0.23*t)")
+         zlabel("(sin(1.2*t)+0.5*cos(0.23*t)) .* (sin(1.2*t)+0.5*cos(0.23*t))")
+
+         var zcross2 = zcross cross  zcross  // again a cross product
+         fig = figure3d(4)  //  the 4th figure handle
+         subplot3d(2,1,1)
+         plot(t,y, zcross, Color.YELLOW)
+// specify labels explicitly for the fig PlotPanel object
+         xlabel("x - Time axis ");
+         ylabel("y - sin(0.2*t)+5*cos(0.23*t)")
+         zlabel("(sin(1.2*t)+0.5*cos(0.23*t)) .* (sin(1.2*t)+0.5*cos(0.23*t))")
+        subplot3d(2,1,2)
+        plot(t,y, zcross, Color.MAGENTA)
+         
+// specify labels explicitly for the fig PlotPanel object
+         xlabel("x - Time axis ")
+         ylabel("y - sin(0.2*t)+5*cos(0.23*t)")
+         zlabel("zcross")
+

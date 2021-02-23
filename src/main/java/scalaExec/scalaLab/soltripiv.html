@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110101;13521400">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>soltripiv</B></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">Given the </SPAN><I>nXn </I><SPAN STYLE="font-style: normal">lower bidiagonal matrix </SPAN><I>L </I><SPAN STYLE="font-style: normal">(L_{i, j}=0 for i&gt;j+1 and j&gt;i) and the unit upper band matrix (with at most two codiagonals) U (U_{i,j}=0 for i&gt;j and j&gt;i+2) such that LU=PT (where P is a permutation matrix resulting from either no interchange or interchange of consecutive rows at each stage in the LU decomposition of T)</SPAN><I>, </I><SPAN STYLE="font-style: normal">solves </SPAN> <SPAN STYLE="font-style: normal">the system of equations Tx=b, </SPAN></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US">for details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+<A NAME="__DdeLink__0_1629243926"></A>
+<SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN>
+<SPAN LANG="en-US">import numal.*;</SPAN>
+
+<SPAN LANG="en-US">public class Test_soltripiv extends Object {</SPAN>
+        
+        <SPAN LANG="en-US">public static void main(String args[]) {</SPAN>
+
+    <SPAN LANG="en-US">int i;</SPAN>
+    <SPAN LANG="en-US">boolean piv[] = new boolean[30];</SPAN>
+    <SPAN LANG="en-US">double d[] = new double[31];</SPAN>
+    <SPAN LANG="en-US">double sub[] = new double[31];</SPAN>
+    <SPAN LANG="en-US">double supre[] = new double[31];</SPAN>
+    <SPAN LANG="en-US">double aid[] = new double[31];</SPAN>
+    <SPAN LANG="en-US">double b1[] = new double[31];</SPAN>
+    <SPAN LANG="en-US">double b2[] = new double[31];</SPAN>
+    <SPAN LANG="en-US">double aux[] = new double[6];</SPAN>
+    
+    <SPAN LANG="en-US">for (i=1; i&lt;=30; i++) {</SPAN>
+      <SPAN LANG="en-US">sub[i]=i*2;</SPAN>
+      <SPAN LANG="en-US">supre[i]=i;</SPAN>
+      <SPAN LANG="en-US">d[i]=i+10;</SPAN>
+      <SPAN LANG="en-US">b1[i]=b2[i]=0.0;</SPAN>
+    <SPAN LANG="en-US">}</SPAN>
+    <SPAN LANG="en-US">b1[1]=1.0;  b1[2]=12.0;  b1[3]=4.0;</SPAN>
+    <SPAN LANG="en-US">b2[2]=2.0;  b2[3]=13.0;  b2[4]=6.0;</SPAN>
+    <SPAN LANG="en-US">aux[2]=1.0e-6;</SPAN>
+    <SPAN LANG="en-US">Linear_algebra.dectripiv(sub,d,supre,30,aid,aux,piv);</SPAN>
+    <SPAN LANG="en-US">Linear_algebra.soltripiv(sub,d,supre,30,aid,piv,b1);</SPAN>
+    <SPAN LANG="en-US">Linear_algebra.soltripiv(sub,d,supre,30,aid,piv,b2);</SPAN>
+    <SPAN LANG="en-US">b1[2]--;  b2[3]--;</SPAN>
+    <SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;AUX[3] and AUX[5]:  &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(aux[3]) + &quot;  &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(aux[5]) + &quot;\nError in b1:  &quot; + </SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(Math.sqrt(Basic.vecvec(1,30,0,b1,b1))) +</SPAN>
+      <SPAN LANG="en-US">&quot;\nError in b2:  &quot; + </SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(Math.sqrt(Basic.vecvec(1,30,0,b2,b2))));</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+<SPAN LANG="en-US">}</SPAN></PRE>
+</BODY>
+</HTML>

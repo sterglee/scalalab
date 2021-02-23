@@ -1,0 +1,29 @@
+import org.bytedeco.javacpp.openblas._
+
+var sz=10
+var SZ=sz*sz*sz
+ var a= new Array[Double](SZ)
+ var b= new Array[Double](SZ)
+ var c= new Array[Double](SZ)
+ 
+ 
+ for (i<-0 until SZ) {
+     a(i)=1.0
+     b(i)=1.0;
+     c(i)=0.0
+     }
+     
+ var Order=1
+ var TransA=1
+ var TransB=1
+ var N=sz
+ var K=sz
+ var alpha=1.0
+ var M=sz
+ 
+ var beta=1.0
+ var lda=sz
+ var ldb=sz
+ var ldc=sz
+ cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, M, N, K, alpha, a, lda,b, ldb, beta, c, ldc)
+c

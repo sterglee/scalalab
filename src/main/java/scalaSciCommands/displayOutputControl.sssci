@@ -1,0 +1,26 @@
+ // outputting results starts at a default state of verbosing (i.e. displayinmg the values of the last result variable), e.g.
+var x  = rand(90)
+// displays the Vector both at the console and the output window
+// individual command output can be surprssed as in Matlab, i.e. with ';', e.g. 
+var x  = rand(90);
+// output can be surrpressed globally for the console window only with:
+setVerboseOff
+// and re-enabled with 
+setVerboseOn
+
+// sets the interpreter to display at most numChars  at the Output window. The Console window is not affected, e.g.
+ setMaxPrintString(100)   // displays the 100 first chars of the output
+
+// truncated the output can be  enabled with:
+setTruncate(true)
+//or
+truncate
+// similarly truncated the output can be  disabled with:
+setTruncate(false)
+//or
+noTruncate
+
+// Matrix output can be controlled with e.g.
+setMaxMatDisp(30) // displays at most 30 rows and columns for 0-indexed matrices
+setMaxMatrixDisp(30) // displays at most 30 rows and columns for 1-indexed matrices
+              

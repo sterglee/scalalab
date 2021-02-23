@@ -1,0 +1,9 @@
+
+    // demonstrates creating a Matlab .mat file
+
+    var t = inc(1,1, 1000);
+    var x = sin(0.12*t)+0.9*cos(0.03*t);
+    plot(t,x);
+    var matFileName = "c:\\scalaTest\\testX";  // the name of the .mat file to save the scalaSci Vec as double []  array
+    var varName = "x";    // the variable name
+    save(matFileName, x, varName);

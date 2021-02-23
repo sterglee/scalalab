@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.1  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20100725;17400500">
+	<META NAME="" CONTENT="">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P><FONT SIZE=6 STYLE="font-size: 22pt"><U><B>Description of the Vec
+class</B></U></FONT></P>
+<P STYLE="font-weight: normal; text-decoration: none">The <B>Vec</B>
+class implements one-dimensional dense vectors in ScalaSci. 
+</P>
+<P STYLE="font-weight: normal; text-decoration: none"><BR><BR>
+</P>
+<P><FONT SIZE=4><U><B>Constructors</B></U></FONT></P>
+<OL>
+	<LI><P STYLE="text-decoration: none"><B>Vec(len: Integer): Creates a
+	vector of size len initialized to zeros</B></P>
+</OL>
+<P STYLE="font-weight: normal; text-decoration: none"><A NAME="DDE_LINK"></A>
+   <I>var v = new Vec(100)  </I>// creates a vector with 100 elements
+initialized to zero values.</P>
+<P STYLE="font-weight: normal; text-decoration: none"><BR><BR>
+</P>
+<P STYLE="font-weight: normal; text-decoration: none"><B>2.       
+Vec(da: Array[Double]): Creates a vector initialized with the da
+array</B></P>
+<P STYLE="font-weight: normal; text-decoration: none">  <I>var da =
+new Array[Double](20)</I></P>
+<P STYLE="font-weight: normal; text-decoration: none">  <I>da(3)=3</I></P>
+<P STYLE="font-weight: normal; text-decoration: none">  <I>var dav =
+new Vec(da)</I></P>
+<P STYLE="font-weight: normal; text-decoration: none"><BR><BR>
+</P>
+<P STYLE="font-style: normal"><U><B>Basic Methods</B></U></P>
+<P STYLE="font-style: normal; font-weight: normal; text-decoration: none"><A NAME="DDE_LINK2"></A>
+<B>def size:  Int   // Returns the size of the Vector</B></P>
+<P STYLE="font-weight: normal; text-decoration: none"><SPAN STYLE="font-style: normal"><B>def
+length:  Int   // Returns the size of the Vector</B></SPAN></P>
+<P STYLE="font-weight: normal; text-decoration: none"><BR><BR>
+</P>
+<P STYLE="font-weight: normal; text-decoration: none"><A NAME="DDE_LINK1"></A>
+ <I>var l = dav.size</I></P>
+<P STYLE="font-weight: normal; text-decoration: none"><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="text-decoration: none"><B>Vectors are
+dynamically resizable while double[] arrays are not. An attempt to
+update a vector element outside its current range increases
+automatically the vector's size by a multiplicative factor, e.g. 1.5,
+in order to avoid frequent resizing operations (which is somehow
+costly).</B></P>
+<P ALIGN=JUSTIFY STYLE="text-decoration: none"><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="text-decoration: none"><BR><BR>
+</P>
+<P STYLE="text-decoration: none"><BR><BR>
+</P>
+</BODY>
+</HTML>

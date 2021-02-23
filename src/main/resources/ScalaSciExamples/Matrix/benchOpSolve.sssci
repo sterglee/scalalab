@@ -1,0 +1,68 @@
+
+close("all")
+var nreps=20  // number of repetitions
+var INC = 50  // matrix size increment
+
+// matrix sizes array
+var sizes = new Array[Double](nreps)
+
+// arrays to keep times
+var ejml_t = new Array[Double](nreps)
+var mtj_t = new Array[Double](nreps)
+var jama_t = new Array[Double](nreps)
+var apache_t = new Array[Double](nreps)
+var commonsMath_t = new Array[Double](nreps)
+
+for (rep <- 0 until nreps) {
+
+    var cSiz = (rep+1)* INC   // matrix will be of size:  cSiz X cSiz
+    sizes(rep) = cSiz*cSiz  // matrix size
+
+// create a positive definite matrix in order to be nonsingular (thus having inverse)
+  var x = scalaSci.EJML.StaticMathsEJML.createSymmPosDef(cSiz, new java.util.Random(234234))
+  var y = x.toDoubleArray 
+
+        // EJML
+    var ejml_x = new scalaSci.EJML.Mat(y)
+    var ejml_b = scalaSci.EJML.StaticMathsEJML.rand0(cSiz,1)
+    tic
+    var ejml_ix = scalaSci.EJML.StaticMathsEJML.solve(ejml_x, ejml_b)
+    ejml_t(rep) = toc.toDouble
+
+        // MTJ
+    var mtj_x = new scalaSci.MTJ.Mat(y)
+    var mtj_b = scalaSci.MTJ.StaticMathsMTJ.rand0(cSiz,1)
+    tic
+    var mtj_ix = scalaSci.MTJ.StaticMathsMTJ.solve(mtj_x, mtj_b)
+    mtj_t(rep) = toc.toDouble
+
+       // JAMA
+    var jama_x = new scalaSci.Mat(y)
+    var jama_b = scalaSci.StaticMaths.rand0(cSiz,1)
+    tic
+    var jama_ix = scalaSci.StaticMaths.solve(jama_x, jama_b)
+    jama_t(rep) = toc.toDouble
+
+     
+       // Apache
+    var apache_x = new scalaSci.CommonMaths.Mat(y)
+    var apache_b = scalaSci.CommonMaths.StaticMathsCommonMaths.rand0(cSiz,1)
+    tic
+    var apache_ix = scalaSci.CommonMaths.StaticMathsCommonMaths.solve(apache_x, apache_b)
+    apache_t(rep) = toc.toDouble
+
+        
+     
+}
+
+
+
+figure(1); hold("on")
+plot(sizes, ejml_t, Color.BLUE, "EJML")
+plot(sizes, mtj_t, Color.RED, "MTJ")
+plot(sizes, jama_t, Color.BLACK, "JAMA")
+plot(sizes, apache_t, Color.YELLOW, "Apache Common Maths")
+
+
+xlabel("Matrix Size"); ylabel("Time (secs)")
+

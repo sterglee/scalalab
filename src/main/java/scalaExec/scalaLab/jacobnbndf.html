@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15061700">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>Numerical
+differentiation</B></FONT></P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>jacobnbndf</B></FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=4>Calculates the Jacobian matrix of an
+n-dimensional function of n variables, if this Jacobian is known to
+be a band matrix and have to be stored rowwise in a one-dimensional
+array.</FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=4><B>Example: Can be run with F9 within
+the ScalaLab Editor  </B></FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><A NAME="__DdeLink__4_1135676563"></A><A NAME="__DdeLink__0_1135676563"></A>
+<BR><BR>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">import
+java.text.DecimalFormat;</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">import numal.*;</FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">public class
+Test_jacobnbndf extends Object implements AE_jacobnbndf_methods {</FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">public static
+void main(String args[]) {</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">int i;</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">double x[] =
+new double[6];</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">double f[] =
+new double[6];</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">double jac[] =
+new double[14];</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">Test_jacobnbndf
+testjacobnbndf = new Test_jacobnbndf();</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">for (i=1; i&lt;=5;
+i++) x[i] = -1.0;</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">testjacobnbndf.funct(5,1,5,x,f);</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">Analytic_eval.jacobnbndf(5,1,1,x,f,jac,testjacobnbndf);</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">DecimalFormat
+oneDigit = new DecimalFormat(&quot;0.0E0&quot;);</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">System.out.println(&quot;The
+calculated tridiagonal jacobian is:\n&quot; +</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(jac[1])
++ &quot;\t&quot; +</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(jac[2])
++ &quot;\n&quot; +</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(jac[3])
++ &quot;\t&quot; +</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(jac[4])
++ &quot;\t&quot; +</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(jac[5])
++ &quot;\n\t&quot; +</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(jac[6])
++ &quot;\t&quot; +</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(jac[7])
++ &quot;\t&quot; +</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(jac[8])
++ &quot;\n\t\t&quot; +</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(jac[9])
++ &quot;\t&quot; +</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(jac[10])
++ &quot;\t&quot; +</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(jac[11])
++ &quot;\n\t\t\t&quot; +</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(jac[12])
++ &quot;\t&quot; +</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">oneDigit.format(jac[13]));</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">public double
+di(int i, int m) {</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">return ((i ==
+5) ? 1.0 : 1.0e-6);</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">public void
+funct(int n, int l, int u, double x[], double f[]) {</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">int i;</FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">for (i=l;
+i&lt;=((u == 5) ? 4 : u); i++) {</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">f[i]=(3.0-2.0*x[i])*x[i]+1.0-2.0*x[i+1];</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">if (i != 1)
+f[i] -= x[i-1];</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">if (u == 5)
+f[5]=4.0-x[4]-x[5]*2.0;</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+</BODY>
+</HTML>

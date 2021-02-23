@@ -1,0 +1,34 @@
+
+
+    // Static initialization of the MathEclipse engine instead of null 
+    // you can set a file name to overload the default initial
+    // rules. This step should be called only once at program setup:
+    F.initSymbols()
+    var  util = new EvalUtilities()
+
+      var  buf = new StringBufferWriter()
+      var  input = "Expand[(AX^2+BX)^2]"
+      var result = util.evaluate(input)
+
+      OutputFormFactory.get().convert(buf, result)
+      var  output = buf.toString()
+      println("Expanded form for " + input + " is " + output)
+
+      // set some variable values
+      input = "A=2;B=4"
+      result = util.evaluate(input)
+
+      buf = new StringBufferWriter()
+      input = "Expand[(A*X^2+B*X)^2]"
+      result = util.evaluate(input)
+      OutputFormFactory.get().convert(buf, result)
+      output = buf.toString()
+      println("Expanded form for " + input + " is " + output)
+      
+      buf = new StringBufferWriter()
+      input = "Factor["+output+"]"
+      result = util.evaluate(input)
+      OutputFormFactory.get().convert(buf, result)
+      output = buf.toString()
+      println("Factored form for " + input + " is " + output)
+    

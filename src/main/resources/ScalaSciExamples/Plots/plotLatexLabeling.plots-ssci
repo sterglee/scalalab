@@ -1,0 +1,17 @@
+
+// demonstrates plotting with LaTex labels
+
+var t = inc(0, 0.01, 10)
+var x = exp(-0.12*t)*log(1+t)
+plot(t,x)
+
+// the formula to be displayed 
+var lformula = """f(x) = \exp^{-0.12*t} \cdot \log(1+t)"""
+
+// the size of the formula
+var labelSize = 20
+// logical coordinates where LaTex formula will be displayed
+var labelx = 0.0 ; var labely = 0.8   
+
+// display the LaTex formula using logical coordinates
+latexLabel(lformula, labelSize, labelx, labely)

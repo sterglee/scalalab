@@ -1,0 +1,30 @@
+
+var A = AAD("3.4 5.6  -3.4; 0.45 0.545 -1.3; 5.3 5.9 -2.3")  // create a RichDoubkeDoubleArray
+
+// compute the eigenvalues using JBLAS 
+var JBLASeigs = jblas_eigenvalues(A)  
+
+// compute the eigenvectors using JBLAS
+var JBLASeigsevecs = jblas_eigenvectors(A)
+
+// compute the eigenvalues/eigenvectors  using EJML
+var ejmleigs = scalaSci.EJML.StaticMathsEJML.eig(A)
+
+// create a (large) symmetric matrix
+var N = 200
+var Mdd = Array.ofDim[Double](N, N)
+for (r<-0 until N)
+ for (c<-0 until N) {
+   var denom = 1.0+r*c
+   Mdd(r)(c) = 1.0/ denom
+}
+
+// compute with LAPACK specific routine for symmetric matrices the eigenvalues
+tic; var JBLASsym = jblas_symmetricEigenvectors(Mdd); var tmJBLASsym = toc
+
+// compute with LAPACK general routine
+tic; var JBLASgen = jblas_eigenvectors(Mdd); var tmJBLASgen = toc
+
+// compute with EJML library
+tic; var EJMLeigs= scalaSci.EJML.StaticMathsEJML.eig(Mdd); var tmEJML= toc
+

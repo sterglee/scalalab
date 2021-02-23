@@ -1,0 +1,28 @@
+
+  val  A_CHAOS=1.4;
+  val  B_CHAOS=0.3;
+    
+tic;
+val henonObj = new JSci.maths.chaos.HenonMap(A_CHAOS, B_CHAOS);
+var N=50000;
+var x0 = new Array[Double](2)
+x0(0)=0.12; x0(1) = 0.2;
+  // warm-up the map
+x0 = henonObj.iterate(10, x0);
+
+var x = Array.ofDim[Double](2, N)
+
+var k = 0
+while  (k < N) {
+  x0 = henonObj.map(x0);
+  x(0)(k) = x0(0); 
+  x(1)(k) = x0(1);
+  k += 1
+ }
+
+var tm = toc();
+scatterPlotsOn();  // display points only, not the connecting lines
+plot(x);
+title("Scala Time "+tm);
+
+  

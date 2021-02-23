@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101230;14344900">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>gssitisolerb</B></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US">Uses the procedure <I>gsselm </I><SPAN STYLE="font-style: normal">to perform a triangular desomposition of the matrix and the procedure </SPAN><I>itisol</I><I>erb</I><I> </I><SPAN STYLE="font-style: normal">to calculate an iteratively refined solution of the given linear system </SPAN><SPAN STYLE="font-style: normal">and a realistic upper bound for the relative error in the solution,</SPAN></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US">for details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+
+import java.text.DecimalFormat;
+import numal.*;
+
+public class Test_gssitisolerb extends Object {
+	
+	public static void main(String args[]) {
+
+    int i,j;
+    double b[] = new double[5];
+    double aux[] = new double[14];
+    double a[][] = new double[5][5];
+
+    for (i=1; i&lt;=4; i++) {
+      for (j=1; j&lt;=4; j++) a[i][j]=840/(i+j-1);
+      b[i]=a[i][3];
+    }
+    aux[0]=aux[2]=aux[10]=1.0e-14;
+    aux[4]=8;
+    aux[6]=aux[8]=0.0;
+    aux[12]=5.0;
+    Linear_algebra.gssitisolerb(a,4,aux,b);
+    DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);
+    System.out.println(&quot;Solution:  &quot; + fiveDigit.format(b[1]) +
+      &quot;  &quot; + fiveDigit.format(b[2]) + &quot;  &quot; +
+      fiveDigit.format(b[3]) + &quot;  &quot; + fiveDigit.format(b[4]));
+    System.out.println(&quot;Sign(Det) = &quot; + (int)aux[1] + 
+      &quot;\nNumber of eliminations = &quot; + (int)aux[3] + 
+      &quot;\nMax(abs(a[i,j])) = &quot; + fiveDigit.format(aux[5]) + 
+      &quot;\nUpper bound growth = &quot; + fiveDigit.format(aux[7]) +
+      &quot;\nNorm calculated inverse matrix = &quot; + fiveDigit.format(aux[9]) +
+      &quot;\nUpper bound for the relative error = &quot; + 
+      fiveDigit.format(aux[11]) + &quot;\nNorm residual vector = &quot; +
+      fiveDigit.format(aux[13]));
+	}
+}</PRE>
+</BODY>
+</HTML>

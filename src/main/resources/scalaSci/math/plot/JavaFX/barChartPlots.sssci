@@ -1,0 +1,14 @@
+
+import scalaSci.math.plot.JavaFX.javaFXPlotBar._
+
+
+var languages = Array("Scala", "Java", "Groovy", "C/C++", "C#")
+
+var speedIndex = Array(0.8, 0.82, 0.6, 0.95, 0.81)
+
+setpieChartTitlefx("Speed indexes of some languages")
+
+setpieChartNamefx("Speed of languages")
+
+
+barChartfx(languages, speedIndex)

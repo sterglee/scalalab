@@ -1,0 +1,15 @@
+
+// illustration of / and \ operators
+
+// illustration of Slash or right matrix divide
+// A / B is the matrix division of B into A, which is A*inv(B)
+var A = rand0(3,3)
+var B = rand0(3,3)
+var C = A / B
+A*inv(B)-C  // should be zero
+
+// illustration of Backslash or left matrix divide
+// A \ B is the matrix division of A into B, which is inv(A)*B
+var D = A \ B
+A*D-B    // should be zero 
+

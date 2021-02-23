@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1253">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20091123;8131922">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21.01cm 29.69cm; margin: 2.01cm }
+		P { margin-bottom: 0.2cm }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE>
+    <FONT SIZE=5 STYLE="font-size: 20pt"><B>In place operations</B></FONT>
+
+
+<FONT SIZE=4 STYLE="font-size: 16pt">Operators ++, <B>--, **</B>, /|  implement <B>in-place</B> <SPAN STYLE="font-weight: medium">addition, subtraction, multiplication and division.</SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN STYLE="font-weight: medium">The </SPAN><B>in-place </B><SPAN STYLE="font-weight: medium">operators are implemented by avoiding creating a copy of the receiver's data area and a new object, thus they are memory and time efficient, generally more than  3 times faster from the corresponding +, -, *, / </SPAN></FONT>
+
+<FONT SIZE=4 STYLE="font-size: 16pt"><B>Examples</B></FONT>
+
+
+<FONT SIZE=4 STYLE="font-size: 16pt"><U>Example 1</U></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><I>var v = vones(10);   // create a Vector of 10 elements</I></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><I>v--30   // subtract 30 from all its elements</I></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><I><U>Result</U></I></FONT>
+<FONT SIZE=3><I>v: scalaSci.Vec = </I></FONT>
+
+<FONT SIZE=3><I>-29.000  -29.000  -29.000  -29.000  -29.000  -29.000  -29.000  -29.000  -29.000  -29.000  </I></FONT>
+<FONT SIZE=3><I>Note that the contents of v are altered</I></FONT>
+
+
+<FONT SIZE=4 STYLE="font-size: 16pt"><U>Example 2</U></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>var m = ones(2,3)  // create an one-indexed Matrix</I></SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>m ++ 100  // add 100 to all its elements</I></SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><U>Result</U></I></SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US"><I>m: scalaSci.Matrix = </I></SPAN></FONT>
+ <FONT SIZE=3><SPAN LANG="en-US"><I><FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="text-decoration: none">101.000  101.000  101.000  </SPAN></SPAN></FONT></I></SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US"><I>101.000  101.000  101.000  </I></SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US"><I>Note that the contents of m are altered</I></SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><U>Example 3</U></SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B>Associativity </B><SPAN STYLE="font-weight: medium">of  ++, --, **, /= is </SPAN><B>the same </B><SPAN STYLE="font-weight: medium">as +, -, **, / respectively, for example:</SPAN></SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: medium">var mm = ones(2,2) ++ 100*2</SPAN></I></SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US"><FONT SIZE=4 STYLE="font-size: 16pt"><I><U><SPAN STYLE="font-weight: medium">Result</SPAN></U></I></FONT></SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">mm: scalaSci.Matrix = </SPAN></SPAN></FONT>
+ 
+<FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">201.000  201.000  </SPAN></SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">201.000  201.000  </SPAN></SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">i.e. first the multiplication * operator is evaluated and then the ++ operator</SPAN></SPAN></FONT>
+
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><U>Example 4</U></SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">var m = zeros0(3,4)  </SPAN></SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">var mm = 5+(m&mdash;1)*10</SPAN></SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US"><FONT SIZE=4 STYLE="font-size: 16pt"><I><U><SPAN STYLE="font-weight: medium">Result</SPAN></U></I></FONT></SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: medium">m: scalaSci.Mat = </SPAN></I></SPAN></FONT>
+ <FONT SIZE=2><SPAN LANG="en-US"><I><FONT SIZE=2><SPAN LANG="en-US"><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: medium">-1.000  -1.000  -1.000  -1.000  </SPAN></SPAN></SPAN></FONT></I></SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: medium">-1.000  -1.000  -1.000  -1.000  </SPAN></I></SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: medium">-1.000  -1.000  -1.000  -1.000  </SPAN></I></SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: medium">mm: scalaSci.Mat = </SPAN></I></SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: medium">-5.000  -5.000  -5.000  -5.000  </SPAN></I></SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: medium">-5.000  -5.000  -5.000  -5.000  </SPAN></I></SPAN></FONT>
+<FONT SIZE=2><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: medium">-5.000  -5.000  -5.000  -5.000  </SPAN></I></SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">Note that m is also decremented.</SPAN></SPAN></FONT>
+
+</PRE>
+</BODY>
+</HTML>

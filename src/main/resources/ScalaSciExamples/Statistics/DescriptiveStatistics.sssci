@@ -1,0 +1,17 @@
+
+import org.apache.commons.math.stat.descriptive._
+
+// Get a DescriptiveStatistics instance
+var stats = new DescriptiveStatistics
+
+var inputArray = Array(0.2, 0.3444, -4.556, 0.344, 2.345)
+// add the data from the array
+for (i<-0 until inputArray.length)
+   stats.addValue(inputArray(i))
+   
+   // Compute some statistics
+var mean = stats.getMean
+var std = stats.getStandardDeviation
+var kurtosis  = stats.getKurtosis
+   
+   

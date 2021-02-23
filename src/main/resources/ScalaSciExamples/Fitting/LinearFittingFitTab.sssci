@@ -1,0 +1,30 @@
+
+// test Fitab
+// Object for fitting a straight line y = a+bx to a set of points (x_i, y_i), with or without available
+ //errors σ_i. Call one of the two constructors to calculate the fit. The answers are then available 
+ // as the variables  a, b, siga, sigb, chi2 and either q or sigdat
+   /* 
+   Constructor. Given a set of data points x[0..ndata-1], y[0..ndata-1] with individual standard 
+   deviations sig[0..ndata-1], sets a, b and their respective probable uncertainties siga and sigb, the chi-square 
+   chi2, and the goodness-of-fit probability q (that the fit would have χ^2 this large or larger)
+   */
+
+   // create the data arrays
+   var xx = new Vec(Array(0.4, 3.5, 6.7,  8.6, 9.8, 15.6, 26.8, 45.8 ))
+   var yy = 3.4*xx + 6.5*vrand(xx.length)
+
+ // fit a linear model, the fitting coefficients are returned in fp.a and fp.b
+   var  fp = new com.nr.model.Fitab(xx, yy)
+
+  var N = 1000  // on how many points to evaluate the model
+  var xxa = linspace( min(xx), max(xx), N)  // construct the x-axis
+  var yya = xxa map ( (x: Double) => fp.a*x+fp.b )   // apply the function
+
+     figure(1)
+     plotMarks(xx, yy.getv, Color.GREEN, "Initial Points");   // the plotted marks here denote the initial points, on which fit is performed
+     hold(on)   // hold the axis on
+     plot(xxa, yya, "Fitted Line")   //  plot the fitted line
+     
+
+
+   

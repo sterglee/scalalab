@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20120410;13412500">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P><FONT SIZE=6 STYLE="font-size: 22pt"><U><B>Description of the
+RichDouble2DArray class</B></U></FONT></P>
+<P STYLE="font-weight: normal; text-decoration: none">The
+RichDouble2DArray wraps standard Java/Scala 2-D Arrays of
+doubles.</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4><U><B>Constructors</B></U></FONT></P>
+<P><BR><BR>
+</P>
+<P><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: normal">RichDouble2DArray</SPAN></SPAN><SPAN STYLE="text-decoration: none"><B>(rows:
+Integer, cols: Integer) </B></SPAN><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: normal">//
+Creates a RichDouble2DArray of size rows, cols initialized to
+zeros</SPAN></SPAN></P>
+<P STYLE="font-weight: normal; text-decoration: none"><I>var m=new
+RichDouble2DArray(2, 3)</I></P>
+<P><BR><BR>
+</P>
+<OL START=3>
+	<P><B>Construction by specifying the initial elements, e.g.</B></P>
+	<P STYLE="font-weight: normal"><I>var m = AAD(&quot;4.5 5.6 -4; 4.5
+	3 -3.4&quot;) // space separated</I></P>
+	<P STYLE="font-weight: normal"><I>var m = AAD(&quot;4.5, 5.6, -4;
+	4.5, 3, -3.4&quot;) // comma separated</I></P>
+</OL>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: normal; text-decoration: none"><A NAME="DDE_LINK"></A>
+// construct RichDouble2DArray  by copying the array values</P>
+<P><A NAME="__DdeLink__3_469529505"></A><SPAN STYLE="text-decoration: none"><B>RichDouble2DArray</B></SPAN><SPAN STYLE="text-decoration: none"><B>(da:
+Array[Array[Double]]) </B></SPAN><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: normal">//
+Creates a </SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: normal">RichDouble2DArray
+</SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: normal">initialized
+with the da array</SPAN></SPAN></P>
+<P><I>var dd = Array.ofDim[Double](2,4)</I></P>
+<P><I>dd(1)(1)=11</I></P>
+<P><I>var mdd = new RichDouble2DArray(dd)</I></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P STYLE="font-style: normal"><U><B>Basic Methods</B></U></P>
+<P STYLE="font-style: normal; text-decoration: none"><A NAME="DDE_LINK2"></A>
+<B>def size: Int </B><SPAN STYLE="font-weight: normal">// Returns the
+number of rows and columns of the </SPAN><SPAN STYLE="font-weight: normal">RichDouble2DArray</SPAN></P>
+<P STYLE="font-style: normal; text-decoration: none"><B>def 
+numRows(): Int  </B><SPAN STYLE="font-weight: normal">// Returns the
+number of rows of RichDouble2DArray</SPAN></P>
+<P STYLE="font-style: normal; text-decoration: none"><B>def 
+numColumns(): Int  </B><SPAN STYLE="font-weight: normal">// Returns
+the number of columns of RichDouble2DArray</SPAN></P>
+<P STYLE="font-style: normal; text-decoration: none"><B>def length:
+Int </B><SPAN STYLE="font-weight: normal">// Returns the number of
+rows of </SPAN><SPAN STYLE="font-weight: normal">RichDouble2DArray</SPAN></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><U><B>Conversion Routines</B></U></P>
+<P STYLE="line-height: 150%"><BR><BR>
+</P>
+<P STYLE="font-weight: normal; line-height: 150%; text-decoration: none">
+The RichDouble2DArray class aims to be the main Matrix type of
+ScalaLab and very convenient to use. Therefore routines are provided
+to convert from other matrix types.  Some conversions are:</P>
+<P STYLE="font-weight: normal; line-height: 150%; text-decoration: none">
+<BR><BR>
+</P>
+<P STYLE="line-height: 150%; text-decoration: none"><B>Convert from a
+JAMA based matrix (i.e.  scalaSci.Mat)</B></P>
+<P STYLE="font-weight: normal; line-height: 150%; text-decoration: none"><A NAME="__DdeLink__12_469529505"></A>
+var  a = scalaSci.Mat.rand(2, 5)   // a JAMA based  matrix</P>
+<P STYLE="font-weight: normal; line-height: 150%; text-decoration: none"><A NAME="__DdeLink__14_469529505"></A>
+var  ra = new RichDouble2DArray(a)   // convert to
+RichDouble2DArray</P>
+<P><BR><BR>
+</P>
+<P STYLE="line-height: 150%; text-decoration: none"><B>Convert from
+an NUMAL based matrix (i.e.  scalaSci.Matrix)</B></P>
+<P STYLE="font-weight: normal; line-height: 150%; text-decoration: none"><A NAME="__DdeLink__27_469529505"></A><A NAME="__DdeLink__12_4695295051"></A>
+var  a = scalaSci.Matrix.rand(2, 5)   // a NUMAL  based  matrix</P>
+<P STYLE="font-weight: normal; line-height: 150%; text-decoration: none"><A NAME="__DdeLink__14_4695295051"></A>
+var  ra = new RichDouble2DArray(a)   // convert to
+RichDouble2DArray</P>
+<P><BR><BR>
+</P>
+<P STYLE="line-height: 150%; text-decoration: none"><A NAME="__DdeLink__39_469529505"></A>
+<B>Convert from an EJML based matrix (i.e.  scalaSci.EJML.Mat)</B></P>
+<P STYLE="font-weight: normal; line-height: 150%; text-decoration: none"><A NAME="__DdeLink__85_469529505"></A><A NAME="__DdeLink__47_469529505"></A><A NAME="__DdeLink__27_4695295051"></A><A NAME="__DdeLink__12_46952950511"></A>
+var  a = scalaSci.EJML.Mat.rand(2, 5)   // an EJML based  matrix</P>
+<P STYLE="font-weight: normal; line-height: 150%; text-decoration: none"><A NAME="__DdeLink__14_46952950511"></A>
+var  ra = new RichDouble2DArray(a)   // convert to
+RichDouble2DArray</P>
+<P><BR><BR>
+</P>
+<P STYLE="line-height: 150%; text-decoration: none"><A NAME="__DdeLink__39_4695295051"></A>
+<B>Convert from an MTJ based matrix (i.e.  scalaSci.MTJ.Mat)</B></P>
+<P STYLE="font-weight: normal; line-height: 150%; text-decoration: none"><A NAME="__DdeLink__124_469529505"></A><A NAME="__DdeLink__114_469529505"></A><A NAME="__DdeLink__104_469529505"></A><A NAME="__DdeLink__79_469529505"></A><A NAME="__DdeLink__65_469529505"></A><A NAME="__DdeLink__47_4695295051"></A><A NAME="__DdeLink__27_46952950511"></A><A NAME="__DdeLink__12_469529505111"></A><A NAME="__DdeLink__69_469529505"></A>
+var  a = scalaSci.MTJ.Mat.rand(2, 5)   // an MTJ based  matrix</P>
+<P STYLE="font-weight: normal; line-height: 150%; text-decoration: none"><A NAME="__DdeLink__14_469529505111"></A>
+var  ra = new RichDouble2DArray(a)   // convert to
+RichDouble2DArray</P>
+<P><BR><BR>
+</P>
+<P STYLE="line-height: 150%; text-decoration: none"><A NAME="__DdeLink__39_46952950511"></A>
+<B>Convert from a Common Maths  based matrix (i.e. 
+scalaSci.CommonMaths.Mat)</B></P>
+<P STYLE="font-weight: normal; line-height: 150%; text-decoration: none"><A NAME="__DdeLink__170_469529505"></A><A NAME="__DdeLink__168_469529505"></A><A NAME="__DdeLink__124_4695295051"></A><A NAME="__DdeLink__114_4695295051"></A><A NAME="__DdeLink__104_4695295051"></A><A NAME="__DdeLink__79_4695295051"></A><A NAME="__DdeLink__65_4695295051"></A><A NAME="__DdeLink__47_46952950511"></A><A NAME="__DdeLink__27_469529505111"></A><A NAME="__DdeLink__12_4695295051111"></A><A NAME="__DdeLink__69_4695295051"></A>
+var  a = scalaSci.CommonMaths.Mat.rand(2, 5)   // a Common Maths
+based  matrix</P>
+<P STYLE="font-weight: normal; line-height: 150%; text-decoration: none"><A NAME="__DdeLink__14_4695295051111"></A>
+var  ra = new RichDouble2DArray(a)   // convert to
+RichDouble2DArray</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><U><B>Routines</B></U></P>
+<P><BR><BR>
+</P>
+<P><B>def ones(n: Int, m: Int): </B><B>RichDouble2DArray</B><B> </B><SPAN STYLE="font-weight: normal">-
+constructs a nXm </SPAN><SPAN STYLE="font-weight: normal">RichDouble2DArray
+ </SPAN><SPAN STYLE="font-weight: normal">of ones</SPAN></P>
+<P><B>def zeros(n: Int, m: Int): </B><B>RichDouble2DArray </B><SPAN STYLE="font-weight: normal">-
+constructs a nXm </SPAN><SPAN STYLE="font-weight: normal">RichDouble2DArray
+ </SPAN><SPAN STYLE="font-weight: normal">of zeros</SPAN></P>
+<P><B>def rand(n: Int, m: Int): </B><B>RichDouble2DArray  </B><B>
+</B><SPAN STYLE="font-weight: normal">- constructs a nXm
+</SPAN><SPAN STYLE="font-weight: normal">RichDouble2DArray  </SPAN><SPAN STYLE="font-weight: normal">
+of random values</SPAN></P>
+<P><SPAN STYLE="font-weight: normal">d</SPAN><B>ef eye(n: Int, m:
+Int): </B><B>RichDouble2DArray  </B><SPAN STYLE="font-weight: normal">-
+constructs a nXm </SPAN><SPAN STYLE="font-weight: normal">RichDouble2DArray
+</SPAN><SPAN STYLE="font-weight: normal"> of zero everywhere except
+the diagonal</SPAN></P>
+<P><I><B>Transpose operator ~ </B></I>
+</P>
+<P STYLE="font-weight: normal"><I>transposes the
+RichDouble2DArray  ,  e.g.</I></P>
+<P STYLE="font-weight: normal"><A NAME="__DdeLink__10_469529505"></A>
+ <I>var   rda = rand(9,12)  // create RichDouble2DArray of size 9
+X 14</I></P>
+<P STYLE="font-weight: normal">  <I>var   rdat = rda~   // transpose
+it</I></P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

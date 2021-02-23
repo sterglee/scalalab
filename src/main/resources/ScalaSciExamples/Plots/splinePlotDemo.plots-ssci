@@ -1,0 +1,11 @@
+var Np = 20
+var x = linspace(0, 15, Np)
+var Ns = 30
+var y   = sin(x)
+
+
+
+figure(1); subplot(2,1,1); plot(x, y)
+subplot(2,1,2); splinePlot(x, y, Ns, Color.DARK_GRAY, "Spline Plot");
+
+

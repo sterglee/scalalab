@@ -1,0 +1,14 @@
+
+
+    var p2 = new Plot2DPanel
+         for (i<-0 until 1) {
+           var XYZ = Array.ofDim[Double](10, 2)
+          for (j<-0 until XYZ.length) {
+            XYZ(j)(0) = 1+Math.random
+            XYZ(j)(1) = 100+Math.random
+          }
+         p2.addScatterPlot("toto"+i, XYZ)
+         }
+         p2.addQuantiletoPlot(0, 1, 1.0, true, 0.2)
+         new FrameView(p2)
+        

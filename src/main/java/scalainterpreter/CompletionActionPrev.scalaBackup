@@ -1,0 +1,93 @@
+
+package  scalainterpreter
+
+
+import java.awt.event.ActionEvent
+import jsyntaxpane.SyntaxDocument
+import javax.swing.text.JTextComponent
+import jsyntaxpane.actions.gui.ComboCompletionDialog
+import jsyntaxpane.actions.DefaultSyntaxAction
+import scalaExec.Interpreter.GlobalValues
+import tools.nsc.interpreter.Completion.ScalaCompleter
+import collection.JavaConversions
+
+//  the action triggered with the F7 key within the JSyntaxPane
+class CompletionActionPrev( completer: ScalaCompleter ) extends DefaultSyntaxAction( "COMPLETION" ) {
+  private var dlg: ComboCompletionDialog = null
+
+  override def actionPerformed( target: JTextComponent, sdoc: SyntaxDocument, dot: Int, e: ActionEvent ) {
+
+     var posAutoCompletion =  -1
+       
+    // compute completion word (cw) and its start position (start) at the editing buffer
+      val (cw, start) = {
+
+      // if the user has selected text we return it 
+      val sel = GlobalValues.editorPane.getSelectedText
+         if( sel != null ) {
+            (sel, GlobalValues.editorPane.getSelectionStart)
+         } 
+         
+      else {  // the user has not selected text
+         
+       var pos = target.getCaretPosition-1  
+       var doc = target.getDocument()
+      
+       
+       var exited = false
+        // take word part before cursor position
+       var wb = ""
+       var offset = pos
+       while (offset >= 0 && exited==false) {
+         var ch = doc.getText(offset, 1).charAt(0)
+         if (ch == '.') {
+               posAutoCompletion = offset-2   // replace the text after '.'
+               if (posAutoCompletion<0) posAutoCompletion=0
+          }
+
+         var isalphaNumeric = ( ch >= 'a' && ch <='z')  || (ch >= 'A' && ch <='Z') || (ch >= '0' && ch <='9') || ch=='.'  || ch=='_' || ch=='$'
+         if (!isalphaNumeric)  exited=true
+          else {
+           wb = wb + ch
+           offset -= 1
+          }
+          }
+    
+    if (posAutoCompletion ==  -1)  // a method name is not specified, thus set selection start to the beginning of the word
+      posAutoCompletion  = offset+1
+        
+         var wordAtCursor = wb.reverse      
+         
+        //println("sterg: wordAtCursor = "+wordAtCursor+" posAutoCompletion = "+posAutoCompletion)
+        
+        //    (line.substring( 0, dot - start ), start)
+          (wordAtCursor, posAutoCompletion)  
+        
+         }
+      }
+      
+
+  
+      val cwlen = cw.length()
+      val m = completer.complete( cw, cwlen )
+
+    // nothing to complete
+   if( m.candidates.isEmpty )  return
+  else {
+      val off = start + m.cursor
+      target.select( off, start + cwlen )
+
+    m.candidates match {
+         case one :: Nil =>
+            target.replaceSelection( one )
+         case more =>
+            if( dlg == null ) {
+                dlg = new ComboCompletionDialog( GlobalValues.editorPane )
+            }
+
+       dlg.displayFor( cw.substring( m.cursor ), JavaConversions.seqAsJavaList( more ))
+       // dlg.displayFor( cw.substring( posAutoCompletion ), JavaConversions.seqAsJavaList( more ))
+      }
+      }
+   }
+}

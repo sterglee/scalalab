@@ -1,0 +1,18 @@
+
+// test multithreading multiply vs serial
+
+var N=1000; var M = 2000; var K=1200
+
+var x = ones(N, M)
+var y = ones(M, K)
+
+var x0 = ones0(N, M)
+var y0 = ones0(M, K)
+
+tic
+var xy = x*y
+var tmp = toc
+
+tic
+var xy0 = x0*y0
+var tms = toc

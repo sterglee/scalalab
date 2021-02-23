@@ -1,0 +1,18 @@
+closeAll
+var N = pow(2, 12).toInt  // a power of 2 integer
+var t =  linspace(0, 2, N)  // get N samples from 0 to 2 with linear sampling
+var (f1, f2, f3) = (2.23, 4.5, 9.8)  // some frequencies for signals
+var sig = sin(f1*t)+4.5*cos(f2*t)+1.9*sin(f3*t)
+var x1 = vrand(N)+sig  // add some noisy
+var (fftX1_re, fftX1_im) = fft(x1)  // perform FFT
+subplot(2,1,1); plot(t, x1, "signal")
+subplot(2,1,2); plot( fftX1_re, "ffT")
+ f2 = getDouble("Get new signal frequency", 8.0)
+sig = sin(f2*t)
+var (fftX2_re, fftX2_im) = fft(sig)
+clf(1, 1, 2)    // clears all plots from the second subplot of figure 1
+subplot(2, 1, 2)
+plot(fftX2_re, "fft for the new frequency = "+f2)
+clf(1, 1, 1)
+subplot(2, 1, 1)
+plot(sig); title("the new signal")

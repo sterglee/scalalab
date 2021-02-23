@@ -1,0 +1,71 @@
+import java.util.Vector 
+
+import javax.swing._
+import numal._
+
+//   this scalaSci file demonstrates the use of the multistep methods of the NUMAL library for integrating the Lorenz system
+
+    var n = 3;   // the order of the system
+
+    var first = new Array[Boolean](1);   // if first is true then the procedure starts the integration with a first order Adams method
+                                                    //  and a steplength equal to hmin,  upon completion of a call, first is set to false
+    first(0)=true
+    
+    var btmp = new Array[Boolean](2)
+    var itmp = new Array[Int](3) 
+    var xtmp = new Array[Double](7)
+    var x = new Array[Double](1)
+    var y = new Array[Double](6*n+1)
+    var ymax = new Array[Double](4)
+
+    var save = new Array[Double](6*n+39)  //    in this array the procedure stores information which can be used in a continuing call
+        // with first = false; also the following messages are delivered:
+        //      save[38] == 0;  an Adams method has been used
+        //      save[38] == 1;  the procedure switched to Gear's method
+        //      save[37] == 0;  no error message
+        //      save[37] == 1; with the hmin specified the procedure cannot handle the nonlinearity (decrease hmin!)
+        //      save[36] ;  number of times that the requested local error bound was exceeded 
+        //      save[35] ;  if save[36] is nonzero then save[35] gives an estimate of the maximal local error bound, otherwise save[35]=0
+
+    var jac = Array.ofDim[Array[Double]](n+1)
+    var k=0
+    while (k<=n) {
+       jac(k) = new Array[Double](n+1)
+       k += 1
+}
+
+      var xOut:Vector[Array[Double]] = new Vector()
+      var yOut:Vector[Array[Double]] = new Vector()
+         
+    var hmin=1.0e-10
+    var eps=1.0e-9
+    
+    y(1)=0.12; y(2)=0.3; y(3)=0.12;
+    ymax(1) = 0.00001
+    ymax(2) = 0.00001
+    ymax(3) = 0.00001;
+    
+    var tstart = 0.0
+    x(0) = tstart
+ var xendDefault ="100.0"  // end point of integration, default value
+ var prompt = "Specify the end integration value"
+ var inVal  = JOptionPane.showInputDialog(prompt, xendDefault)
+ var tend = inVal.toDouble
+ 
+ var  javaClassName = "scalaExec.Functions.Chaotic.LorenzMultiStep"
+
+ var  invocationObject = Class.forName(javaClassName).newInstance();
+ var multistepObject = invocationObject.asInstanceOf[AP_multistep_methods]
+
+ tic()
+ Analytic_problems.multistep(x, tend,y,hmin,5,ymax,eps,first, save, multistepObject, jac, true,n,btmp,itmp,xtmp, xOut, yOut)
+
+ var  runTime =  toc()
+      
+ 
+ var plotTitle = "Lorenz system, method Multistep,  ntegratin from "+tstart+", to tEnd= "+tend+", runTime = "+runTime;
+
+ var color = Color.RED
+ figure3d(1); plotV(yOut, color, plotTitle)
+
+

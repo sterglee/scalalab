@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1253">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101110;10054622">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21.01cm 29.69cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P><FONT SIZE=6 STYLE="font-size: 22pt"><U><B>Description of the Mat
+class</B></U></FONT></P>
+<P STYLE="font-weight: medium; text-decoration: none">The <B>Mat</B>
+class implements zero-indexed two-dimensional dense matrices in
+ScalaSci. 
+</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4><U><B>Constructors</B></U></FONT></P>
+<P><BR><BR>
+</P>
+<P><SPAN STYLE="text-decoration: none"><B>Mat(rows: Integer, cols:
+Integer) </B></SPAN><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: medium">//
+Creates a Mat of size rows, cols initialized to zeros</SPAN></SPAN></P>
+<P STYLE="font-weight: medium; text-decoration: none"><I>var m=new
+Mat(2, 3)</I></P>
+<P><BR><BR>
+</P>
+<OL START=3>
+	<P><B>Construction by specifying the initial elements, e.g.</B></P>
+	<P STYLE="font-weight: medium"><I>var m = M(&ldquo;4.5 5.6 -4; 4.5 3
+	-3.4&rdquo;) // space separated</I></P>
+	<P STYLE="font-weight: medium"><I>var m = M(&ldquo;4.5, 5.6, -4;
+	4.5, 3, -3.4&rdquo;) // comma separated</I></P>
+</OL>
+<P STYLE="font-weight: medium; text-decoration: none"><A NAME="DDE_LINK"></A>
+// construct Mat by copying the array values</P>
+<P><A NAME="DDE_LINK3"></A><SPAN STYLE="text-decoration: none"><B>Mat(da:
+Array[Array[Double]]) </B></SPAN><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: medium">//
+Creates a Mat initialized with the da array</SPAN></SPAN></P>
+<P><I>var dd = Array.ofDim[Double](2,4)</I></P>
+<P><I>dd(1)(1)=11</I></P>
+<P><I>var mdd = new Mat(dd)</I></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-style: normal">// construct a Mat by <B>reference an
+existing double array</B>,</P>
+<P STYLE="font-style: normal">// in order to avoid duplicating the
+array</P>
+<P><I>var tm = new Mat(1,1) // a small Mat object</I></P>
+<P><I>tm.setv(dd, 2, 4) // set its value content to an existing
+double arrayof size 2X4</I></P>
+<P><BR><BR>
+</P>
+<P><SPAN STYLE="text-decoration: none"><B>Mat(rows: Integer, cols:
+Integer, initValue: Double) </B></SPAN><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: medium">//
+Creates a Mat of size rows, cols initialized to initValue</SPAN></SPAN></P>
+<P STYLE="font-weight: medium; text-decoration: none"><I>var m=new
+Mat(3, 4, 3.4)</I></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: medium; text-decoration: none">// construct a
+Mat from a two-dimensional double array without copying the array
+values</P>
+<P STYLE="font-style: normal"><SPAN STYLE="text-decoration: none"><B>Mat(da:
+Array[Array[Double]], flag: Boolean) </B></SPAN><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: medium">//
+Creates a Mat initialized with a reference to the da array</SPAN></SPAN></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+// construct a Mat from an one-dimensional double array</P>
+<P STYLE="font-style: normal; text-decoration: none"><B>Mat(da:
+Array[Double])</B></P>
+<P STYLE="font-weight: medium; text-decoration: none"><I>var od = new
+Array[Double](10)</I></P>
+<P STYLE="font-weight: medium; text-decoration: none"><I>od(2)=2.2</I></P>
+<P STYLE="font-weight: medium; text-decoration: none"><I>var odm =
+new Mat(od)</I></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P STYLE="font-style: normal"><U><B>Basic Methods</B></U></P>
+<P STYLE="font-style: normal; text-decoration: none"><A NAME="DDE_LINK2"></A>
+<B>def size: Int </B><SPAN STYLE="font-weight: medium">// Returns the
+number of rows and columns of the Mat</SPAN></P>
+<P STYLE="font-style: normal; text-decoration: none"><B>def length:
+Int </B><SPAN STYLE="font-weight: medium">// Returns the number of
+rows of Mat</SPAN></P>
+<P STYLE="font-style: normal; text-decoration: none"><B>def Nrows:
+Int </B><SPAN STYLE="font-weight: medium">// Returns the number of
+rows of Mat</SPAN></P>
+<P><B>def Ncols: Int</B> <SPAN STYLE="font-weight: medium">// Returns
+the number of columns of Mat</SPAN></P>
+<P><BR><BR>
+</P>
+<P><U><B>Routines</B></U></P>
+<P><BR><BR>
+</P>
+<P><B>def ones0(n: Int): Mat  - </B><SPAN STYLE="font-weight: medium">constructs
+a nXn Mat of  ones</SPAN></P>
+<P><B>def ones0(n: Int, m: Int): Mat  </B><SPAN STYLE="font-weight: medium">-
+constructs a nXm Mat of  ones</SPAN></P>
+<P><B>def zeros0(n: Int): Mat  - </B><SPAN STYLE="font-weight: medium">constructs
+a nXn Mat of  zeros</SPAN></P>
+<P><B>def zeros0(n: Int, m: Int): Mat  </B><SPAN STYLE="font-weight: medium">-
+constructs a nXm Mat of  zeros</SPAN></P>
+<P><B>def rand0(n: Int): Mat  - </B><SPAN STYLE="font-weight: medium">constructs
+a nXn Mat of  random values</SPAN></P>
+<P><B>def rand0(n: Int, m: Int): Mat  </B><SPAN STYLE="font-weight: medium">-
+constructs a nXm Mat of  random values</SPAN></P>
+<P><B>def eye0(n: Int): Mat  - </B><SPAN STYLE="font-weight: medium">constructs
+a nXn Mat of zero everywhere except the diagonal</SPAN></P>
+<P><SPAN STYLE="font-weight: medium">d</SPAN><B>ef eye0(n: Int, m:
+Int): Mat  </B><SPAN STYLE="font-weight: medium">- constructs a nXm
+Mat of  zero everywhere except the diagonal</SPAN></P>
+<P><I><B>Transpose operator    ~     transposes the Matrix, e.g.  </B><SPAN STYLE="font-weight: medium">var
+ mt = m~</SPAN></I></P>
+<P STYLE="font-weight: medium"><BR><BR>
+</P>
+<P STYLE="font-weight: medium"><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

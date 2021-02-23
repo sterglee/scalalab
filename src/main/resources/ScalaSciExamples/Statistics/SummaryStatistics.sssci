@@ -1,0 +1,20 @@
+
+import org.apache.commons.math.stat.descriptive.summary._
+
+// Get a SummaryStatistics instance
+var stats = new SummaryStatistics
+
+// read data from a List of values
+// adding values and updating sums, counters, etc.
+
+var listOfValues = List(0.333, -2.34, 4.333, 0.3333, -0.33322)
+
+var inputArray = Array(0.2, 0.3444, -4.556, 0.344, 2.345)
+// add the data from the array
+
+listOfValues foreach  (  stats.addValue(_) )
+   
+   // Compute some statistics
+var mean = stats.getMean
+var std = stats.getStandardDeviation
+   

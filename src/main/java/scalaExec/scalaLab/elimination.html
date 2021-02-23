@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101229;15171600">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>Two-dimensional boundary value problems </B></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US"><B>Elliptic special linear systems</B></SPAN></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US"><B>elimination</B></SPAN></FONT>
+
+<FONT SIZE=4>Determines an approximation u'_n to the solution of the system of equations </FONT>
+               <FONT SIZE=4>Au = f</FONT>
+<FONT SIZE=4>where A is an NXN matrix, <I>elimination</I>  is to be used in conjuction with <I>richardson, </I><SPAN STYLE="font-style: normal">for details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+<SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN>
+<SPAN LANG="en-US">import numal.*;</SPAN>
+
+<SPAN LANG="en-US">public class Test_elimination extends Object</SPAN>
+                              <SPAN LANG="en-US">implements AP_richardson_methods {</SPAN>
+
+  <SPAN LANG="en-US">static boolean elim;</SPAN>
+  <SPAN LANG="en-US">static int nn;</SPAN>
+  <SPAN LANG="en-US">static double h,h2,d1,d2;</SPAN>
+
+<SPAN LANG="en-US">	public static void main(String args[]) {</SPAN>
+
+    <SPAN LANG="en-US">int j,l,lj,uj,ll,ul;</SPAN>
+    <SPAN LANG="en-US">int n[] = new int[1];</SPAN>
+    <SPAN LANG="en-US">int k[] = new int[1];</SPAN>
+    <SPAN LANG="en-US">int p[] = new int[1];</SPAN>
+    <SPAN LANG="en-US">double rateconvr,rateconve,a,b;</SPAN>
+    <SPAN LANG="en-US">double discr[] = new double[3];</SPAN>
+    <SPAN LANG="en-US">double u[][] = new double[12][12];</SPAN>
+    <SPAN LANG="en-US">double rateconv[] = new double[1];</SPAN>
+    <SPAN LANG="en-US">double domeigval[] = new double[1];</SPAN>
+
+    <SPAN LANG="en-US">Test_elimination testelimination = new Test_elimination();</SPAN>
+    <SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);  </SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;RICHARDSON and ELIMINATION deliver:\n&quot;);</SPAN>
+    <SPAN LANG="en-US">lj=0;  uj=11;  ll=0;  ul=11;  n[0]=50;</SPAN>
+    <SPAN LANG="en-US">a=0.326;  b=7.83;</SPAN>
+    <SPAN LANG="en-US">h=Math.PI/(uj-lj);</SPAN>
+    <SPAN LANG="en-US">h2=h*h;</SPAN>
+    <SPAN LANG="en-US">for (j=lj; j&lt;=uj; j++)</SPAN>
+      <SPAN LANG="en-US">for (l=ll; l&lt;=ul; l++)</SPAN>
+        <SPAN LANG="en-US">u[j][l] = (j==lj || j==uj || l==ll || l==ul) ?</SPAN>
+                  <SPAN LANG="en-US">(j*h)*(j*h)*(l*h)*(l*h) : 1.0;</SPAN>
+    <SPAN LANG="en-US">nn=n[0];</SPAN>
+    <SPAN LANG="en-US">elim = false;</SPAN>
+    <SPAN LANG="en-US">Analytic_problems.richardson(u,lj,uj,ll,ul,true,testelimination,</SPAN>
+                      <SPAN LANG="en-US">a,b,n,discr,k,rateconv,domeigval);</SPAN>
+    <SPAN LANG="en-US">rateconvr=rateconv[0];</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;\n dominant eigenvalue:  &quot; +</SPAN>
+                       <SPAN LANG="en-US">fiveDigit.format(domeigval[0]) + &quot;\n&quot;);</SPAN>
+    <SPAN LANG="en-US">elim = true;</SPAN>
+    <SPAN LANG="en-US">Analytic_problems.elimination(u,lj,uj,ll,ul,testelimination,</SPAN>
+                      <SPAN LANG="en-US">a,b,p,discr,k,rateconv,domeigval);</SPAN>
+    <SPAN LANG="en-US">rateconve=rateconv[0];</SPAN>
+    <SPAN LANG="en-US">nn=n[0]+p[0];</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;\nTotal number of iterations: &quot; +</SPAN>
+      <SPAN LANG="en-US">nn + &quot;\nRate of convergence with respect to\n&quot; +</SPAN>
+      <SPAN LANG="en-US">&quot;   the zeroth iterand of RICHARDSON:  &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format((n[0]*rateconvr+p[0]*rateconve)/nn));</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public void residual(int lj, int uj, int ll, int ul, double u[][])</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">int ujmin1,ulmin1,ljplus1,j,l;</SPAN>
+    <SPAN LANG="en-US">double u2;</SPAN>
+    <SPAN LANG="en-US">double u1[] = new double[12];</SPAN>
+
+    <SPAN LANG="en-US">ujmin1=uj-1;</SPAN>
+    <SPAN LANG="en-US">ulmin1=ul-1;</SPAN>
+    <SPAN LANG="en-US">ljplus1=lj+1;</SPAN>
+    <SPAN LANG="en-US">for (j=lj; j&lt;=uj; j++) {</SPAN>
+      <SPAN LANG="en-US">u1[j]=u[j][ll];</SPAN>
+      <SPAN LANG="en-US">u[j][ll]=0.0;</SPAN>
+    <SPAN LANG="en-US">}</SPAN>
+    <SPAN LANG="en-US">for (l=ll+1; l&lt;=ulmin1; l++) {</SPAN>
+      <SPAN LANG="en-US">u1[lj]=u[lj][l];</SPAN>
+      <SPAN LANG="en-US">u[lj][l]=0.0;</SPAN>
+      <SPAN LANG="en-US">for (j=ljplus1; j&lt;=ujmin1; j++) {</SPAN>
+        <SPAN LANG="en-US">u2=u[j][l];</SPAN>
+        <SPAN LANG="en-US">u[j][l]=(4.0*u2-u1[j-1]-u1[j]-u[j+1][l]-u[j][l+1])+</SPAN>
+                <SPAN LANG="en-US">2.0*((j*h)*(j*h)+(l*h)*(l*h))*h2;</SPAN>
+        <SPAN LANG="en-US">u1[j]=u2;</SPAN>
+      <SPAN LANG="en-US">}</SPAN>
+      <SPAN LANG="en-US">u[uj][l]=0.0;</SPAN>
+    <SPAN LANG="en-US">}</SPAN>
+    <SPAN LANG="en-US">for (j=lj; j&lt;=uj; j++) u[j][ul]=0.0;</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public void out(double u[][], int lj, int uj, int ll, int ul, int n[],</SPAN>
+        <SPAN LANG="en-US">double discr[], int k[], double rateconv[], double domeigval[])</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);    </SPAN>
+    <SPAN LANG="en-US">if (elim) {</SPAN>
+      <SPAN LANG="en-US">if (k[0] == n[0])</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;  &quot; + k[0] + &quot;    &quot; +</SPAN>
+          <SPAN LANG="en-US">fiveDigit.format(discr[1]) + &quot;   &quot; +</SPAN>
+          <SPAN LANG="en-US">fiveDigit.format(discr[2]) + &quot;   &quot; +</SPAN>
+          <SPAN LANG="en-US">fiveDigit.format(rateconv[0]));</SPAN>
+    <SPAN LANG="en-US">} else {</SPAN>
+      <SPAN LANG="en-US">if (k[0] == 0)</SPAN>
+        <SPAN LANG="en-US">d1=d2=1.0;</SPAN>
+      <SPAN LANG="en-US">else {</SPAN>
+        <SPAN LANG="en-US">d2=d1;</SPAN>
+        <SPAN LANG="en-US">d1=domeigval[0];</SPAN>
+        <SPAN LANG="en-US">n[0] = (Math.abs((d1-d2)/d2) &lt; 1.0e-4) ? k[0] : nn;</SPAN>
+        <SPAN LANG="en-US">if (k[0] == n[0])</SPAN>
+          <SPAN LANG="en-US">System.out.println(&quot;  K    DISCR[1]     DISCR[2]  &quot; +</SPAN>
+            <SPAN LANG="en-US">&quot;   RATECONV\n  &quot; + k[0] + &quot;   &quot; +</SPAN>
+            <SPAN LANG="en-US">fiveDigit.format(discr[1]) + &quot;   &quot; +</SPAN>
+            <SPAN LANG="en-US">fiveDigit.format(discr[2]) + &quot;   &quot; +</SPAN>
+            <SPAN LANG="en-US">fiveDigit.format(rateconv[0]));</SPAN>
+      <SPAN LANG="en-US">}</SPAN>
+    <SPAN LANG="en-US">}</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+<SPAN LANG="en-US">}</SPAN></PRE>
+</BODY>
+</HTML>

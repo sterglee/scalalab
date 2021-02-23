@@ -1,0 +1,56 @@
+/// fast  compute of the sine axis wih a recurrence
+
+
+var delta = 0.001
+var alpha = 2*sin(delta/2)*sin(delta/2)
+var beta = sin(delta)
+
+var lowLimit = 0
+var highLimit = 20
+var pcosTheta = 0.0
+var psinTheta = 0.0
+
+var Np = ((highLimit-lowLimit)/delta).asInstanceOf[Int]+1
+
+var vSines = new Array[Double](Np)
+var vSinesDirect = new Array[Double](Np)
+var vCosines = new Array[Double](Np)
+var vCosinesDirect = new Array[Double](Np)
+
+tic
+var cosTheta = 0.0
+var sinTheta = 0.0
+var cnt = 0
+for (k<-0 to 10) {
+ cosTheta = cos(0)
+ sinTheta = sin(0)
+pcosTheta = cosTheta
+psinTheta = sinTheta
+
+
+  cnt=0
+while (cnt < Np) {
+  cosTheta = pcosTheta - (alpha*pcosTheta + beta*psinTheta)
+  sinTheta = psinTheta - (alpha*psinTheta - beta*pcosTheta)
+  vSines(cnt) = pcosTheta
+  vCosines(cnt) = psinTheta
+  pcosTheta = cosTheta;  psinTheta = sinTheta
+  cnt += 1
+ }
+}
+var tmRecur = toc;
+
+tic
+cnt = 0
+for (k<-0 to 10) {
+ cnt=0
+while (cnt < Np) {
+  vSinesDirect(cnt) = cos(cnt*delta)
+  vCosinesDirect(cnt) = sin(cnt*delta)
+  
+  cnt += 1
+ }
+}
+ var tmDirect = toc;
+
+plot(vSines); hold("on"); plot(vCosines, Color.BLUE)

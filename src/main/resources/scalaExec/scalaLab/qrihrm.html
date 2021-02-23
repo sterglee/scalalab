@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110101;15023800">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>qrihrm</B></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">for</SPAN> details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+
+<SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN>
+<SPAN LANG="en-US">import numal.*;</SPAN>
+
+<SPAN LANG="en-US">public class Test_qrihrm extends Object {</SPAN>
+<SPAN LANG="en-US">	</SPAN>
+<SPAN LANG="en-US">	public static void main(String args[]) {</SPAN>
+
+    <SPAN LANG="en-US">int i;</SPAN>
+    <SPAN LANG="en-US">double val[] = new double[5]; </SPAN>
+    <SPAN LANG="en-US">double em[] = new double[6];</SPAN>
+    <SPAN LANG="en-US">double a[][] = new double[5][5];</SPAN>
+    <SPAN LANG="en-US">double vr[][] = new double[5][5];</SPAN>
+    <SPAN LANG="en-US">double vi[][] = new double[5][5];</SPAN>
+    
+    <SPAN LANG="en-US">Basic.inimat(1,4,1,4,a,0.0);</SPAN>
+    <SPAN LANG="en-US">a[1][1]=a[2][2]=3.0;</SPAN>
+    <SPAN LANG="en-US">a[3][2]=2.0;  a[4][1] = -2.0;</SPAN>
+    <SPAN LANG="en-US">a[1][2]=a[3][3]=a[3][4]=a[4][4]=1.0;</SPAN>
+    <SPAN LANG="en-US">em[0]=em[2]=5.0e-5;</SPAN>
+    <SPAN LANG="en-US">em[4]=20.0;</SPAN>
+    <SPAN LANG="en-US">DecimalFormat twoDigit = new DecimalFormat(&quot;##&quot;);</SPAN>
+    <SPAN LANG="en-US">DecimalFormat threeDigit = new DecimalFormat(&quot;0.000&quot;);</SPAN>
+    <SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN>
+    
+    <SPAN LANG="en-US">System.out.println(&quot;QRIHRM: &quot; + </SPAN>
+      <SPAN LANG="en-US">Linear_algebra.qrihrm(a,4,val,vr,vi,em));</SPAN>
+    <SPAN LANG="en-US">Basic.sclcom(vr,vi,4,2,3);</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;\nEigenvalues:&quot; +</SPAN>
+      <SPAN LANG="en-US">&quot;\n  VAL[1]:   &quot; + threeDigit.format(val[1]) +</SPAN>
+      <SPAN LANG="en-US">&quot;\n  VAL[2]:   &quot; + threeDigit.format(val[2]) +</SPAN>
+      <SPAN LANG="en-US">&quot;\n  VAL[3]:  &quot; + threeDigit.format(val[3]) + </SPAN>
+      <SPAN LANG="en-US">&quot;\n  VAL[4]:  &quot; + threeDigit.format(val[4]) +        </SPAN>
+      <SPAN LANG="en-US">&quot;\n\nEigenvectors corresponding to\n   VAL[2]      VAL[3]&quot;);</SPAN>
+    <SPAN LANG="en-US">for (i=1; i&lt;=4; i++)</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;   &quot; +</SPAN>
+      <SPAN LANG="en-US">twoDigit.format(vr[i][2]) + &quot;  &quot; +</SPAN>
+      <SPAN LANG="en-US">twoDigit.format(vi[i][2]) + &quot;*I&quot; + &quot;      &quot; + </SPAN>
+      <SPAN LANG="en-US">twoDigit.format(vr[i][3]) + &quot;  &quot; +</SPAN>
+      <SPAN LANG="en-US">twoDigit.format(vi[i][3]) + &quot;*I&quot;);</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;\nEM[1]:  &quot; + fiveDigit.format(em[1]) +</SPAN>
+      <SPAN LANG="en-US">&quot;\nEM[3]:  &quot; + fiveDigit.format(em[3]) +</SPAN>
+      <SPAN LANG="en-US">&quot;\nEM[5]:  &quot; + fiveDigit.format(em[5]));</SPAN>
+<SPAN LANG="en-US">	}</SPAN>
+<SPAN LANG="en-US">}</SPAN>
+
+</PRE>
+</BODY>
+</HTML>

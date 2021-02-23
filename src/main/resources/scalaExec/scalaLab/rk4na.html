@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15095600">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE> <FONT SIZE=5><SPAN LANG="en-US"><B>rk4na</B></SPAN></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US">Solves an initial value problem for a system of first order ordinary differential equations </SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>dy/dx=f(x,y)</I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">, where f(x,y) may become large, e.g., in the neighborhood of a singularity, from </SPAN></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>x=x0 </I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">to </SPAN></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>x=xe </I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">where </SPAN></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>y(x0)=y0, </I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">by means of a 5-th order Runge-Kutta method. The system is assumed to be nonstiff.</SPAN></SPAN></FONT>
+
+<B><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">Example: Can be run with F9 within the ScalaLab Editor  </SPAN></SPAN></FONT></B>
+
+
+
+import java.text.DecimalFormat;
+import java.util.*;
+import numal.*;
+
+public class Test_rk4na extends Object
+                                implements AP_rk4na_methods {
+        
+        public static void main(String args[]) {
+
+    boolean first;
+    int j;
+    double x0;
+    double e[] = new double[8];
+    double xa[] = new double[3];
+    double x[] = new double[3];
+    double d[] = new double[6];
+
+    Vector xout = new Vector();
+    
+    DecimalFormat eightDigit = new DecimalFormat(&quot;0.00000000&quot;);
+    Test_rk4na testrk4na = new Test_rk4na();
+    for (j=0; j&lt;=5; j++) e[j]=0.1e-6;
+    e[6]=e[7]=1.0e-8;
+    System.out.println(&quot;VAN DER POL\n\nEPS = &quot; +
+      eightDigit.format(e[0]) +
+      &quot;\n\nThe values of x[0],x[1],x[2],p:&quot;);
+    x0=xa[0]=xa[2]=0.0;
+    xa[1]=2.0;
+    System.out.println(&quot;  &quot; + eightDigit.format(xa[0]) +
+      &quot;\t&quot; + eightDigit.format(xa[1]) + &quot;\t&quot; +
+      eightDigit.format(xa[2]) + &quot;\t&quot; + eightDigit.format(x0));
+    first=true;
+    for (j=1; j&lt;=4; j++) {
+      Analytic_problems.rk4na(x,xa,testrk4na,e,d,first,2,0,true, xout);
+      x0=x[0]-x0;
+      System.out.println(&quot;  &quot; + eightDigit.format(x[0]) +
+        &quot;\t&quot; + eightDigit.format(x[1]) + &quot;\t&quot; +
+        eightDigit.format(x[2]) + &quot;\t&quot; + eightDigit.format(x0));
+      first=false;
+      x0=x[0];
+    }
+        }
+
+
+  public double b(int n, double x[])
+  {
+    return x[2];
+  }
+
+
+  public double fxj(int n, int k, double x[])
+  {
+    return ((k == 1) ? x[2] : 10.0*(1.0-x[1]*x[1])*x[2]-x[1]);
+  }
+}</PRE>
+</BODY>
+</HTML>

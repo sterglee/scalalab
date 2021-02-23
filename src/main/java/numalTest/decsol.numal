@@ -1,0 +1,43 @@
+// NUMAL related imports
+     import _root_.java.util.Vector ; 
+    import _root_.numal._ ; 
+    import _root_.numal.Algebraic_eval._;
+    import _root_.numal.Analytic_eval._
+    import _root_.numal.Analytic_problems._
+    import _root_.numal.Approximation._
+    import _root_.numal.Basic._;
+    import _root_.numal.FFT._;
+    import  _root_.numal.Linear_algebra._; 
+    import _root_.numal.Special_functions._;
+    import java.text.DecimalFormat 
+
+
+/*                  ROUTINE:    decsol
+Solves a well-conditioned linear system of equations Ax=b whose order is small 
+relative to the number of binary digits in the number representation.
+
+Procedure parameters:
+       def  decsol(a: AAD, n: Int, aux: AD, b: AD)
+
+*/
+
+/* Solve the 4X4 linear system of equations Ax=b, where A is the Hilbert matrix, for which 
+Aij=1/(i+j-1), i, j = 1, ..., 4, and bi = 1/(2+i), i=1, ..., 4, (so that the solution is the unit vector (0, 0, 1, 0)) */
+
+var  b = new AD(5)
+var  aux = new AD(4)
+var  a = Array.ofDim[Double](5,5)
+
+for (i<-1 to 4)
+  for (j<-1 to 4)  {
+     a(i)(j) = 1.0/(i+j-1)
+     b(i) = a(i)(3)
+    }
+aux(2) = 1.0e-5
+decsol(a, 4, aux, b)
+
+var fiveDigit = new DecimalFormat("0.00000E0")
+
+println("\n\nSolution: "+ fiveDigit.format(b(1)) + " "+fiveDigit.format(b(2))+" "+fiveDigit.format(b(3)) + " "+   fiveDigit.format(b(4)))
+
+              

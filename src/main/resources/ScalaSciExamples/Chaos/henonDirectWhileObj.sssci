@@ -1,0 +1,30 @@
+
+close("all")
+  val  A_CHAOS=1.4;
+  val  B_CHAOS=0.3;
+    
+tic;
+var N=50000 //getInt("Number of points for Henon");
+  
+var x = Array.ofDim[Double](2, N)
+x(0)(0)=0.12; x(1)(0) = 0.2;
+
+var k = 1;
+while  (k < N) {
+  x(0)(k) = 1.0-A_CHAOS*x(0)(k-1)*x(0)(k-1)+x(1)(k-1)
+  x(1)(k) = B_CHAOS*x(0)(k-1)
+  k += 1
+ }
+
+var tm = toc();
+scatterPlotsOn();  // display points only, not the connecting lines
+plot(x);
+title("Scala Time "+tm);
+
+  
+ tm = toc();
+scatterPlotsOn();  // display points only, not the connecting lines
+plot(x);
+title("Scala Time "+tm);
+
+  

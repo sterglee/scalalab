@@ -1,0 +1,38 @@
+
+// test rand()
+var  mra1 = rand1(2,3)   //  one indexed Matrix
+var  mra0 = rand0(2,3)   //  zero indexed Mat
+var r1d = rand(9) // RichDouble1DArray
+var rra = rand(2,3)  //  RichDouble2DArray
+var r1D = Rand(9) //  Array[Double]
+var r2D = Rand(3,7) // Array[Array[Double]
+var vrnd = vrand(9)  // vector 
+
+// test fill()
+var v = 4.5
+var  mfa1 = fill1(2,3, v)   //  one indexed Matrix
+var  mfa0 = fill0(2,3, v)   //  zero indexed Mat
+var mf1d = fill(6, v) // RichDouble1DArray
+var rfa = fill(2,3, v)  //  RichDouble2DArray
+var v1D = Fill(9, v)  // Array[Double]
+var v2D = Fill(3,9, v) // Array[Array[Double]]
+var vf = vfill(7, v)  // vector
+
+
+// test ones()
+var  moa1 = ones1(2,3)   //  one indexed Matrix
+var  moa0 = ones0(2,3)   //  zero indexed Mat
+var  mo1d = ones(8)  // RichDouble1DArray
+var mo2d = ones(2,3)  //  RichDouble2DArray
+var mO1D = Ones(8)  // Array[Double]
+var mO2D = Ones(6,8)  // Array[Array[Double]]
+var vo = vones(9)  // vector
+
+// test zeros()
+var  mza1 = zeros1(2,3)   //  one indexed Matrix
+var  mza0 = zeros0(2,3)   //  zero indexed Mat
+var  mz1d = zeros(8)  // RichDouble1DArray
+var mz2d = zeros(2,3)  //  RichDouble2DArray
+var mZ1D = Zeros(8)  // Array[Double]
+var mZ2D = Zeros(6,8)  // Array[Array[Double]]
+var vz = vzeros(9)  // vector

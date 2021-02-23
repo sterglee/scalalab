@@ -1,0 +1,21 @@
+
+initMatlabConnection
+
+var N=300
+var x = Rand(N, N)
+var s = """
+tic; 
+[evecs, evals] = eig(x);
+tmmatlab = toc;
+"""
+
+
+@MATLAB
+meval(s, Array("x"), Array("evals", "evecs", "tmmatlab"))
+@MATLAB
+
+tic
+var jx = eig(x)
+var tmj =toc
+
+

@@ -1,0 +1,31 @@
+
+// bifurcation diagram for Logistic Map
+        
+        var kc = 0
+        var dx = 0.001
+        var xup = 4.0
+        var xlow = 2.0
+        var  N  = ((xup-xlow)/dx).asInstanceOf[Int]+1
+        var M = 20
+        var yplot=0.0
+        var (xa, ya) = (new Array[Double](M*N+1), new Array[Double](M*N+1))
+
+       var r =  xlow   // r is the bifurcation parameter
+        while (r <  xup) {
+            var x = 0.8
+            for (k<-0 to 20)
+                x = r*x*(1.0-x)
+            
+            for (k<-0 until M) {
+                x = r*x*(1.0-x)
+                xa(kc) = r
+                ya(kc) =1- x
+                kc += 1
+            }
+            r = r+dx
+        }
+    
+
+    scatterPlotsOn
+    plot(xa, ya)
+    

@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110101;14255800">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>eqilbrcom</B></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">Equilibrates an </SPAN><I>nXn </I><SPAN STYLE="font-style: normal"> complex matrix A by determining a real diagonal matrix D whose diagonal elements are integers powers of two, and a permutation matrix P </SPAN><SPAN STYLE="font-style: normal">,</SPAN></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">for</SPAN> details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+<SPAN LANG="en-US">import numal.*;</SPAN>
+
+<SPAN LANG="en-US">public class Test_eqilbrcom extends Object {</SPAN>
+<SPAN LANG="en-US">	</SPAN>
+<SPAN LANG="en-US">	public static void main(String args[]) {</SPAN>
+
+    <SPAN LANG="en-US">int inter[] = new int[4];</SPAN>
+    <SPAN LANG="en-US">double em[] = new double[8];</SPAN>
+    <SPAN LANG="en-US">double d[] = new double[4];</SPAN>
+    <SPAN LANG="en-US">double a1[][] = new double[4][4];</SPAN>
+    <SPAN LANG="en-US">double a2[][] = new double[4][4];</SPAN>
+  
+    <SPAN LANG="en-US">em[0]=5.0e-7;</SPAN>
+    <SPAN LANG="en-US">em[6]=10.0;</SPAN>
+    <SPAN LANG="en-US">Basic.inimat(1,3,1,3,a1,0.0);</SPAN>
+    <SPAN LANG="en-US">Basic.inimat(1,3,1,3,a2,0.0);</SPAN>
+    <SPAN LANG="en-US">a1[1][1]=a1[2][2]=1.0;</SPAN>
+    <SPAN LANG="en-US">a1[3][3]=2.0;</SPAN>
+    <SPAN LANG="en-US">a2[1][3]=Math.pow(2.0,10.0);</SPAN>
+    <SPAN LANG="en-US">a2[3][1]=Math.pow(2.0,-10.0);</SPAN>
+    <SPAN LANG="en-US">Linear_algebra.eqilbrcom(a1,a2,3,em,d,inter);</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;Equilibrated matrix:\n  &quot; +</SPAN>
+      <SPAN LANG="en-US">a1[1][1] + &quot;  &quot;  + a1[1][2] + &quot;  &quot; + a1[1][3] +</SPAN>
+      <SPAN LANG="en-US">&quot;\n  &quot; + a1[2][1] + &quot;  &quot; + a1[2][2] + &quot;  I&quot; +</SPAN>
+      <SPAN LANG="en-US">&quot;\n  &quot; + a1[3][1] + &quot;  I    &quot; + a1[3][3] +</SPAN>
+      <SPAN LANG="en-US">&quot;\n\nEM[7]:       &quot; + (int)em[7] +</SPAN>
+      <SPAN LANG="en-US">&quot;\nD[1:3]:      &quot; +  d[1] + &quot;  &quot; + d[2] + &quot;  &quot; + d[3] +</SPAN>
+      <SPAN LANG="en-US">&quot;\nINTER[1:3]:  &quot; + inter[1] + &quot;    &quot; + </SPAN>
+      <SPAN LANG="en-US">inter[2] + &quot;       &quot; + inter[3]);</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+<SPAN LANG="en-US">}</SPAN></PRE>
+</BODY>
+</HTML>

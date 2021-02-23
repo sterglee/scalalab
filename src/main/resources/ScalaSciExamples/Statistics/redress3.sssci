@@ -1,0 +1,29 @@
+import org.apache.commons.math.stat.regression.OLSMultipleLinearRegression
+
+var regression = new OLSMultipleLinearRegression()
+
+var y = Array(11.0, 12.0, 13.0, 14.0, 15.0, 16.0)
+
+var x = Array.ofDim[Array[Double]](6)
+
+x(0) = Array(0.0, 0.0, 0.0, 0.0, 0.0)
+x(1) = Array(2.0, 0, 0, 0, 0)
+x(2) = Array(0, 3.0, 0, 0, 0)
+x(3) = Array(0, 0, 4.0, 0, 0)
+x(4) = Array(0, 0, 0, 5.0, 0)
+x(5) = Array(0, 0, 0, 0, 6.0)
+
+regression.newSampleData(y, x)
+// get regression parameters and diagnostics
+
+var beta = regression.estimateRegressionParameters()
+
+var residuals = regression.estimateResiduals()
+
+var parametersVariance = regression.estimateRegressionParametersVariance()
+
+var regressandVariance = regression.estimateRegressandVariance()
+
+var rSsquared = regression.calculateRSquared()
+
+var sigma = regression.estimateRegressionStandardError() 

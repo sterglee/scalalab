@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101228;16225500">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>modifiedtaylor</B></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US">Solves an initial value problem, given as an autonomous system of  first order differential equations by means of a <SPAN STYLE="font-style: normal">one-step Taylor method. This procedure is suitable for the integration of large systems arising from partial differential equations, provided that higher order derivatives can be easily obtained.</SPAN></SPAN></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+<FONT SIZE=3><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">public class Test_modifiedtaylor extends Object</SPAN></FONT>
+                      <FONT SIZE=3><SPAN LANG="en-US">implements AP_modifiedtaylor_methods {</SPAN></FONT>
+
+  <FONT SIZE=3><SPAN LANG="en-US">static double expt,lnt,c0,c1,c2,c3;</SPAN></FONT>
+   
+        <FONT SIZE=3><SPAN LANG="en-US">public static void main(String args[]) {</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">int j,order,accuracy;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">int k[] = new int[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double te;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double u[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double t[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double eta[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double rho[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double data[] =new double[5];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double xtmp[] = new double[8];</SPAN></FONT>
+    
+    <FONT SIZE=3><SPAN LANG="en-US">Test_modifiedtaylor testmodifiedtaylor = </SPAN></FONT>
+                             <FONT SIZE=3><SPAN LANG="en-US">new Test_modifiedtaylor();</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot;The results with MODIFIEDTAYLOR are:&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">te=0.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">order=4;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">accuracy=3;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">data[0]=6.025;  data[1]=1.0; data[2]=0.5;  data[3]=1.0/6.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">data[4]=0.018455702;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">t[0]=u[0]=1.0e-2;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">k[0]=0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">for (j=1; j&lt;=2; j++) {</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">te = (j == 1) ? Math.exp(1.0) : te*te;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">Analytic_problems.modifiedtaylor(t,te,0,0,u,</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">testmodifiedtaylor,1.0e-4,k,order,accuracy,</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">data,1.5,1,eta,rho,xtmp);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void derivative(double t[], int m0, int m, int i,</SPAN></FONT>
+                         <FONT SIZE=3><SPAN LANG="en-US">double a[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">if (i == 1) {</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">expt=Math.exp(t[0]);</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">lnt=Math.log(t[0]);</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">c0=a[0];</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">c1 = a[0] = -expt*c0+1.0/t[0]+expt*lnt;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">if (i == 2) c2=a[0]=expt*(lnt+1.0/t[0]-c0-c1)-1.0/t[0]/t[0];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">if (i == 3)</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">c3=a[0]=expt*(lnt+2.0/t[0]-c0-2.0*c1-c2-1.0/t[0]/t[0])+</SPAN></FONT>
+              <FONT SIZE=3><SPAN LANG="en-US">2.0/t[0]/t[0]/t[0];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">if (i == 4)</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">a[0]=c3-2.0*(1.0+3.0/t[0])/t[0]/t[0]/t[0]+</SPAN></FONT>
+           <FONT SIZE=3><SPAN LANG="en-US">expt*((1.0-(2.0-2.0/t[0])/t[0])/t[0]-c1-c2*2.0-c3);</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public double sigma(double t[], int m0, int m)</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">return Math.exp(t[0]);</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public double aeta(double t[], int m0, int m)</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">return 1.0e-5;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public double reta(double t[], int m0, int m)</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">return 1.0e-4;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void out(double t[], double te, int m0, int m,</SPAN></FONT>
+                  <FONT SIZE=3><SPAN LANG="en-US">double u[], int k[], double eta[], double rho[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">if (t[0] == te)</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot;\nNumber of steps: &quot; + k[0] +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">&quot;\nSolution:  T = &quot; + fiveDigit.format(t[0]) +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">&quot;    U(T) = &quot; + fiveDigit.format(u[0]));</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT></PRE>
+</BODY>
+</HTML>

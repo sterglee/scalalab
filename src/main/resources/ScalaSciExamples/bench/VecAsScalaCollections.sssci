@@ -1,0 +1,6 @@
+
+var v= inc(0, 0.01, 10)
+def f(x:Double) = x*x
+var v2 = v map f
+
+plot(v, v2)

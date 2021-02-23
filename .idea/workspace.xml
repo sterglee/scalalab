@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:scalalab" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f2d6d69e-6b7c-449f-8457-cb968c90c9be" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScalaLab.jar" beforeDir="false" afterPath="$PROJECT_DIR$/ScalaLab.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libScala/.directory" beforeDir="false" afterPath="$PROJECT_DIR$/libScala/.directory" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libScala/jline-3.16.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libScala/jna-5.3.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libScala/scala-compiler.jar" beforeDir="false" afterPath="$PROJECT_DIR$/libScala/scala-compiler.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libScala/scala-library.jar" beforeDir="false" afterPath="$PROJECT_DIR$/libScala/scala-library.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libScala/scala-reflect.jar" beforeDir="false" afterPath="$PROJECT_DIR$/libScala/scala-reflect.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libScala/scalap-2.13.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SysUtils/ConsoleWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SysUtils/ConsoleWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/scalaExec/Interpreter/GlobalValues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/scalaExec/Interpreter/GlobalValues.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/scalaExec/Interpreter/ControlInterpreter.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/scalaExec/Interpreter/ControlInterpreter.scala" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1cAOynAV6iAJBhKSAt3YNfucaJS" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/build.sbt" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="StructuralSearchPlugin">
+    <searchConfiguration name="Unnamed" created="1596539082502" text="NativeLibsObj" recursive="false" caseInsensitive="false" type="JAVA" pattern_context="default" scope_type="PROJECT" scope_descriptor="" history="1">
+      <constraint name="__context__" within="" contains="" />
+    </searchConfiguration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f2d6d69e-6b7c-449f-8457-cb968c90c9be" name="Default Changelist" comment="" />
+      <created>1589968187503</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1589968187503</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1046" y="462" width="1023" height="1368" key="find.popup" timestamp="1606827193411">
+      <screen x="0" y="0" width="3840" height="2084" />
+    </state>
+    <state x="1046" y="462" width="1023" height="1368" key="find.popup/0.0.3840.2084@0.0.3840.2084" timestamp="1606827193411" />
+    <state x="625" y="542" width="2160" height="946" key="new project wizard" timestamp="1602325934277">
+      <screen x="0" y="0" width="3840" height="2084" />
+    </state>
+    <state x="625" y="542" width="2160" height="946" key="new project wizard/0.0.3840.2084@0.0.3840.2084" timestamp="1602325934277" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/src/main/scala/scalainterpreter/ScalaInterpreterPane.scala</url>
+          <line>555</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

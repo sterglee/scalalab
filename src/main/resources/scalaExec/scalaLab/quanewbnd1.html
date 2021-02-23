@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15090000">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>Systems
+of equations – No Jacobian matrix</B></FONT></P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>quanewbnd1</B></FONT></P>
+<P STYLE="font-style: normal"><FONT SIZE=4>Solves systems of
+nonlinear equations of which the Jacobian is known to ba a band
+matrix and an approximation of the Jacobian is assumed to be
+available at the initial guess. </FONT>
+</P>
+<P STYLE="font-style: normal"><BR><BR>
+</P>
+<P STYLE="font-style: normal"><FONT SIZE=4><B>Example: Can be run
+with F9 within the ScalaLab Editor  </B></FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">import
+java.text.DecimalFormat;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">import numal.*;</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public class Test_quanewbnd1
+extends Object</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">implements
+AP_quanewbnd_method {</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public static void
+main(String args[]) {</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">int i;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double in[] = new double[6];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double out[] = new double[6];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double x[]= new double[601];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double f[]= new double[601];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">Test_quanewbnd1
+testquanewbnd1 = new Test_quanewbnd1();</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">DecimalFormat fiveDigit = new
+DecimalFormat(&quot;0.00000E0&quot;);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">for (i=1; i&lt;=600; i++)
+x[i] = -1.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">in[0]=1.0e-6;
+in[1]=in[2]=in[3]=1.0e-5; in[4]=20000.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">in[5]=0.001;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">Analytic_problems.quanewbnd1(600,1,1,x,f,testquanewbnd1,in,out);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">System.out.println(&quot;Norm
+Residual vector: &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(out[2]) +
+&quot;\nLength of last step: &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(out[1]) +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">&quot;\nNumber of function
+component evaluations: &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">(int)out[3] + &quot;\nNumber
+of iterations: &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">(int)out[4] + &quot;\nReport:
+&quot; + (int)out[5]);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public boolean funct(int n,
+int l, int u, double x[], double f[])</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">{</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">int i;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double x1,x2,x3;</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">x1 = (l == 1) ? 0.0 : x[l-1];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">x2=x[l];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">x3 = (l == n) ? 0.0 : x[l+1];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">for (i=l; i&lt;=u; i++) {</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">f[i]=(3.0-2.0*x2)*x2+1.0-x1-x3*2.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">x1=x2;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">x2=x3;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">x3 = (i &lt;= n-2) ? x[i+2] :
+0.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">return (true);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+</BODY>
+</HTML>

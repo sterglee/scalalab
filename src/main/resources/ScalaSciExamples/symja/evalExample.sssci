@@ -1,0 +1,7 @@
+
+var expr1 =   "Integrate[a+b*x, x]"
+var expr2 =   "Integrate[x^(-1), x]"
+    
+    
+var rs1  = sym(expr1)
+var rs2  = sym(expr2)

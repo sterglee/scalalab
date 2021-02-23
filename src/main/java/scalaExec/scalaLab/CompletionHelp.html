@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1253">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20130603;13574719">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2.01cm }
+		P { margin-bottom: 0.2cm }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>Tutorial on JSyntaxPane Completion</B></FONT>
+
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">The <I>JSyntaxPane</I> editor supports two modes of code completion, the <I>Global </I><SPAN STYLE="font-style: normal">mode and the </SPAN><I>Scala </I><SPAN STYLE="font-style: normal">mode.  </SPAN><FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">ScalaLab exit and is available for the next working session.</SPAN></FONT></SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">The &ldquo;<I>Global&rdquo;  </I>completion mode is used with <B>CTRL-SPACE</B>.  It is useful to remind the large number of  routines of ScalaLab. Also,  many of these routines are overloaded and thus it is more difficult for the user to remember their usage. One good example is the <I>plot()</I> routines that has a lot of overloaded versions. The user can simply type <I>plot</I> and then CTRL-SPACE. The code completion feature of the JsyntaxArea editor reminds the user of all the overloaded versions of plot.</SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">The &ldquo;<I>Scala&rdquo;</I> completion mode is used with <B>F7. </B><SPAN STYLE="font-weight: medium">It </SPAN>can also be very useful for other completion tasks.  That mode extracts information using a <I>Scala completer object. </I>One very usefl task is <I>package completion.  </I>Suppose that we want to display the contents of the package <I>org.ejml. </I>We simple write: <I>org.ejml.  </I>and then we press F7.</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">The completer displays to us the contents of the package <I>org.ejml  </I>with an elegant popup completion list. </SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Also, very convenient is the member completion feature. Suppose that we execute the command:</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US"><I>var xx = new JFrame(&quot;test&quot;)</I></SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Then we can easily remember the many fields/methods of the <I>javax.swing.JFrame </I>class, using:</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US"><I>xx.</I> &lt;F7&gt;</SPAN></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US"><B>Tutorial on RsyntaxArea Completion</B></SPAN></FONT>
+
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">The <I>RSyntaxArea </I>editor supports two modes of code completion, the <I>Global </I><SPAN STYLE="font-style: normal">mode and the </SPAN><I>Scala </I><SPAN STYLE="font-style: normal">mode.  The menu </SPAN>&ldquo;<I>Completion&rdquo; </I><SPAN STYLE="font-style: normal">can be used to switch between these two completion modes, with the submenu option: </SPAN></SPAN></FONT>
+&ldquo; <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US"><I>Toggle Global/Scala completion mode, current mode is: .... &ldquo;</I></SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">That submenu also displays the current completion mode. Also the current completion mode is saved upon ScalaLab exit and is available for the next working session.</SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">The &ldquo;<I>Global&rdquo; </I>completion mode is useful to remind the large number of  routines of ScalaLab. Also,  many of these routines are overloaded and thus it is more difficult for the user to remember their usage. One good example is the <I>plot()</I> routines that has a lot of overloaded versions. The user can simply type <I>plot</I> and then CTRL-SPACE, while RsyntaxArea is in &ldquo;Global&rdquo; completion mode. The code completion feature of the RsyntaxArea editor reminds the user of all the overloaded versions of plot.</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Also, we can from the &ldquo;<I>Completion</I>&rdquo; menu expand the completion lists available at the &ldquo;Global&rdquo; completion mode using information extracted from libraries using Java reflection. </SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">The &ldquo;<I>Scala&rdquo;</I> completion mode can also be very useful for other completion tasks.  That mode extracts information using a <I>Scala completer object. </I>One very usefl task is <I>package completion.  </I>Suppose that we want to display the contents of the package <I>org.ejml. </I>We simple write: <I>org.ejml.  </I>and then we press CTRL-SPACE wile in &ldquo;Scala&rdquo; completion mode. The completer displays to us the contents of the package <I>org.ejml  </I>with an elegant popup completion list. </SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Also, very convenient is the member completion feature. Suppose that we execute the command:</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US"><I>var xx = new JFrame(&quot;test&quot;)</I></SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Then we can easily remember the many fields/methods of the <I>javax.swing.JFrame </I>class, using:</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US"><I>xx.</I> &lt;CTRL-SPACE&gt;</SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US"><B>F4 Completion</B></SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">The F4 key works similar for both editors (i.e. JSyntaxPane and RsyntaxArea). It displays a completion list  with about the same contents as that obtained from Scala Completion but by using Java reflection.</SPAN></FONT></PRE>
+</BODY>
+</HTML>

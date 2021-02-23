@@ -1,0 +1,26 @@
+
+import java.io.IOException
+
+import com.github.sarxos.webcam.Webcam
+import com.github.sarxos.webcam.WebcamMotionDetector
+import com.github.sarxos.webcam.WebcamMotionEvent
+import com.github.sarxos.webcam.WebcamMotionListener
+
+
+    var detector = new WebcamMotionDetector(Webcam.getDefault())
+    detector.setInterval(100)  // one check per 100 ms
+    var motionListenerObj = new MotionListener   // the motion listener object
+    detector.addMotionListener(motionListenerObj)
+    detector.start()
+	
+
+class MotionListener extends AnyRef with  WebcamMotionListener {
+	override def motionDetected( wme: WebcamMotionEvent) {
+		//println("Detected motion I, alarm turn on you have");
+  //java.awt.Toolkit.getDefaultToolkit().beep()
+  tone(400,1000)
+
+	}
+
+	
+}

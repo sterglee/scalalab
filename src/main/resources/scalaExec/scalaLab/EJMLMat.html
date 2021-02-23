@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110725;14111700">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P><FONT SIZE=6 STYLE="font-size: 22pt"><U><B>Description of the
+EJMLMat class</B></U></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none">The
+<B>EJMLMat</B> class implements zero-indexed two-dimensional dense
+matrices in ScalaSci that are based upon the Efficient Java Matrix
+Library.</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4><U><B>Constructors</B></U></FONT></P>
+<P><BR><BR>
+</P>
+<P><SPAN STYLE="text-decoration: none"><B>Mat(rows: Integer, cols:
+Integer) </B></SPAN><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: normal">//
+Creates a EML Mat of size rows, cols initialized to zeros</SPAN></SPAN></P>
+<P STYLE="font-weight: normal; text-decoration: none"><A NAME="__DdeLink__3_1047709065"></A>
+<I>var m=new Mat(2, 3)</I></P>
+<P STYLE="font-weight: normal; text-decoration: none"><I>m.print //
+print the contents</I></P>
+<P><BR><BR>
+</P>
+<OL START=3>
+	<P><B>Construction by specifying the initial elements, e.g.</B></P>
+	<P STYLE="font-weight: normal"><A NAME="__DdeLink__9_1047709065"></A><A NAME="__DdeLink__5_1047709065"></A>
+	<I>var m = M(&quot;4.5 5.6 -4; 4.5 3 -3.4&quot;) // space separated</I></P>
+	<P STYLE="font-weight: normal"><A NAME="__DdeLink__11_1047709065"></A>
+	<I>var m = M(&quot;4.5, 5.6, -4; 4.5, 3, -3.4&quot;) // comma
+	separated</I></P>
+</OL>
+<P STYLE="font-weight: normal; text-decoration: none"><A NAME="DDE_LINK"></A>
+// construct Mat by copying the array values</P>
+<P><A NAME="DDE_LINK3"></A><SPAN STYLE="text-decoration: none"><B>Mat(da:
+Array[Array[Double]]) </B></SPAN><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: normal">//
+Creates an EJML Mat initialized with the da array</SPAN></SPAN></P>
+<P><A NAME="__DdeLink__13_1047709065"></A><I>var dd = new
+Array[Array[Double]](2,4)</I></P>
+<P><I>dd(1)(1)=11</I></P>
+<P><I>var mdd = new Mat(dd)</I></P>
+<P><I>mdd.print // print finally the EJML Matrix</I></P>
+<P><BR><BR>
+</P>
+<P><U><B>Operators</B></U></P>
+<P>Matrix addition, subtraction and multiplication has been
+overloaded and works properly. Also addition and multiplication with
+scalars operates properly, e.g.</P>
+<P><BR><BR>
+</P>
+<P><A NAME="__DdeLink__41_30059315"></A><I>var m1 = rand0(4,7)</I></P>
+<P><I>var m2 = rand0(7, 9)</I></P>
+<P><I>var mmul = m1*m2 // multiplication</I></P>
+<P><I>var madd = m1+7*m1+m1*9.4</I></P>
+<P><BR><BR>
+</P>
+<P><I>org.ejml.ops.MatrixVisualization.show(madd.sm.getMatrix, &quot;madd
+matrix&quot;)</I></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-style: normal"><U><B>Basic Methods</B></U></P>
+<P STYLE="font-style: normal; text-decoration: none"><B>def getv:
+Array[Array[Double]] </B><SPAN STYLE="font-weight: normal">// returns
+the Java 1-D double array used to store the contents of the matrix</SPAN></P>
+<P STYLE="font-style: normal; text-decoration: none"><A NAME="DDE_LINK2"></A>
+<B>def size: (Int, Int)</B> <SPAN STYLE="font-weight: normal">//
+Returns the number of rows and columns of the Mat</SPAN></P>
+<P STYLE="font-weight: normal; text-decoration: none"><I>var md =
+ones0(9)</I></P>
+<P STYLE="font-weight: normal; text-decoration: none"><I>md.size</I></P>
+<P STYLE="font-style: normal; text-decoration: none"><B>def length:
+Int </B><SPAN STYLE="font-weight: normal">// Returns the number of
+rows of Mat</SPAN></P>
+<P STYLE="font-weight: normal; text-decoration: none"><I>var md =
+ones0(9, 2)</I></P>
+<P STYLE="font-weight: normal; text-decoration: none"><I>md.length</I></P>
+<P STYLE="font-style: normal; text-decoration: none"><B>def Nrows:
+Int </B><SPAN STYLE="font-weight: normal">// Returns the number of
+rows of Mat</SPAN></P>
+<P STYLE="font-weight: normal; text-decoration: none"><I>md.Nrows</I></P>
+<P><B>def Ncols: Int</B> <SPAN STYLE="font-weight: normal">// Returns
+the number of columns of Mat</SPAN></P>
+<P><I>md.Ncols</I></P>
+<P><BR><BR>
+</P>
+<P><U><B>Routines</B></U></P>
+<P><BR><BR>
+</P>
+<P><B>def ones0(n: Int): Mat - </B><SPAN STYLE="font-weight: normal">constructs
+a nXn Mat of ones</SPAN></P>
+<P><B>def ones0(n: Int, m: Int): Mat </B><SPAN STYLE="font-weight: normal">-
+constructs a nXm Mat of ones</SPAN></P>
+<P><B>def zeros0(n: Int): Mat - </B><SPAN STYLE="font-weight: normal">constructs
+a nXn Mat of zeros</SPAN></P>
+<P><B>def zeros0(n: Int, m: Int): Mat </B><SPAN STYLE="font-weight: normal">-
+constructs a nXm Mat of zeros</SPAN></P>
+<P><B>def rand0(n: Int): Mat - </B><SPAN STYLE="font-weight: normal">constructs
+a nXn Mat of random values</SPAN></P>
+<P><B>def rand0(n: Int, m: Int): Mat </B><SPAN STYLE="font-weight: normal">-
+constructs a nXm Mat of random values</SPAN></P>
+<P STYLE="font-weight: normal"><I>var rr = rand0(5,8)</I></P>
+<P><B>Apply Operators</B></P>
+<P STYLE="font-weight: normal"><I>var rr = rand0(5,8)</I></P>
+<P STYLE="font-weight: normal"><I>var rr01 = rr(0,1) // gets the
+corresponding double value</I></P>
+<P STYLE="font-weight: normal"><I>var r0 = rr(0) // extracts the 0<SUP>th</SUP>
+row</I></P>
+<P><BR><BR>
+</P>
+<P><B>Update Operators</B></P>
+<P STYLE="font-weight: normal"><I>rr(0,1) = 99 // sets the
+corresponding element</I></P>
+<P><BR><BR>
+</P>
+<P><B>Transpose matrix</B></P>
+<P STYLE="font-weight: normal"><I>var mm = ones0(9, 2)</I></P>
+<P STYLE="font-weight: normal"><I>var mmt = mm.transpose </I>
+</P>
+<P STYLE="font-weight: normal"><I>var mmt = transpose(mm) //
+alternative interface</I></P>
+<P STYLE="font-style: normal"><B>Also the ~ operator can be used for
+transposing matrices,</B></P>
+<P STYLE="font-style: normal"><B>e.g. </B>
+</P>
+<P STYLE="font-style: normal; font-weight: normal">var myMat =
+rand0(2, 8)</P>
+<P STYLE="font-style: normal; font-weight: normal">var tMyMat =
+myMat~ // transposed</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P STYLE="font-style: normal"><B>Inverse matrix</B></P>
+<P STYLE="font-weight: normal"><A NAME="__DdeLink__8_1277899113"></A><I>var
+mm= rand0(8)</I></P>
+<P STYLE="font-weight: normal"><I>var mmi = inv(mm) // get the
+inverse</I></P>
+<P STYLE="font-weight: normal"><I>var oned = mm*mmi // verify that
+indeed we get the inverse</I></P>
+<P STYLE="font-weight: normal"><A NAME="__DdeLink__10_1277899113"></A>
+<I>oned.print</I></P>
+<P><BR><BR>
+</P>
+<P><B>Solve Linear System</B></P>
+<P><A NAME="__DdeLink__12_1277899113"></A><I>var A = M(&quot;3 -1 1;
+-1 3 1; 1 1 3&quot;)</I></P>
+<P><I>var b = M(&quot;3; -5; -4&quot;)</I></P>
+<P><I>var x = A.solve(b) // solve thye system</I></P>
+<P><I>var bres = A*x // estimate the quality of the solution </I>
+</P>
+<P><I>var diff = b-bres</I></P>
+<P><I>diff.print // we should have zeros</I></P>
+<P><BR><BR>
+</P>
+<P><B>map a function to each matrix elements</B></P>
+<P STYLE="font-weight: normal">Let now transform all the elements of
+a matrix with the function f(x) = 2*x+10</P>
+<P STYLE="font-weight: normal"><A NAME="__DdeLink__14_1277899113"></A>
+<I>def f(x: Double) = 2*x+10</I></P>
+<P STYLE="font-weight: normal"><I>var m = ones0(5,10) // a simple
+test matrix consisting of all ones</I></P>
+<P STYLE="font-weight: normal"><I>var mTrans = m map f // the
+transformed matrix</I></P>
+<P STYLE="font-weight: normal"><I>mTrans.print</I></P>
+<P><BR><BR>
+</P>
+<P><B>Create a diagonal matrix (diag)</B></P>
+<P STYLE="font-weight: normal"><A NAME="__DdeLink__16_1277899113"></A>
+var diagElems = List(0.5, 2.3, -3.4, 2.3) // specify with a list the
+diagonal elements</P>
+<P STYLE="font-weight: normal">var mm = diag(diagElems) // create the
+matrix</P>
+<P STYLE="font-weight: normal">mm.print</P>
+<P><BR><BR>
+</P>
+<P><A NAME="__DdeLink__27_1277899113"></A><B>Determinant of a matrix
+(det)</B></P>
+<P STYLE="font-weight: normal"><A NAME="__DdeLink__16_12778991131"></A>
+var diagElems = List(1.0, 2.0, -3, 4) // specify with a list the
+diagonal elements</P>
+<P STYLE="font-weight: normal">var mm = diag(diagElems) // create the
+matrix</P>
+<P STYLE="font-weight: normal">var detMatrix = det(mm) // compute the
+determinant, should be -24.0</P>
+<P><BR><BR>
+</P>
+<P><B>Transpose of a matrix (~)</B></P>
+<P><A NAME="__DdeLink__29_1277899113"></A><BR><BR>
+</P>
+<P STYLE="font-weight: normal">var rmat = rand0(2, 8)</P>
+<P STYLE="font-weight: normal">var trmat = rmat~ // transpose the
+matrix 
+</P>
+<P><BR><BR>
+</P>
+<P><B>Trigonometric functions </B>
+</P>
+<P STYLE="font-weight: normal">All the basic trigonometric functions,
+e.g. sin, cos, tan, asin, acos, atan, cosh, sinh, tanh etc. are
+applicable to matrices.</P>
+<P><B>Access operations</B></P>
+<P STYLE="font-weight: normal">Access operations are implemented
+conveniently with a Matlab-like style, e.g.</P>
+<P><BR><BR>
+</P>
+<P><A NAME="__DdeLink__79_30059315"></A><BR><BR>
+</P>
+<P STYLE="font-weight: normal"><A NAME="__DdeLink__61_1277899113"></A><A NAME="__DdeLink__43_1277899113"></A><A NAME="__DdeLink__35_1277899113"></A><A NAME="__DdeLink__31_1277899113"></A>
+<I>var a = rand0(10, 20)</I></P>
+<P STYLE="font-weight: normal"><I>var a1 = a(1) // get the 1th row as
+a matrix</I></P>
+<P STYLE="font-weight: normal"><A NAME="__DdeLink__39_1277899113"></A><A NAME="__DdeLink__33_1277899113"></A>
+<I>var a1_3 = a(1, 3, ':') // get rows 1 until 3 all columns</I></P>
+<P STYLE="font-weight: normal"><A NAME="__DdeLink__45_1277899113"></A><A NAME="__DdeLink__41_1277899113"></A>
+<I>var ac2_5 = a(':', 2, 5) // get columns 2 until 5 all rows</I></P>
+<P STYLE="font-weight: normal"><A NAME="__DdeLink__63_1277899113"></A>
+<I>var ac2_3_1_5 = a(2, 3, 1, 5) // get rows 2 until 3, columns 1
+until 5 </I>
+</P>
+<P><BR><BR>
+</P>
+<P><B>Covariance Operations</B></P>
+<P><B>// isValid returns: 0 = is valid, 1 = failed positive diagonal,
+</B>
+</P>
+<P><B>// 2 = failed on symmetry, 2 = failed on positive definite</B></P>
+<P STYLE="font-weight: normal">var m = identity0(3)</P>
+<P STYLE="font-weight: normal">m.print</P>
+<P STYLE="font-weight: normal">// nothing is wrong with it, is a
+valid covariance matrix, return 0</P>
+<P STYLE="font-weight: normal">isValid(m) // 0</P>
+<P STYLE="font-weight: normal">// negative diagonal term</P>
+<P STYLE="font-weight: normal">m(1,1) = -3</P>
+<P STYLE="font-weight: normal">isValid(m) // 1</P>
+<P STYLE="font-weight: normal">// not symmetric</P>
+<P STYLE="font-weight: normal">m = identity0(3)</P>
+<P STYLE="font-weight: normal">m(1, 0)=30</P>
+<P STYLE="font-weight: normal">isValid(m) // 2</P>
+<P STYLE="font-weight: normal">// not positive definite</P>
+<P STYLE="font-weight: normal">m = identity0(3)</P>
+<P STYLE="font-weight: normal">m(1, 2)= -400; m(2,1) = -400</P>
+<P STYLE="font-weight: normal">isValid(m) // 3</P>
+<P><B>Norm Operations</B></P>
+<P STYLE="font-weight: normal"><A NAME="__DdeLink__25_30059315"></A>var
+zeroMatrix = new Mat(3,4)</P>
+<P STYLE="font-weight: normal">var unzeroMatrix = M(&quot;0.2 1; -2
+3; 6 5&quot;) // create the 2X3 matrix</P>
+<P STYLE="font-weight: normal">var unzeroVector = M(&quot;0.3; 1; -2;
+3; 4&quot;)</P>
+<P STYLE="font-weight: normal">var squareMatrix = M(&quot;0.2 1; -2
+3&quot;)</P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: normal">var vs = conditionP(squareMatrix, 1)
+// should be 7.69</P>
+<P STYLE="font-weight: normal">var vsq = conditionP(unzeroMatrix, 1)
+// should be 3.43</P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: normal">var vt = unzeroMatrix~ // transpose
+matrix</P>
+<P STYLE="font-weight: normal">var vtt = conditionP(vt,1) // should
+be 3.48</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

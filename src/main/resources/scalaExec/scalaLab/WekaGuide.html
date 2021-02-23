@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110221;14512500">
+	<META NAME="" CONTENT="">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P ALIGN=CENTER><FONT SIZE=5><B>Data  Mining  with   WEKA  in
+ScalaLab</B></FONT></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><B>Example  1   -  The Multilayer  Perceptron  Classifier</B></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: normal">// this script  requires  WEKA toolbox
+to be first loaded</P>
+<P STYLE="font-weight: normal">import weka.classifiers.functions._</P>
+<P STYLE="font-weight: normal">import weka.classifiers.Classifier</P>
+<P STYLE="font-weight: normal">import weka.core._</P>
+<P STYLE="font-weight: normal">import java.io._</P>
+<P STYLE="font-weight: normal">import
+weka.core.converters.ConverterUtils._</P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+<P STYLE="font-weight: normal">var dataFile = getFile(&quot;Please
+specify your data file&quot;)   // get the datafile from the user</P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+<P STYLE="font-weight: normal">   //  read the datafile</P>
+<P STYLE="font-weight: normal">var allData =
+DataSource.read(dataFile)</P>
+<P STYLE="font-weight: normal">allData.setClassIndex(allData.numAttributes()-1)</P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+<P STYLE="font-weight: normal">// construct the training set and
+testing sets</P>
+<P STYLE="font-weight: normal">var trainSet = new Instances(allData,
+0)  // create an initial empty training set</P>
+<P STYLE="font-weight: normal">var testSet = new Instances(allData,
+0)    // create an initial empty testing set</P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+<P STYLE="font-weight: normal">var UseInTrain = true  // controls
+whether to add the Instance at the training set or at the testing set</P>
+<P STYLE="font-weight: normal">var enumInstances =
+allData.enumerateInstances()</P>
+<P STYLE="font-weight: normal">while  (enumInstances.hasMoreElements)
+{</P>
+<P STYLE="font-weight: normal"> var currInstance  =
+enumInstances.nextElement.asInstanceOf[Instance]</P>
+<P STYLE="font-weight: normal"> if (UseInTrain)</P>
+<P STYLE="font-weight: normal">    trainSet.add(currInstance)</P>
+<P STYLE="font-weight: normal"> else</P>
+<P STYLE="font-weight: normal">   testSet.add(currInstance)</P>
+<P STYLE="font-weight: normal"> UseInTrain = !UseInTrain</P>
+<P STYLE="font-weight: normal">}</P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+<P STYLE="font-weight: normal">  // construct an MLP classifier and
+train it</P>
+<P STYLE="font-weight: normal">var MLPNet =  new MultilayerPerceptron
+// create a WEKA MLP structure</P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+<P STYLE="font-weight: normal">MLPNet.buildClassifier(trainSet)   //
+build an MLP classifier on the training set</P>
+<P STYLE="font-weight: normal">// test the classifier on the testing
+set</P>
+<P STYLE="font-weight: normal">// extract the class labels</P>
+<P STYLE="font-weight: normal">var enumTestInstances =
+testSet.enumerateInstances()  
+</P>
+<P STYLE="font-weight: normal">var numTestingInstances =
+testSet.numInstances()</P>
+<P STYLE="font-weight: normal">var classLabels = new
+Array[Double](numTestingInstances)</P>
+<P STYLE="font-weight: normal">var predictedLabels  = new
+Array[Double](numTestingInstances)</P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+<P STYLE="font-weight: normal">var cnt=0</P>
+<P STYLE="font-weight: normal">var classIdx = testSet.classIndex   //
+get class index</P>
+<P STYLE="font-weight: normal">while
+(enumTestInstances.hasMoreElements) {   // for all the elements of
+the testing set</P>
+<P STYLE="font-weight: normal">   var currInstance =
+enumTestInstances.nextElement.asInstanceOf[Instance]</P>
+<P STYLE="font-weight: normal">   var distForInstance =
+MLPNet.distributionForInstance(currInstance)</P>
+<P STYLE="font-weight: normal">   var classOfInstance = 
+currInstance.toDoubleArray.apply(classIdx)</P>
+<P STYLE="font-weight: normal">   classLabels(cnt) = classOfInstance</P>
+<P STYLE="font-weight: normal">   predictedLabels(cnt) =
+distForInstance(0)</P>
+<P STYLE="font-weight: normal">   cnt += 1</P>
+<P STYLE="font-weight: normal">}</P>
+<P STYLE="font-weight: normal">   
+</P>
+<P STYLE="font-weight: normal">figure(1)</P>
+<P STYLE="font-weight: normal">linePlotsOn</P>
+<P STYLE="font-weight: normal">hold(&quot;on&quot;)</P>
+<P STYLE="font-weight: normal">plot(predictedLabels, Color.RED,
+&quot;predicted&quot;);</P>
+<P STYLE="font-weight: normal">plot(classLabels, Color.BLUE, &quot;actual
+class&quot;); title(&quot;MLP Network prediction&quot;)</P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+<P><B>Example  2</B></P>
+<P><BR><BR>
+</P>
+<P><B>// this script  requires  WEKA toolbox to be first loaded</B></P>
+<P><B>import weka.classifiers.functions._</B></P>
+<P><B>import weka.classifiers.Classifier</B></P>
+<P><B>import weka.core._</B></P>
+<P><B>import java.io._</B></P>
+<P><B>import weka.core.converters.ConverterUtils._</B></P>
+<P><BR><BR>
+</P>
+<P><B>var dataFile = getFile(&quot;Please specify your data file&quot;)
+  // get the datafile from the user</B></P>
+<P><BR><BR>
+</P>
+<P>   <B>//  read the datafile</B></P>
+<P><B>var allData = DataSource.read(dataFile)</B></P>
+<P><B>allData.setClassIndex(allData.numAttributes()-1)</B></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><B>// construct the training set and testing sets</B></P>
+<P><B>var trainSet = new Instances(allData, 0)  // create an initial
+empty training set</B></P>
+<P><B>var testSet = new Instances(allData, 0)    // create an initial
+empty testing set</B></P>
+<P><BR><BR>
+</P>
+<P><B>var UseInTrain = true  // controls whether to add the Instance
+at the training set or at the testing set</B></P>
+<P><B>var enumInstances = allData.enumerateInstances()</B></P>
+<P><B>while  (enumInstances.hasMoreElements) {</B></P>
+<P> <B>var currInstance  =
+enumInstances.nextElement.asInstanceOf[Instance]</B></P>
+<P> <B>if (UseInTrain)</B></P>
+<P>    <B>trainSet.add(currInstance)</B></P>
+<P> <B>else</B></P>
+<P>   <B>testSet.add(currInstance)</B></P>
+<P> <B>UseInTrain = !UseInTrain</B></P>
+<P><B>}</B></P>
+<P><BR><BR>
+</P>
+<P>  <B>// construct an MLP classifier and train it</B></P>
+<P><B>var MLPNet =  new MultilayerPerceptron // create a WEKA MLP
+structure</B></P>
+<P><BR><BR>
+</P>
+<P><B>MLPNet.buildClassifier(trainSet)   // build an MLP classifier
+on the training set</B></P>
+<P><B>// test the classifier on the testing set</B></P>
+<P><B>// extract the class labels</B></P>
+<P><B>var enumTestInstances = testSet.enumerateInstances()  </B>
+</P>
+<P><B>var numTestingInstances = testSet.numInstances()</B></P>
+<P><B>var classLabels = new Array[Double](numTestingInstances)</B></P>
+<P><B>var predictedLabels  = new Array[Double](numTestingInstances)</B></P>
+<P><BR><BR>
+</P>
+<P><B>var cnt=0</B></P>
+<P><B>var classIdx = testSet.classIndex   // get class index</B></P>
+<P><B>while (enumTestInstances.hasMoreElements) {   // for all the
+elements of the testing set</B></P>
+<P>   <B>var currInstance =
+enumTestInstances.nextElement.asInstanceOf[Instance]</B></P>
+<P>   <B>var distForInstance =
+MLPNet.distributionForInstance(currInstance)</B></P>
+<P>   <B>var classOfInstance = 
+currInstance.toDoubleArray.apply(classIdx)</B></P>
+<P>   <B>classLabels(cnt) = classOfInstance</B></P>
+<P>   <B>predictedLabels(cnt) = distForInstance(0)</B></P>
+<P>   <B>cnt += 1</B></P>
+<P><B>}</B></P>
+<P>   
+</P>
+<P><B>figure(1)</B></P>
+<P><B>linePlotsOn</B></P>
+<P><B>hold(&quot;on&quot;)</B></P>
+<P><B>plot(predictedLabels, Color.RED, &quot;predicted&quot;);</B></P>
+<P><B>plot(classLabels, Color.BLUE, &quot;actual class&quot;);
+title(&quot;MLP Network prediction&quot;)</B></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: normal"><BR><BR>
+</P>
+</BODY>
+</HTML>

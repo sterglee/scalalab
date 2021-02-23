@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1253">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110716;11553226">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2.01cm }
+		P { margin-bottom: 0.2cm }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Linear Algebra Demonstrations</B></FONT>
+
+
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><I><B><SPAN LANG="en-US">If </SPAN><SPAN LANG="en-US">Q </SPAN><SPAN LANG="en-US">is orthogonal then </SPAN><SPAN LANG="en-US">det(Q) = <IMG SRC="LinearAlgebraDemonstrations_html_m443fcef8.gif" NAME="Object1" ALIGN=ABSMIDDLE HSPACE=8 WIDTH=28 HEIGHT=18></SPAN></B></I></SPAN></FONT>
+
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>// Mat  library or EJML  zero-indexed libraries</I></SPAN></SPAN></FONT>
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var A = M(&quot;0.6 -0.8; 0.8 0.6&quot;)</I></SPAN></SPAN></FONT>
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var Ainv = inv(A)   // compute the inverse</I></SPAN></SPAN></FONT>
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var Atrans = A~   // transpose</I></SPAN></SPAN></FONT>
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var distance = norm2(Ainv-Atrans)</I></SPAN></SPAN></FONT>
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var dA = det(A)  // is 1</I></SPAN></SPAN></FONT>
+
+
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>// Matrix  library, one indexed</I></SPAN></SPAN></FONT>
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var A1 = M1(&quot;0.6 -0.8; 0.8 0.6&quot;)</I></SPAN></SPAN></FONT>
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var Ainv1 = inv(A1)   // compute the inverse</I></SPAN></SPAN></FONT>
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var Atrans1 = A1~   // transpose</I></SPAN></SPAN></FONT>
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var distance1 = norm2(Ainv1-Atrans1)</I></SPAN></SPAN></FONT>
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var dA1 = det(A1)  // is 1</I></SPAN></SPAN></FONT>
+
+
+
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><B><SPAN LANG="en-US"><I>If Q is orthogonal </I></SPAN></B></SPAN></FONT>
+ <FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><B><SPAN LANG="en-US"><I>&lt;Qx, Qy&gt; = &lt;x, y&gt;</I></SPAN></B></SPAN></FONT>
+
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var A = M(&quot;0.6 -0.8; 0.8 0.6&quot;)</I></SPAN></SPAN></FONT>
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var x = M(&quot;1.2; 4.5&quot;)</I></SPAN></SPAN></FONT>
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var y = M(&quot;-4.5; 0.12&quot;)</I></SPAN></SPAN></FONT>
+
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>// compute the inner products</I></SPAN></SPAN></FONT>
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var QxQy = (A*x) dot (A*y)  </I></SPAN></SPAN></FONT>
+<FONT SIZE=3 STYLE="font-size: 13pt"><SPAN LANG="en-US"><SPAN LANG="en-US"><I>var  xy = x  dot  y</I></SPAN></SPAN></FONT>
+
+
+</PRE>
+</BODY>
+</HTML>

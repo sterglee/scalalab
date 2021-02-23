@@ -1,0 +1,24 @@
+
+val x = rand0(8, 8)  // create an EJML.Mat random matrix
+
+import org.ejml.simple.SimpleMatrix._   // static methods of  EJML SimpleMatrix class 
+val xsm = x.getLibraryMatrixRef    // get a reference to the EJML SimpleMatrix, which  the scalaSci.EJML.Mat wraps
+
+// demonstrating directly using the SimpleMatrix
+val sm20 = identity(20)   // create a SimpleMatrix with 1s at the diagonal
+val diagArray = Array(2.3, 7.8, 6.7)
+val smDiagonal = diag(diagArray:_*)   // create a diagonal SimpleMatrix
+
+// creates a new SimpleMatrix with random elements drawn from a uniform distribution from minValue to maxValue
+val smr = random(4, 5, -4.0, 5.8, new Random())
+
+
+ // compute the invert matrix
+var xsmi = xsm.invert
+
+// wrap the invert SimpleMatrix to a scalaSci.EJML.Mat
+var xsmiToEJMLMat = new scalaSci.EJML.Mat(xsmi)
+
+//  .. now we can verify more easily that the inversion succeded
+
+var shouldBeIdentity = x*xsmiToEJMLMat

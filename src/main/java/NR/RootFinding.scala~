@@ -1,0 +1,282 @@
+
+package scalaSci.NR
+
+import scalaSci.NR.Common._
+import java.lang.Math._
+
+/*
+ def f(x: Double) = cos(x)
+ var r = scalaSci.NR.RootFinding.zbrac(f, -4, 6)
+ */
+object RootFinding {
+  
+  // Given a function func and an initial guessed range x1 to x2, the routine expands the range
+  // geometrically until a root is bracketed by the returned values x1 and x2 ( in which case zbrac returns BreacketedRoot == true)
+  //  or until the range becomes unacceptably large ( in which case zbrac returns BracketedRoot ==false)
+  //  Returns a tuple (BracketedRoot, xlow, xhigh) consisted of the boolean BrecketedRoot explained above and the bracketing interval
+    def  zbrac(func: Double => Double,  xi1: Double,  xi2: Double ) : (Boolean, Double, Double) =
+{
+	val   NTRY = 50
+	val   FACTOR = 1.6
+	var x1 = xi1; var x2 = xi2
+        
+	if (x1 == x2) throw new NRException("Bad initial range in zbrac")
+	var f1 = func(x1)
+	var f2 = func(x2)
+	for (j <- 0 until  NTRY)  {
+	  if (f1*f2 < 0.0) { 
+             return (true, x1, x2) 
+          }
+	  if (Math.abs(f1) < Math.abs(f2)) {
+	   x1 += (FACTOR*(x1-x2))
+                     f1 = func(x1)
+            }
+	else  {
+	x2 += (FACTOR*(x2-x1))
+                  f2 = func(x2)
+         }
+        }
+(false, x1, x2)
+}
+
+  /*
+   def fx(x: Double) = sin(7.8*x)
+   var N = 8
+   var xb1 = new Array[Double](N)
+   var xb2 = new Array[Double](N)
+   var nroots = scalaSci.NR.RootFinding.zbrak(fx, -8, 8, 20, xb1, xb2)
+   */
+
+// Given a function fx defined on the interval from x1-x2 subdivide the interval into n equally spaced fragments, 
+// and search for zero crossings of the function. The arrays xb1[0..nb-1] and xb2[0..nb-1] will be filled sequentially
+// with any bracketing pairs that are found, and must be provided with a size nb that is sufficient to hold the maximum
+// number of roots sought. 
+// nroot will be set to the number of braketing pairs actually found  
+  
+def  zbrak( fx: Double => Double, x1: Double, x2: Double, n: Int, xb1: Array[Double], xb2: Array[Double])  =
+  {
+     
+    var  nb = xb1.size
+    var nroot = 0
+    var dx = (x2-x1)/n
+    var x = x1
+    var fc = 0.0
+    var fp = fx(x)
+    var exitLoop = false
+    var i=0
+    while  ( (i < n) && ( exitLoop==false) )  {
+      fc = fx(x)
+      x += dx
+      if (fc*fp <= 0.0) {
+        xb1(nroot) = x-dx
+        xb2(nroot) = x
+        nroot += 1
+        if(nroot == nb)  {
+          exitLoop = true
+        }	
+      }
+     fp=fc
+     i += 1
+    }
+ nroot
+}
+
+  /*
+   def fx(x: Double) = { x*x - 2.4*x + 0.2}
+   var z = scalaSci.NR.RootFinding.rtbis(fx, -2, 2, 0.000001)
+   var verifyThatIsRoot = fx(z)   
+   */
+   // Using bisection, find the root of a function func known to lie between x1 and x2. The root, returned as rtb,
+   // will be refined until its accuracy is +-xacc
+  def rtbis(func: Double => Double,  x1: Double, x2: Double, xacc: Double): Double =
+{
+  val   JMAX=40
+  
+ var  f = func(x1)
+ var  fmid = func(x2)
+ if (f * fmid >= 0.0) throw new NRException("Root must be bracketed for bisection in rtbis")
+ 
+ var dx=0.0
+ var rtb = 
+    if (f < 0.0)  { 
+       dx = x2-x1
+       x1
+   }
+ else {
+   dx = x1-x2
+   x2
+   }
+   
+      for (j<-0 until JMAX) {
+        dx *= 0.5
+        var xmid = rtb+dx
+        var fmid=func(xmid)
+        if (fmid <= 0.0) rtb=xmid;
+        if (java.lang.Math.abs(dx) < xacc || fmid == 0.0) return rtb
+	}
+  throw new NRException("Too many bisections in rtbis")
+  return 0.0
+}
+
+  /*
+   def fx(x: Double) = { x*x - 2.4*x + 0.2}
+   var z = scalaSci.NR.RootFinding.rtflsp(fx, -2, 2, 0.000001)
+   var verifyThatIsRoot = fx(z)   
+   */
+  // using the false position method, find the root of a function func known to lie between x1 
+  // and x2. The root, returned as rtflsp, is refined until its accuracy is +-xacc
+  def  rtflsp(func: Double => Double,   x1: Double,  x2: Double,  xacc: Double): Double  =
+    {
+     val  MAXIT = 30
+     var  xl = 0.0
+     var  xh = 0.0
+     
+    var  fl  = func(x1)
+    var  fh = func(x2)
+    if  (fl * fh > 0.0 )
+        throw new NRException("Root must be bracketed in rtflsp")
+    
+    if (fl < 0.0) {
+      xl = x1
+      xh = x2
+    } else {
+    xl = x2
+    xh = x1
+    // swap(fl,fh);
+    var tmp = fh;  fh = fl; fl = tmp;
+   }
+
+    var  dx = xh - xl
+    var  rtf = 0.0
+    var del = 0.0
+  for (j <- 0  until  MAXIT) {
+   rtf = xl + dx * fl / (fl - fh)
+   var  f = func(rtf)
+    if (f < 0.0) {
+      del = xl - rtf
+      xl = rtf
+      fl = f
+      }
+   else {
+      del = xh-rtf
+      xh = rtf
+      fh = f
+    }
+    
+dx = xh-xl
+if (java.lang.Math.abs(del) < xacc || f == 0.0) 
+   return rtf;
+    }
+   
+ throw new NRException("Maximum number of iterations exceeded in rtflsp")
+	
+ }
+  
+
+  // using the secant method , find the root of a function func thought to lie between x1 and x2
+  // the root, returned as rtsec, is refined until its accuracy is +-xacc
+/*
+   def fx(x: Double) = { x*x - 2.4*x + 0.2}
+   var z = scalaSci.NR.RootFinding.rtsec(fx, -2, 2, 0.000001)
+   var verifyThatIsRoot = fx(z)   
+   */
+   
+ def  rtsec(func: Double => Double,  x1: Double,  x2: Double,  xacc: Double): Double = 
+{
+val  MAXIT = 30
+     var  xl = 0.0
+     var  xh = 0.0
+     
+    var  fl  = func(x1)
+    var  f = func(x2)
+    
+    var  dx=0.0; var rts = 0.0
+     
+    fl = func(x1)
+    f = func(x2)
+    if (Math.abs(fl) < Math.abs(f)) {
+      rts = x1
+      xl = x2
+    // swap(fl,f);
+    var tmp = f;  f = fl; fl = tmp;
+   } else {
+ xl = x1
+ rts = x2
+   }
+ for (j <- 0 until  MAXIT) {
+      dx = (xl - rts) * f / (f - fl)
+      xl = rts
+      fl = f
+      rts += dx
+      f = func(rts)
+      if (Math.abs(dx) < xacc || f == 0.0) 
+        return rts
+}
+throw new NRException("Maximum number of iterations exceeded in rtsec")
+} 
+
+
+
+// using Ridders' method, return the root of a function func known to lie between x1 and x2
+// the root, returned as zriddr, will be refined to an approximate accuracy xacc  
+/*
+   def fx(x: Double) = { x*x - 2.4*x + 0.2}
+   var z = scalaSci.NR.RootFinding.zriddr(fx, -2, 2, 0.000001)
+   var verifyThatIsRoot = fx(z)   
+   */
+
+  def zriddr(func: Double => Double,  x1: Double,  x2: Double,  xacc: Double): Double =
+{
+  val   MAXIT = 60
+  val  UNUSED = -1.11e30
+  var  ans = 0.0
+  var xm = 0.0;  var fm = 0.0; var s = 0.0;  var xnew = 0.0; var xl = 0.0; var xh = 0.0; var fnew=0.0
+  
+
+    var  fl = func(x1)
+    var fh=func(x2)
+    if ((fl > 0.0 && fh < 0.0) || (fl < 0.0 && fh > 0.0)) {
+        xl = x1
+        xh = x2
+        ans = UNUSED
+      for (j <- 0 until MAXIT) {
+          xm = 0.5*(xl+xh)
+          fm = func(xm)
+          s = Math.sqrt(fm*fm-fl*fh)
+          if (s == 0.0) return ans
+        
+        
+        xnew = xm+(xm-xl)* (if (fl>= fh) 1.0 else -1.0) * fm/s
+        if (Math.abs(xnew-ans) <= xacc) return ans
+        ans = xnew
+        fnew = func(ans)
+        if (fnew == 0.0) return ans
+        if (SIGN(fm, fnew) != fm) {
+          xl = xm
+          fl = fm
+          xh = ans
+          fh = fnew
+} else if (SIGN(fl, fnew) != fl) {
+    xh = ans
+    fh = fnew
+} else if (SIGN(fh, fnew) != fh) {
+    xl = ans
+    fl = fnew
+ } 
+ else
+   throw new NRException("never get here.")
+		
+        if (Math.abs(xh-xl) <= xacc) return ans
+	}
+        
+	throw new NRException("zriddr exceed maximum iterations")
+    }
+ else {
+    if (fl == 0.0)  return x1
+    if (fh == 0.0)  return x2
+throw new NRException("root must be bracketed in zriddr.")
+        }
+ return 0.0;
+}  
+  
+  }

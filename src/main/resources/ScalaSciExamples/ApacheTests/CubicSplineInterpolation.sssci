@@ -1,0 +1,19 @@
+
+import org.apache.commons.math3.analysis.interpolation._
+var x = Array( 0.0, 0.5, 1.0, 1.6,  2.0)
+var y = Array( 1.0, 0.7, -1.0, -1.6, 2.0)
+
+var interpolator = new SplineInterpolator()
+var function  = interpolator.interpolate(x, y)
+
+def interpf (x: Double) = function.value(x)  // the constructed function from spline interpolation
+
+
+var fig = figure(1)
+var N = 1000  
+var taxis = linspace(0, 2, N)
+var interpValues = taxis map interpf  // constructs a plot of the constructed function with spline interpolation
+plot( taxis, interpValues, Color.GREEN, "Interpolated Curve")
+plotMarks(x,  y, Color.WHITE, "Original Points")
+
+title(1, "Demonstration of the Apache Common Maths interpolation")

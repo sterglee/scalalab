@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15081600">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE> <FONT SIZE=5><SPAN LANG="en-US"><B>multistep</B></SPAN></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US">Solves an initial value problem for a system of first order ordinary differential equations </SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>dy</I></SPAN></FONT><SUB><FONT SIZE=5><SPAN LANG="en-US"><I>i</I></SPAN></FONT></SUB><FONT SIZE=5><SPAN LANG="en-US"><I>/dx=f</I></SPAN></FONT><SUB><FONT SIZE=5><SPAN LANG="en-US"><I>i</I></SPAN></FONT></SUB><FONT SIZE=5><SPAN LANG="en-US"><I>(x,y)</I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">, (</SPAN></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>i=1,2,..., n</I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">), from </SPAN></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>x=x</I></SPAN></FONT><SUB><FONT SIZE=5><SPAN LANG="en-US"><I>0</I></SPAN></FONT></SUB> <FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">to </SPAN></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>x=x</I></SPAN></FONT><SUB><FONT SIZE=5><SPAN LANG="en-US"><I>e</I></SPAN></FONT></SUB> <FONT SIZE=5><SPAN LANG="en-US"><I>(x</I></SPAN></FONT><SUB><FONT SIZE=5><SPAN LANG="en-US"><I>0  </I></SPAN></FONT></SUB><FONT SIZE=5><SPAN LANG="en-US"><I>&lt;  xe ) </I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">where </SPAN></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>y(x</I></SPAN></FONT><SUB><FONT SIZE=5><SPAN LANG="en-US"><I>0</I></SPAN></FONT></SUB> <FONT SIZE=5><SPAN LANG="en-US"><I>) </I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">being given, based on two linear multistep methods. For stiff problems it uses the backward differentiation method, and for nonstiff problems the Adams-Bashforth-Moulton method. </SPAN></SPAN></FONT>
+
+       <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-style: normal"><U>Procedure  parameters:</U></SPAN></SPAN></FONT>
+<SPAN STYLE="text-decoration: none">                        </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>def  multistep( x, xend, y, hmin, hmax, ymax, eps, first, save, method, jacobian, stiff, n, btmp, itmp, xtmp): Boolean</B></I></SPAN></FONT></SPAN>
+
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I><B>Return value:</B></I></SPAN></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">if difficulties are encountered during the integration (i.e., save[37] != 0 or save[36] != 0) then </SPAN></SPAN></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I><B>multistep</B></I></SPAN></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">is set to false, otherwise </SPAN></SPAN></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I><B>multistep</B></I></SPAN></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">is set to true;</SPAN></SPAN></SPAN></SPAN></FONT>
+  
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I><B>x</B></I></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US">:  Array[Double](0:0)</SPAN></SPAN></FONT>
+         <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">entry: the </SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B>independent </B></SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">variable; the initial value </SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>x0</I></SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I><B>xend</B></I></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US">: Double</SPAN></SPAN></FONT>
+         <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">entry: the final value of </SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>x</I></SPAN></FONT> <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">(</SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>xend </I></SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">&gt;=</SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>x</I></SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">)</SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I><B>y</B></I></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US">: Array[Double](1:6*n);</SPAN></SPAN></FONT>
+        <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">entry: the </SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B>dependent</B></SPAN></FONT> <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">variable; y[1:n] are the initial values of </SPAN></FONT>
+                <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">the solution of the system of differential equations at x=x0;</SPAN></FONT>
+        <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">exit: y[1:n] are the values of the solution at x=xend;</SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>hmin, hmax</B></I></SPAN><SPAN LANG="en-US"><B>:</B></SPAN> <SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">Double;</SPAN></SPAN></FONT>
+       <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">entry: the minimum and maximum steplength allowed, respectively;</SPAN></SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>ymax</B></I></SPAN><SPAN LANG="en-US"><B>:</B></SPAN>  <SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">Array[Double](1:n);</SPAN></SPAN></FONT>
+        <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">entry:  the absolute local error bound divided by eps</SPAN></SPAN></FONT>
+        <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">exit:   </SPAN></SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">ymax(i)</SPAN></I></SPAN></FONT> <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">gives the maximal value of the entry value of </SPAN></SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">ymax(i)</SPAN></I></SPAN></FONT> <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">and</SPAN></SPAN></FONT>
+                 <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">the values of  | y(i) | during integration</SPAN></SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I><B>eps</B></I></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><B>: </B></SPAN></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">Double;  entry: the relative local error bound;</SPAN></SPAN></SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I><B>first</B></I></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><B>:  </B></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">Array[Boolean](0:0)</SPAN></I></SPAN></SPAN></FONT>
+<SPAN STYLE="text-decoration: none">        </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">if </SPAN></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">first</SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">is true then the procedure starts the integration with a first order</SPAN></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">        </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">Adams method and a steplength equal to </SPAN></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">hmin</SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">, upon completion of a </SPAN></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">        </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">call, </SPAN></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">first</SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none">  </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">is set to </SPAN></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">false;</SPAN></I></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">        </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">if </SPAN></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">first </SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">is </SPAN></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">false </SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">then the procedure continues integration;</SPAN></SPAN></FONT></SPAN>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I><B>save:  </B></I></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">Array[Double](0:6n+38);</SPAN></I></SPAN></SPAN></FONT>
+<SPAN STYLE="text-decoration: none">        </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">in this array the procedure stores information which can be used in a </SPAN></SPAN></FONT></SPAN>
+        <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">continuing call with first = false; also the following messages are</SPAN></SPAN></FONT>
+        <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">delivered:</SPAN></SPAN></FONT>
+<SPAN STYLE="text-decoration: none">         </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">save(38)=0: </SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">an Adams method has been used</SPAN></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">        </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">save(38)=1:</SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">the procedure switched to Gear's method</SPAN></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">         </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">save(37)=0: </SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">no error message</SPAN></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">         </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">save(37)=1:</SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">with the </SPAN></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">hmin </SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">specified the procedure cannot handle the</SPAN></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">                           </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">nonlinearity (decrease </SPAN></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">hmin!</SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">)</SPAN></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">         </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">save(36):     </SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">number of times that the requested local error bound</SPAN></SPAN></FONT></SPAN>
+                           <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">was exceeded</SPAN></SPAN></FONT>
+<SPAN STYLE="text-decoration: none">        </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">save(35):     </SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">if  </SPAN></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">save(36)</SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">is nonzero then </SPAN></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">save(35) </SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">gives an estimate of</SPAN></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">                          </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">the maximal local error bound, otherwise </SPAN></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">save(35)=0</SPAN></I></SPAN></FONT></SPAN>
+
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I><B>method</B></I></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I>: </I></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">a class that defines two procedures </SPAN></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I><B>deriv</B></I></SPAN></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">and </SPAN></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><I><B>fxj</B></I></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><SPAN STYLE="font-style: normal"><B>, </B></SPAN></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">this class must implement the </SPAN></SPAN></SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><SPAN STYLE="font-style: normal"><B>AP_multistep_methods</B></SPAN></SPAN></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">interface (trait);</SPAN></SPAN></SPAN></FONT>
+   <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>def deriv(df: Array[Double], n: Int, x: Array[Double], </B></I></SPAN></FONT>
+                    <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>y: Array[Double]): Unit</B></I></SPAN></FONT>
+                   <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">this procedure should deliver </SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>dy(i)/dx</I></SPAN></FONT> <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">in </SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>df(i)</I></SPAN></FONT>
+   <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>def available(n: Int, x: Array[Double], y: Array[Double], </B></I></SPAN></FONT>
+                       <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>jacobian: Array[Array[Double]])</B></I></SPAN></FONT>   
+        <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">if an analytic expression of the Jacobian matrix is not available then</SPAN></FONT>
+        <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>available</I></SPAN></FONT> <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">is set to false, otherwise </SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>available </I></SPAN></FONT> <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">is set to true and the </SPAN></FONT>
+        <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">evaluation of the procedure must have the following side-effect:</SPAN></FONT>
+         <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">the entries of the Jacobian matrix </SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>d(dy(i)/dx)/dy(j) </I></SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">are  delivered </SPAN></FONT>
+        <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">in the array elements </SPAN></FONT><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>jacobian(i, j)</I></SPAN></FONT>
+<SPAN STYLE="text-decoration: none">  </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>def out(h: Double, k: Int, n: Int, x: Array[Double], y: Array[Double])</B></I></SPAN></FONT></SPAN>
+         <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">at the end of each accepted step of integration process this procedure is </SPAN></FONT>
+        <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">called, the last steplength used, h, and the order of the method, k, are</SPAN></FONT>
+        <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">delivered</SPAN></FONT>
+<SPAN STYLE="text-decoration: none">   </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>jacobian: Array[Array[Double]](1:n, 1:n)</B></I></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">        </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">at each evaluation of the user supplied procedure </SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>available</I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">with the</SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">        </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">result </SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>available </I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">equals true, the Jacobian matrix has to be assigned</SPAN></FONT></SPAN>
+        <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">to this array </SPAN></FONT>
+<SPAN STYLE="text-decoration: none">  </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>stiff</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">: </SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>Boolean</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none">     </SPAN>
+<SPAN STYLE="text-decoration: none">   </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>entry</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">: if </SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I>stiff </I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">equals true then the procedure skips an attempt to </SPAN></FONT></SPAN>
+                <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">solve the problem with Adams-Bashforth or Adams-Moulton </SPAN></FONT>
+                <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">methods, directly using Gear's method</SPAN></FONT>
+<SPAN STYLE="text-decoration: none">    </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>n</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B>:   </B></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">Int; entry; the number of equations</SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">    </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>btmp:  Array[Boolean](0:2)</B></I></SPAN></FONT></SPAN>
+          <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">working storage for internal static data</SPAN></FONT>
+<SPAN STYLE="text-decoration: none">    </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>itmp: Array[Int](0:3)</B></I></SPAN></FONT></SPAN>
+           <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">working storage for internal static data</SPAN></FONT>
+<SPAN STYLE="text-decoration: none">    </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><I><B>xtmp: Array[Double](0:7)</B></I></SPAN></FONT></SPAN>
+            <FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">working storage for internal static data</SPAN></FONT>
+
+<B><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US">Example: Can be run with F9 within the ScalaLab Editor  </SPAN></FONT></B>
+                
+
+
+import java.text.DecimalFormat;
+import numal.*;
+import java.util.Vector;
+
+public class Test_multistep extends Object
+                            implements AP_multistep_methods {
+        
+        public static void main(String args[]) {
+
+    int i;
+    double xend,hmin,eps;
+    boolean first[] = new boolean[1];
+    boolean btmp[] = new boolean[2];
+    int itmp[] = new int[3];
+    double xtmp[] = new double[7];
+    double x[] = new double[1];
+    double y[] = new double[13];
+    double ymax[] = new double[3];
+    double d[] = new double[53];
+    double jac[][] = new double[3][3];
+    Vector xout = new Vector();
+    Vector yout = new Vector();
+    
+    Test_multistep testmultistep = new Test_multistep();
+    hmin=1.0e-10;
+    eps=1.0e-9;
+    first[0]=true;
+    x[0]=0.0;
+    y[1]=y[2]=0.0;
+    ymax[1]=0.0001;
+    ymax[2]=1.0;
+    DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);
+    System.out.println(&quot;Delivers with hmin = &quot; +
+      fiveDigit.format(hmin) + &quot;  and eps = &quot; +
+      fiveDigit.format(eps));
+    for (i=1; i&lt;=10; i+=9) {
+      xend=i;
+      Analytic_problems.multistep(x,xend,y,hmin,5,ymax,eps,first,
+                        d,testmultistep,jac,true,2,btmp,itmp,xtmp, xout, yout);
+      System.out.println(&quot;   &quot; + fiveDigit.format(y[1]) +
+        &quot;   &quot; + fiveDigit.format(y[2]));
+    }
+    int xSiz = xout.size();
+    int ySiz = yout.size();
+        }
+
+
+  public void deriv(double f[], int n, double x[], double y[])
+  {
+    double r;
+
+    f[2]=r=3.0e7*y[1]*y[1];
+    f[1]=0.04*(1-y[1]-y[2])-1.0e4*y[1]*y[2]-r;
+  }
+
+
+  public boolean available(int n, double x[], double y[],
+                           double jac[][])
+  {
+    double r;
+
+    jac[2][1]=r=6.0e7*y[1];
+    jac[1][1] = -0.04-1.0e4*y[2]-r;
+    jac[1][2] = -0.04-1.0e4*y[1];
+    jac[2][2]=0.0;
+    return true;
+  }
+
+
+  public void out(double h, int k, int n, double x[], double y[])
+  {
+    return;
+  }
+}</PRE>
+</BODY>
+</HTML>

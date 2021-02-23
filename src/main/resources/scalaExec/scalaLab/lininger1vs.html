@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101228;15364700">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>liniger1vs</B></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US">Solves an initial value problem, given as an autonomous system of first order ordinary differential equations by means of an implicit, first-order accurate, exponentially fitted one-step method.</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+
+<FONT SIZE=3><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">public class Test_liniger1vs extends Object</SPAN></FONT>
+                             <FONT SIZE=3><SPAN LANG="en-US">implements AP_liniger1vs_methods {</SPAN></FONT>
+   
+<FONT SIZE=3><SPAN LANG="en-US">	public static void main(String args[]) {</SPAN></FONT>
+
+  <FONT SIZE=3><SPAN LANG="en-US">	int i,itmax;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	double reta;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	double y[] = new double[3];</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	double info[] = new double[10];</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	double x[] = new double[1];</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	double sigma[] = new double[1];</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	double j[][] = new double[3][3];</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	Test_liniger1vs testliniger1vs = new Test_liniger1vs();</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	System.out.println(&quot;The results with LINIGER1VS are:\n&quot;);</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	reta=1.0;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	for (i=1; i&lt;=3; i++) {</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">	  	reta *= 1.0e-2;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">		x[0]=y[2]=0.0;</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">	  	y[1]=1.0;</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">		  Analytic_problems.liniger1vs(x,50.0,2,y,sigma,testliniger1vs,</SPAN></FONT>
+                                   <FONT SIZE=3><SPAN LANG="en-US">j,10,0.1,50.0,reta,reta,info);</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">	  }</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">	  System.out.println();</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	reta = -1.0;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	for (i=1; i&lt;=3; i++) {</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">		reta *= 1.0e-2;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">		x[0]=y[2]=0.0;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">		y[1]=1.0;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">		Analytic_problems.liniger1vs(x,50.0,2,y,sigma,testliniger1vs,</SPAN></FONT>
+                                   <FONT SIZE=3><SPAN LANG="en-US">j,10,0.1,1.0,reta,reta,info);</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	}</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">	}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void derivative(int m, double a[], double sigma[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	double a1,a2;</SPAN></FONT>
+
+  <FONT SIZE=3><SPAN LANG="en-US">	a1=a[1];</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	a2=a[2];</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	a[1]=(a1+0.99)*(a2-1.0)+0.99;</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">	  a[2]=1000.0*((1.0+a1)*(1.0-a2)-1.0);</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void jacobian(int m, double j[][], double y[],</SPAN></FONT>
+                       <FONT SIZE=3><SPAN LANG="en-US">double sigma[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	j[1][1]=y[2]-1.0;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	j[1][2]=0.99+y[1];</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">	  j[2][1]=1000.0*(1.0-y[2]);</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">	j[2][2] = -1000.0*(1.0+y[1]);</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">	  sigma[0]=Math.abs(j[2][2]+j[1][1]-</SPAN></FONT>
+             <FONT SIZE=3><SPAN LANG="en-US">Math.sqrt((j[2][2]-j[1][1])*</SPAN></FONT>
+             <FONT SIZE=3><SPAN LANG="en-US">(j[2][2]-j[1][1])+4.0*j[2][1]*j[1][2]))/2.0;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void output(double x[], double xe, int m, double y[],</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">			double sigma[], double j[][], double info[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat oneDigit = new DecimalFormat(&quot;0.E0&quot;);</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">	  if (x[0] == 50.0)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">	  	System.out.println(&quot; &quot; + (int)info[1] + &quot;\t&quot; +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">(int)info[2] + &quot;\t&quot; + (int)info[3] + &quot;\t&quot; +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">(int)info[4] + &quot;\t&quot; + (int)info[5] + &quot;\t&quot; + </SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">(int)info[6] + &quot;\t&quot; + oneDigit.format(info[9]) +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">&quot;\t&quot; + fiveDigit.format(y[1])+ &quot;\t&quot; +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">fiveDigit.format(y[2]));</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT></PRE>
+</BODY>
+</HTML>

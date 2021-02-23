@@ -1,0 +1,28 @@
+
+
+def pl(x: Double,  E0: Double, E1: Double, E2: Double, m0: Double, m1: Double, m2: Double, m3: Double): Double = {
+  if (x < E0)
+    m0* x
+ else if (x < E1)
+   m1*x
+ else if (x < E2)
+   m2*x
+else
+  m3*x
+}
+
+def plv(x: Array[Double],  E0: Double, E1: Double, E2: Double, m0: Double, m1: Double, m2: Double, m3: Double): Array[Double] = {
+   var xl = x.length
+   var y = new Array[Double](xl)
+   for (k<-0 until xl)
+     y(k) = pl(x(k), E0, E1, E2, m0, m1, m2, m3)
+ y
+}
+
+var E0 =  5
+var E1 = 10
+var E2 = 15
+var (m0, m1, m2, m3) = (0.5, -0.4, -0.7, 0.9)
+var xaxis = inc(0, 0.01, 20)
+var y = plv(xaxis, E0, E1, E2,  m0, m1, m2, m3)
+plot(xaxis, y)

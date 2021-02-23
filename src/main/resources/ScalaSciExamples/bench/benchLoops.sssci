@@ -1,0 +1,22 @@
+
+var sm=0.0; 
+var  tStart  = System.currentTimeMillis();  
+var  cnt=0;
+var K=2000;
+var  L=3000;
+var k=0; 
+while (k<K)  { 
+ var l=0;
+    while (l<L) {
+         cnt = cnt+1;
+         sm += Math.sin(k*l);
+         sm = Math.cos(sm);
+         l=l+1;
+          }
+   k=k+1;
+}
+  var tEnd = System.currentTimeMillis();
+  var ScalaTime = tEnd-tStart;
+  println("ScalaTime ="+ ScalaTime);
+
+  

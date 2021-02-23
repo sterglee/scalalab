@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15115100">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>Analytic
+Problems</B></FONT></P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>zeroinrat</B></FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=4><SPAN STYLE="font-style: normal">Given
+the values, x_0 and y_0,of the end points of an interval assumed to
+contain a zero of the function f(x), </SPAN><I>zeroinrat</I> <SPAN STYLE="font-style: normal">attempts
+to find, by use of a combination of linear interpolation,
+extrapolation and bisection, values, x_n and y_n, of the end points
+of a smaller interval containing the zero.</SPAN></FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=4><B><SPAN STYLE="font-style: normal">Example:
+Can be run with F9 within the ScalaLab Editor (Ctrl-E to open the
+editor)</SPAN></B></FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">import
+java.text.DecimalFormat;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">import numal.*;</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public class Test_zeroinrat
+extends Object</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">implements
+AP_zeroinrat_methods {</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public static void
+main(String args[]) {</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double x[] = new double[1];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double y[] = new double[1];</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">Test_zeroinrat testzeroinrat
+= new Test_zeroinrat();</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">DecimalFormat fiveDigit = new
+DecimalFormat(&quot;0.00000E0&quot;);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">x[0]=0.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">y[0]=1.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">if
+(Analytic_problems.zeroinrat(x,y,testzeroinrat))</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">System.out.println(&quot;Calculated
+zero: &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(x[0]));</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">else</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">System.out.println(&quot;No
+zero found.&quot;);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public double fx(double x[])</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">{</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">return
+Math.exp(-x[0]*3.0)*(x[0]-1.0)+x[0]*x[0]*x[0];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public double tolx(double
+x[])</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">{</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">return
+Math.abs(x[0])*1.0e-6+1.0e-6;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+</BODY>
+</HTML>

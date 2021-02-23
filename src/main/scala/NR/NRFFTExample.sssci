@@ -1,0 +1,50 @@
+ 
+var  NN=32
+var NN2=NN+NN
+var   data = new Array[Double](NN2)
+var  dcmp = new Array[Double](NN2)
+
+     println ("TEST 1")
+     println ("h(t) = real-valued even function")
+     println ("h(n) = h(N-n) and real")
+          // construct the function
+      var i=0
+      while (i< NN2-1) {
+          data(i)=1.0/((( (i-NN)*(i-NN) )/NN)+1.0)
+          data(i+1)=0.0
+          i += 2
+        }
+
+      var  cpdata = data.clone  // copy data since FFT is done in-place
+
+                var isign=1
+                scalaSci.FFT.FFTScala.four1(cpdata, isign);
+                figure(1); subplot(2,1,1);     plot(data, Color.BLUE,  "Real-Valued even function");
+                subplot(2,1,2); plot(cpdata, Color.RED, "H(n) = H(N-n) and Real")
+
+
+        println ("TEST 2")
+        println ("h(t) = imaginary-valued even-function")
+        println ("h(n) = h(N-n) and imaginary")
+        i = 0
+       while ( i<NN2-1) {
+          data(i+1)=1.0/((( (i-NN)*(i-NN) )/NN)+1.0)
+          data(i)=0.0
+          i += 2
+        }
+
+                cpdata = data.clone  // copy data since FFT is done in-place
+                
+
+                isign=1
+                scalaSci.FFT.FFTScala.four1(cpdata, isign);
+                figure(2); subplot(2,1,1);     plot(data, Color.BLUE,  "Imaginary-Valued even function");
+                subplot(2,1,2); plot(cpdata, Color.RED, "H(n) = H(N-n) ad Imaginary")
+
+
+ 
+        // testing simplified interface to four1
+ 
+
+ var (realffts, imffts) = scalaSci.FFT.FFTScala.fft(data)
+ 

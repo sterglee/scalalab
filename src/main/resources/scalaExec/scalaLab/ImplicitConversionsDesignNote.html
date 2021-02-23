@@ -1,0 +1,606 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110502;17304700">
+	<META NAME="" CONTENT="">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P ALIGN=CENTER><FONT SIZE=5><B>Redesign of the Implicit Conversions
+in ScalaLab around the RichNumber class</B></FONT></P>
+<P ALIGN=LEFT><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><FONT SIZE=4>Initially,
+we have implemented implicit conversions that transformed the
+receiver object according to the type of the arguments in order the
+operation to proceed, e.g.  for the code below:</FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><FONT SIZE=4><I>var a =
+rand(200, 300)  // creates a 200 by 300 Matrix</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><FONT SIZE=4><I>var a2 =
+2+a   // performs the addition by implicitly converted 2</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: normal"><FONT SIZE=4>the
+2  at the initial design was transformed to a 200X300 Matrix filled
+with 2, and the operation performed as Matrix addition.</FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: normal"><FONT SIZE=4>However,
+this design was not very elegant and also not as effective that it
+can be.</FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: normal"><FONT SIZE=4>Therefore,
+we updated the design of the implicit conversions around the
+<I>RichNumber </I>class. This class models an extended Number capable
+of accepting operations with all the relevant classes of ScalaLab,
+e.g. with <I>Mat, Matrix, EJML.Mat, </I>and generally whatever class
+we need to process.  </FONT>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><FONT SIZE=4>At the
+example above, the 2 is transformed by the Scala compiler to a
+<I>RichNumber</I><SPAN STYLE="font-style: normal"> object, that has
+defined an operation to add a Matrix. Therefore, the operation
+proceeds effectively without allocating any new space (at the
+original design a Matrix object was created filled with 2s).</SPAN></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><FONT SIZE=4><SPAN STYLE="font-style: normal">This
+design is more effective (about 20-30% speed increase) and (perhaps
+more important) simpler and more extendable.</SPAN></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><FONT SIZE=4><SPAN STYLE="font-style: normal">We
+present the current code of the </SPAN><I>RichNumber </I><SPAN STYLE="font-style: normal">class:</SPAN></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><BR><BR>
+</P>
+<P>// serves for implicitly converted to that type when certain
+operations cannot be performed, 
+</P>
+<P>// e.g  2+Mat</P>
+<P>package scalaSci</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>class RichNumber(v: Double) {</P>
+<P>    private val  value = v    // the RichNumber includes a Double
+field that corresponds to its value</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>  def +(that: Array[Double]): Array[Double] = {</P>
+<P>    var   N  =  that.length</P>
+<P>    
+</P>
+<P>    var result = new Array[Double](N)</P>
+<P>     for (r &lt;-0 until  N)  
+</P>
+<P>         result(r) = that(r) + value</P>
+<P> 
+</P>
+<P>    result</P>
+<P>    
+</P>
+<P>  }</P>
+<P>  
+</P>
+<P><BR><BR>
+</P>
+<P>  def -(that: Array[Double]): Array[Double] = {</P>
+<P>    var   N  =  that.length</P>
+<P>    
+</P>
+<P>    var result = new Array[Double](N)</P>
+<P>     for (r &lt;-0 until  N)  
+</P>
+<P>         result(r) = -that(r) + value</P>
+<P> 
+</P>
+<P>    result</P>
+<P>    
+</P>
+<P>  }</P>
+<P>  
+</P>
+<P><BR><BR>
+</P>
+<P>  
+</P>
+<P> def *(that: Array[Double]): Array[Double] = {</P>
+<P>    var   N  =  that.length</P>
+<P>    
+</P>
+<P>    var result = new Array[Double](N)</P>
+<P>     for (r &lt;-0 until  N)  
+</P>
+<P>         result(r) = that(r) * value</P>
+<P> 
+</P>
+<P>    result</P>
+<P>    
+</P>
+<P>  }</P>
+<P>  
+</P>
+<P><BR><BR>
+</P>
+<P>  
+</P>
+<P><BR><BR>
+</P>
+<P> def /( that:  Array[Double]): Array[Double]= {</P>
+<P>    var   N  =  that.length</P>
+<P>    
+</P>
+<P>   var result = new Array[Double](N)</P>
+<P>   var r=0</P>
+<P>   while (r &lt; N)  {</P>
+<P>        var tmp = that(r)</P>
+<P>        if (tmp != 0)</P>
+<P>            result(r) = value /  tmp</P>
+<P>        else</P>
+<P>            result(r) = 0.0</P>
+<P>         r += 1</P>
+<P>       }</P>
+<P>      
+</P>
+<P>    result</P>
+<P> }</P>
+<P><BR><BR>
+</P>
+<P>  
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>  def +(that: Array[Array[Double]]): Array[Array[Double]] = {</P>
+<P>    var   N  =  that.length</P>
+<P>    var   M = that(0).length</P>
+<P><BR><BR>
+</P>
+<P>    var result = Array.ofDim[Double](N,M)</P>
+<P>     for (r &lt;-0 until  N)  
+</P>
+<P>       for (c &lt;-0 until  M)  
+</P>
+<P>         result(r)(c) = that(r)(c) + value</P>
+<P> 
+</P>
+<P>    result</P>
+<P>    
+</P>
+<P>  }</P>
+<P>  
+</P>
+<P><BR><BR>
+</P>
+<P>  def -(that: Array[Array[Double]]): Array[Array[Double]] = {</P>
+<P>    var   N  =  that.length</P>
+<P>    var   M = that(0).length</P>
+<P><BR><BR>
+</P>
+<P>    var result = Array.ofDim[Double](N,M)</P>
+<P>     for (r &lt;-0 until  N)  
+</P>
+<P>       for (c &lt;-0 until  M)  
+</P>
+<P>         result(r)(c) = -that(r)(c) + value</P>
+<P> 
+</P>
+<P>    result</P>
+<P>    
+</P>
+<P>  }</P>
+<P>  
+</P>
+<P>  
+</P>
+<P>  
+</P>
+<P>  def *(that: Array[Array[Double]]): Array[Array[Double]] = {</P>
+<P>    var   N  =  that.length</P>
+<P>    var   M = that(0).length</P>
+<P><BR><BR>
+</P>
+<P>    var result = Array.ofDim[Double](N,M)</P>
+<P>     for (r &lt;-0 until  N)  
+</P>
+<P>       for (c &lt;-0 until  M)  
+</P>
+<P>         result(r)(c) = that(r)(c) * value</P>
+<P> 
+</P>
+<P>    result</P>
+<P>    
+</P>
+<P>  }</P>
+<P>  
+</P>
+<P><BR><BR>
+</P>
+<P> def /( that:  Array[Array[Double]]): Array[Array[Double]]= {</P>
+<P>    var   N  =  that.length</P>
+<P>    var   M = that(0).length</P>
+<P><BR><BR>
+</P>
+<P>   var result = Array.ofDim[Double](M, N)</P>
+<P>   var r=0; var c=0</P>
+<P>   while (r &lt; N)  {</P>
+<P>      c = 0</P>
+<P>      while (c &lt; M)  {</P>
+<P>        var tmp = that(r)(c)</P>
+<P>        if (tmp != 0)</P>
+<P>            result(r)(c) = value /  tmp</P>
+<P>        else</P>
+<P>            result(r)(c) = 0.0</P>
+<P>         c += 1</P>
+<P>       }</P>
+<P>      r += 1</P>
+<P>    }</P>
+<P>    result</P>
+<P> }</P>
+<P><BR><BR>
+</P>
+<P>  
+</P>
+<P>  
+</P>
+<P> // addition of RichNumber and Vec</P>
+<P> def +( that:  Vec ): Vec = {</P>
+<P>   var   N  =  that.length</P>
+<P>    
+</P>
+<P>   var result = new Vec(N)</P>
+<P>   var r=0</P>
+<P>   while (r &lt; N)   {</P>
+<P>         result(r) = that(r) + value</P>
+<P>         r += 1</P>
+<P>       }</P>
+<P>    result 
+</P>
+<P> }</P>
+<P><BR><BR>
+</P>
+<P>   // subtraction of Vec from a RichNumber 
+</P>
+<P> def -( that:  Vec ): Vec = {</P>
+<P>   var   N  =  that.length</P>
+<P>    
+</P>
+<P>   var result = new Vec(N)</P>
+<P>   var r=0</P>
+<P>   while (r &lt; N)   {</P>
+<P>         result(r) =  value - that(r) 
+</P>
+<P>         r += 1</P>
+<P>       }</P>
+<P>    result</P>
+<P> }</P>
+<P><BR><BR>
+</P>
+<P>  
+</P>
+<P> // multiplication of RichNumber and Vec</P>
+<P> def *( that:  Vec ): Vec = {</P>
+<P>   var   N  =  that.length</P>
+<P>    
+</P>
+<P>   var result = new Vec(N)</P>
+<P>   var r=0</P>
+<P>   while (r &lt; N)   {</P>
+<P>         result(r) = that(r) * value</P>
+<P>         r += 1</P>
+<P>       }</P>
+<P>    result</P>
+<P> }</P>
+<P><BR><BR>
+</P>
+<P>  
+</P>
+<P> // division of a  RichNumber with a Vec</P>
+<P> def /( that:  Vec ): Vec = {</P>
+<P>   var   N  =  that.length</P>
+<P>    
+</P>
+<P>   var result = new Vec(N)</P>
+<P>   var r=0</P>
+<P>   while (r &lt; N)   {</P>
+<P>         var tmp = that(r)</P>
+<P>         if (tmp!=0)</P>
+<P>            result(r) =  value / tmp</P>
+<P>          else</P>
+<P>            result(r) = 0.0</P>
+<P>         r += 1</P>
+<P>       }</P>
+<P>    result</P>
+<P> }</P>
+<P><BR><BR>
+</P>
+<P>  
+</P>
+<P>   
+</P>
+<P>  def +(that: Matrix): Matrix = {</P>
+<P>    var   N  =  that.Nrows</P>
+<P>    var   M = that.Ncols</P>
+<P><BR><BR>
+</P>
+<P>    var result = Array.ofDim[Double](N,M)</P>
+<P>     for (r &lt;-0 until  N)  
+</P>
+<P>       for (c &lt;-0 until  M)  
+</P>
+<P>         result(r)(c) = that(r,c) + value</P>
+<P> 
+</P>
+<P>    new Matrix(result, true)</P>
+<P>    
+</P>
+<P>  }</P>
+<P>  
+</P>
+<P>// subtraction of a Matrix from a RichNumber</P>
+<P>  def -(that: Matrix): Matrix = {</P>
+<P>    var   N  =  that.Nrows</P>
+<P>    var   M = that.Ncols</P>
+<P><BR><BR>
+</P>
+<P>    var result = Array.ofDim[Double](N,M)</P>
+<P>     for (r &lt;-0 until  N)  
+</P>
+<P>       for (c &lt;-0 until  M)  
+</P>
+<P>         result(r)(c) =  value - that(r,c) 
+</P>
+<P> 
+</P>
+<P>    new Matrix(result, true)</P>
+<P>    
+</P>
+<P>  }</P>
+<P><BR><BR>
+</P>
+<P>  def *(that: Matrix): Matrix = {</P>
+<P>    var   N  =  that.Nrows</P>
+<P>    var   M = that.Ncols</P>
+<P><BR><BR>
+</P>
+<P>    var result = Array.ofDim[Double](N,M)</P>
+<P>     for (r &lt;-0 until  N)  
+</P>
+<P>       for (c &lt;-0 until  M)  
+</P>
+<P>         result(r)(c) = that(r,c) * value</P>
+<P> 
+</P>
+<P>    new Matrix(result, true)</P>
+<P>    
+</P>
+<P>  }</P>
+<P>  
+</P>
+<P><BR><BR>
+</P>
+<P>  
+</P>
+<P>  // division of a RichNumber with a  Matrix. Divides the
+corresponding number with each of the Matrix's element'</P>
+<P> def /( that:  Matrix ): Matrix = {</P>
+<P>    var   N  =  that.Nrows</P>
+<P>    var   M = that.Ncols</P>
+<P><BR><BR>
+</P>
+<P>   var result = new Matrix(N, M)</P>
+<P>   var r=0; var c=0</P>
+<P>   while (r &lt; N)  {</P>
+<P>      c = 0</P>
+<P>      while (c &lt; M)  {</P>
+<P>        var tmp = that(r, c)</P>
+<P>        if (tmp != 0)</P>
+<P>            result(r, c) = value /  tmp</P>
+<P>        else</P>
+<P>            result(r, c) = 0.0</P>
+<P>         c += 1</P>
+<P>       }</P>
+<P>      r += 1</P>
+<P>    }</P>
+<P>    result</P>
+<P> }</P>
+<P><BR><BR>
+</P>
+<P>  
+</P>
+<P>   
+</P>
+<P>  def +(that: Mat): Mat = {</P>
+<P>    var   N  =  that.Nrows</P>
+<P>    var   M = that.Ncols</P>
+<P><BR><BR>
+</P>
+<P>    var result = Array.ofDim[Double](N,M)</P>
+<P>     for (r &lt;-0 until  N)  
+</P>
+<P>       for (c &lt;-0 until  M)  
+</P>
+<P>         result(r)(c) = that(r,c) + value</P>
+<P> 
+</P>
+<P>    new Mat(result, true)</P>
+<P>    
+</P>
+<P>  }</P>
+<P>  
+</P>
+<P>// subtraction of a Matrix from a RichNumber</P>
+<P>  def -(that: Mat): Mat = {</P>
+<P>    var   N  =  that.Nrows</P>
+<P>    var   M = that.Ncols</P>
+<P><BR><BR>
+</P>
+<P>    var result = Array.ofDim[Double](N,M)</P>
+<P>     for (r &lt;-0 until  N)  
+</P>
+<P>       for (c &lt;-0 until  M)  
+</P>
+<P>         result(r)(c) =  value - that(r,c) 
+</P>
+<P> 
+</P>
+<P>    new Mat(result, true)</P>
+<P>    
+</P>
+<P>  }</P>
+<P><BR><BR>
+</P>
+<P>  def *(that: Mat): Mat = {</P>
+<P>    var   N  =  that.Nrows</P>
+<P>    var   M = that.Ncols</P>
+<P><BR><BR>
+</P>
+<P>    var result = Array.ofDim[Double](N,M)</P>
+<P>     for (r &lt;-0 until  N)  
+</P>
+<P>       for (c &lt;-0 until  M)  
+</P>
+<P>         result(r)(c) = that(r,c) * value</P>
+<P> 
+</P>
+<P>    new Mat(result, true)</P>
+<P>    
+</P>
+<P>  }</P>
+<P>  
+</P>
+<P><BR><BR>
+</P>
+<P>  
+</P>
+<P>  // division of a RichNumber with a  Matrix. Divides the
+corresponding number with each of the Matrix's element'</P>
+<P> def /( that:  Mat ): Mat = {</P>
+<P>    var   N  =  that.Nrows</P>
+<P>    var   M = that.Ncols</P>
+<P><BR><BR>
+</P>
+<P>   var result = new Mat(N, M)</P>
+<P>   var r=0; var c=0</P>
+<P>   while (r &lt; N)  {</P>
+<P>      c = 0</P>
+<P>      while (c &lt; M)  {</P>
+<P>        var tmp = that(r, c)</P>
+<P>        if (tmp != 0)</P>
+<P>            result(r, c) = value /  tmp</P>
+<P>        else</P>
+<P>            result(r, c) = 0.0</P>
+<P>         c += 1</P>
+<P>       }</P>
+<P>      r += 1</P>
+<P>    }</P>
+<P>    result</P>
+<P> }</P>
+<P><BR><BR>
+</P>
+<P>  
+</P>
+<P>  
+</P>
+<P>  // addition of RichNumber and an EJML.Mat</P>
+<P> def +( that:  EJML.Mat ): EJML.Mat = {</P>
+<P>    var   N  =  that.Nrows</P>
+<P>    var   M = that.Ncols</P>
+<P><BR><BR>
+</P>
+<P>   var result = new EJML.Mat(N, M)</P>
+<P>   var r=0; var c=0</P>
+<P>   while (r &lt; N)  {</P>
+<P>      c = 0</P>
+<P>      while (c &lt; M)  {</P>
+<P>         result(r, c) = that(r,c) + value</P>
+<P>         c += 1</P>
+<P>       }</P>
+<P>      r += 1</P>
+<P>    }</P>
+<P>    result</P>
+<P> }</P>
+<P><BR><BR>
+</P>
+<P>  // subtraction of an EJML.Mat from a RichNumber</P>
+<P> def -( that:  EJML.Mat ): EJML.Mat = {</P>
+<P>    var   N  =  that.Nrows</P>
+<P>    var   M = that.Ncols</P>
+<P><BR><BR>
+</P>
+<P>   var result = new EJML.Mat(N, M)</P>
+<P>   var r=0; var c=0</P>
+<P>   while (r &lt; N)  {</P>
+<P>      c = 0</P>
+<P>      while (c &lt; M)  {</P>
+<P>         result(r, c) = -that(r,c) + value</P>
+<P>         c += 1</P>
+<P>       }</P>
+<P>      r += 1</P>
+<P>    }</P>
+<P>    result</P>
+<P> }</P>
+<P><BR><BR>
+</P>
+<P>  // multiplication of a RichNumber with a Mat</P>
+<P> def *( that:  EJML.Mat ): EJML.Mat = {</P>
+<P>    var   N  =  that.Nrows</P>
+<P>    var   M = that.Ncols</P>
+<P><BR><BR>
+</P>
+<P>   var result = new EJML.Mat(N, M)</P>
+<P>   var r=0; var c=0</P>
+<P>   while (r &lt; N)  {</P>
+<P>      c = 0</P>
+<P>      while (c &lt; M)  {</P>
+<P>         result(r, c) = that(r,c) * value</P>
+<P>         c += 1</P>
+<P>       }</P>
+<P>      r += 1</P>
+<P>    }</P>
+<P>    result</P>
+<P> }</P>
+<P><BR><BR>
+</P>
+<P>  
+</P>
+<P>  // division of a RichNumber with a  Mat. Divides the
+corresponding number with each of the Mat's element'</P>
+<P> def /( that:  EJML.Mat ): EJML.Mat = {</P>
+<P>    var   N  =  that.Nrows</P>
+<P>    var   M = that.Ncols</P>
+<P><BR><BR>
+</P>
+<P>   var result = new EJML.Mat(N, M)</P>
+<P>   var r=0; var c=0</P>
+<P>   while (r &lt; N)  {</P>
+<P>      c = 0</P>
+<P>      while (c &lt; M)  {</P>
+<P>        var tmp = that(r, c)</P>
+<P>        if (tmp != 0)</P>
+<P>            result(r, c) = value /  tmp</P>
+<P>        else</P>
+<P>            result(r, c) = 0.0</P>
+<P>         c += 1</P>
+<P>       }</P>
+<P>      r += 1</P>
+<P>    }</P>
+<P>    result</P>
+<P> }</P>
+<P><BR><BR>
+</P>
+<P>  
+</P>
+<P>  
+</P>
+<P>  
+</P>
+<P>}</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

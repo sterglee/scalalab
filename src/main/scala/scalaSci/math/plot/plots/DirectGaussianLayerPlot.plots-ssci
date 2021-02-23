@@ -1,0 +1,17 @@
+
+// testing direct gaussian plot
+var  p2 = new Plot2DPanel;
+var XYZ = Array.ofDim[Double](10, 2);
+var sXYZ = new Array[Double](10);
+   for (i <- 0 to 1) {
+   for (j <- 0 to XYZ.length-1) {
+        XYZ(j)(0) = Math.random;
+	XYZ(j)(1) = Math.random;
+	sXYZ(j) = Math.random;
+      }
+   p2.addScatterPlot("toto" + i, XYZ);
+  }
+		p2.getPlot(0).addGaussQuantiles(1, sXYZ);
+		p2.getPlot(1).addGaussQuantiles(1, 0.1);
+
+		new FrameView(p2)

@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.2
+Created-By: 1.7.0_03-b04 (Oracle Corporation)
+Main-Class: scalaExec.scalaLab.scalaLab
+Class-Path: lib/BrowserLauncher2-1_3.jar lib/EJML.jar lib/JASYMCA.jar 
+ lib/JSci.jar  lib/NUMAL.jar lib/MTJColtSGT.jar li
+ b/VISAD.jar lib/apidoc.jar lib/arpack_combo-0.1.jar lib/autocomplete-
+ 1.4.1.jar lib/biojavaJH.jar lib/concurrent.jar lib/csparsej.jar lib/e
+ jmlHelp.jar lib/fjbg.jar lib/forkjoin.jar lib/itext-2.1.5.jar lib/jdk
+ 6Help.jar lib/jhall.jar lib/jline.jar lib/jplasma.jar lib/jsearch.jar
+  lib/jsyntaxpane-0.9.5-b29.jar lib/jta26-src.jar lib/jta26.jar lib/jt
+ ransforms.jar lib/junit-4.4.jar lib/netlib-java-0.9.3.jar lib/optimiz
+ ation.jar lib/rsyntaxtextarea-1.4.1.jar lib/scala-compiler.jar lib/sc
+ ala-library.jar lib/scala-swing.jar lib/scalaHelp.jar lib/scalap.jar 
+ lib/JFreeChart.jar lib/scalatreewrapper_github_commit-e4bc44cd6b19fda
+ 25d6f.jar lib/xmlgraphics-commons-1.3.1.jar
+X-COMMENT: Main-Class will be added automatically by build
+

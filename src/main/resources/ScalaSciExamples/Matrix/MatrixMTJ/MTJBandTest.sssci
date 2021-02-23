@@ -1,0 +1,39 @@
+
+import no.uib.cipr.matrix.BandLU
+import no.uib.cipr.matrix.BandMatrix
+import no.uib.cipr.matrix.DenseMatrix
+import no.uib.cipr.matrix.Matrices
+import no.uib.cipr.matrix.Matrix
+import no.uib.cipr.matrix.Utilities
+
+// Tests the banded LU decomposition
+ 
+var  n = 100 
+
+var kl = 2 
+var ku = 3
+       
+// create an appropriate band matrix
+var A = new BandMatrix(n, kl, kl + ku)
+
+// populate A with random values returning the result as an Array[Array[Double]]
+var rvs = Utilities.bandPopulate(A, kl, ku)
+
+tic
+// perform an LU decomposition
+var lu = new BandLU(n, kl, ku)
+// factorize matrix A
+lu.factor(A.copy())
+
+
+// make a DenseMatrix of size nXn
+var I = Matrices.identity(n)
+// the solution x = A^{-1} \cdot x, is overwritten on I
+var solution = lu.solve(I)
+
+// compute the time for the solution
+var tmLUSolveband = toc()
+
+// test the solution
+var J = I.multAdd(1.0, A, new DenseMatrix(n, n))
+

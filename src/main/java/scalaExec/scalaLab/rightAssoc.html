@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1253">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20091124;8245661">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2.01cm }
+		P { margin-bottom: 0.2cm }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE><FONT SIZE=5><B>Right-associativity operators</B></FONT>
+
+<FONT SIZE=4 STYLE="font-size: 16pt">Scala implements all operators as <B>method calls. </B><SPAN STYLE="font-weight: medium">For example, if M is a Matrix then M + 10 is implemented as M.+(10). The opposite case 10 + </SPAN><B>M</B><SPAN STYLE="font-weight: medium">, is implemented by defining an </SPAN><B>implicit conversion</B> <SPAN STYLE="font-weight: medium">that directs the compiler to transform the </SPAN><B>Int</B> <SPAN STYLE="font-weight: medium">element 10, to a Matrix of compatible size with </SPAN><B>M</B> <SPAN STYLE="font-weight: medium">and with all its elements set to 10, and then performing the matrix addition.</SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt">However, the implicit conversion implies an object transformation at run time and thus some computational cost. In order to avoid the overhead of the implicit conversion the <B>right associativity </B><SPAN STYLE="font-weight: medium">of operators that end with ':' can be exploited. In particular, </SPAN><B>any method that ends in a ':' is invoked on its right operand, passing it to the left operand.</B><SPAN STYLE="font-weight: medium"> For example, in</SPAN></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><I><SPAN STYLE="font-weight: medium">var m= rand(20, 30);    var r = 20 +: m</SPAN></I></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN STYLE="font-weight: medium">the addition is evaluated as: </SPAN><I><SPAN STYLE="font-weight: medium">var r = m.+(20)</SPAN></I></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><SPAN STYLE="font-weight: medium">Right-associativity operators </SPAN><B>+:, -:, *: </B><SPAN STYLE="font-weight: medium">are supported by classes </SPAN><B>Vec, Matrix, Mat</B><SPAN STYLE="font-weight: medium"> and for any </SPAN><B>Number</B><SPAN STYLE="font-weight: medium"> (e.g. Int, Double) at the left side, i.e. the general pattern is:</SPAN></FONT>
+   <FONT SIZE=4 STYLE="font-size: 16pt"><B>(Short | Int | Long | Float | Double) (+: | -: | *:) (Vec | Matrix | Mat)</B></FONT>
+</PRE>
+</BODY>
+</HTML>

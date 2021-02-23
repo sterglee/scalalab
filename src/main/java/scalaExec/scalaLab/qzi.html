@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110101;15195300">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>Generalized eigenvalue problem</B></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US"><B>qzi</B></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US">Solves the generalized eigenvalue problem by means of QZ iteration,</SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">for</SPAN> details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+<SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN>
+<SPAN LANG="en-US">import numal.*;</SPAN>
+
+<SPAN LANG="en-US">public class Test_qzi extends Object {</SPAN>
+<SPAN LANG="en-US">	</SPAN>
+<SPAN LANG="en-US">	public static void main(String args[]) {</SPAN>
+
+    <SPAN LANG="en-US">int k,l;</SPAN>
+    <SPAN LANG="en-US">int iter[] = new int[5];</SPAN>
+    <SPAN LANG="en-US">double alfr[] = new double[5];</SPAN>
+    <SPAN LANG="en-US">double alfi[] = new double[5];</SPAN>
+    <SPAN LANG="en-US">double beta[] = new double[5];</SPAN>
+    <SPAN LANG="en-US">double em[] = new double[2];</SPAN>
+    <SPAN LANG="en-US">double a[][] = new double[5][5];</SPAN>
+    <SPAN LANG="en-US">double b[][] = new double[5][5];</SPAN>
+    <SPAN LANG="en-US">double x[][] = new double[5][5];</SPAN>
+
+    <SPAN LANG="en-US">a[1][1]=2.0;  a[1][2]=3.0;     a[1][3] = -3.0;   a[1][4]=4.0;</SPAN>
+    <SPAN LANG="en-US">a[2][1]=1.0;  a[2][2] = -1.0;  a[2][3]=5.0;      a[2][4]=1.0;</SPAN>
+    <SPAN LANG="en-US">a[3][1]=0.0;  a[3][2]=2.0;     a[3][3]=6.0;      a[3][4]=8.0;</SPAN>
+    <SPAN LANG="en-US">a[4][1]=1.0;  a[4][2]=1.0;     a[4][3]=0.0;      a[4][4]=4.0;</SPAN>
+    <SPAN LANG="en-US">b[1][1]=1.0;  b[1][2]=5.0;     b[1][3]=9.0;      b[1][4]=0.0;</SPAN>
+    <SPAN LANG="en-US">b[2][1]=2.0;  b[2][2]=6.0;     b[2][3]=10.0;     b[2][4]=2.0;</SPAN>
+    <SPAN LANG="en-US">b[3][1]=3.0;  b[3][2]=7.0;     b[3][3]=11.0;     b[3][4] = -1.0;</SPAN>
+    <SPAN LANG="en-US">b[4][1]=4.0;  b[4][2]=8.0;     b[4][3]=12.0;     b[4][4]=3.0;</SPAN>
+    <SPAN LANG="en-US">for (k=1; k&lt;=4; k++)</SPAN>
+      <SPAN LANG="en-US">for (l=1; l&lt;=4; l++)  x[k][l] = (k == l) ? 1.0 : 0.0;</SPAN>
+    <SPAN LANG="en-US">em[0]=1.0e-35;</SPAN>
+    <SPAN LANG="en-US">em[1]=1.0e-6;</SPAN>
+    <SPAN LANG="en-US">Linear_algebra.qzi(4,a,b,x,alfr,alfi,beta,iter,em);</SPAN>
+    <SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN>
+    <SPAN LANG="en-US">for (k=1; k&lt;=4; k++)</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;ITER[&quot; + k + &quot;] =  &quot; + iter[k]);</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;\nEigenvectors:&quot;);</SPAN>
+    <SPAN LANG="en-US">for (k=1; k&lt;=4; k++)</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot; &quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(x[k][1]) + &quot;\t&quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(x[k][2]) + &quot;\t&quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(x[k][3]) + &quot;\t&quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(x[k][4]));</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;\nALFA(real part)\tALFA(imaginary part)\tBETA&quot;);</SPAN>
+    <SPAN LANG="en-US">for (k=1; k&lt;=4; k++)</SPAN>
+      <SPAN LANG="en-US">System.out.println(fiveDigit.format(alfr[k]) + &quot;\t&quot; + </SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(alfi[k]) + &quot;\t\t&quot; + </SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(beta[k]));</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;\nLAMBDA(real part)\tLAMBDA(imaginary part)&quot;);</SPAN>
+    <SPAN LANG="en-US">for (k=1; k&lt;=4; k++)</SPAN>
+      <SPAN LANG="en-US">if (beta[k] == 0.0)</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;  INFINITE\t\tINDEFINITE&quot;);</SPAN>
+      <SPAN LANG="en-US">else</SPAN>
+        <SPAN LANG="en-US">System.out.println(fiveDigit.format(alfr[k]/beta[k]) +</SPAN>
+          <SPAN LANG="en-US">&quot;\t\t&quot; + fiveDigit.format(alfi[k]/beta[k]));</SPAN>
+<SPAN LANG="en-US">	}</SPAN>
+<SPAN LANG="en-US">}</SPAN>
+
+</PRE>
+</BODY>
+</HTML>

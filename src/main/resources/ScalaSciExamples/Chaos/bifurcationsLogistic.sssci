@@ -1,0 +1,43 @@
+
+    import _root_.java.awt._ ; 
+    import _root_.java.awt.event._ ;
+    import _root_.javax.swing._ ;
+    import _root_.javax.swing.event._; 
+
+ class bifLogistFrame extends JFrame  {
+        setTitle("Bifurcation Diagram")
+        var Nw = 40 // "warm up" repetitions
+        var NP = 100 // how many points to evaluate for each parameter
+        var (lpv, upv) = (2.0, 4.0) // upper and lower bifurcation param value
+        var dr = 0.0001  // step on bifurcation parameter
+        var (xmax, ymax)  = (700, 700)
+        setSize(xmax, ymax)
+    
+    override def  paint ( g: Graphics):Unit = {
+        var xplot=0.0; var yplot=0.0
+   
+       g.clearRect(0, 0, xmax, ymax)
+       g.setColor(Color.GREEN)
+       var r =  lpv
+        while (r <= upv) {
+            xplot = xmax*(r-lpv)/lpv;
+            var x = 0.8
+            for (k<-0 to Nw)
+                x = r*x*(1.0-x)
+            
+            for (k<-0 to NP) {
+                x = r*x*(1.0-x)
+                yplot = ymax*(1.0-x)
+                var m =  Math.round(xplot).asInstanceOf[Int]
+                var n =  Math.round(yplot).asInstanceOf[Int]
+                g.drawLine(m, n, m, n)
+            }
+            r = r+dr
+        }
+    }
+ 
+}
+    
+ var f = new bifLogistFrame()
+ f.setVisible(true)
+    
