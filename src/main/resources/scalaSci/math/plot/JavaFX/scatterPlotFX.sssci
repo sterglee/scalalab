@@ -1,0 +1,11 @@
+import scalaSci.math.plot.JavaFX.javaFXPlotScatter._
+
+
+var x = 0::0.5::20
+
+var y = sin(0.56*x)
+
+setscatterPlotTitlefx("A sine function  plotted with JavaFX")
+
+setscatterPlotNamefx(" sin function")
+scatterplotfx(x, y)

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" hgap="15.0" prefHeight="34.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onCancel" text="Cancel" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onOK" text="OK" />
+         </children>
+      </FlowPane>
+   </bottom>
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="201.0" minWidth="10.0" prefWidth="201.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="10.0" prefWidth="45.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.0" minWidth="10.0" prefWidth="198.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.0" minWidth="10.0" prefWidth="39.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="181.0" minWidth="10.0" prefWidth="171.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="89.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="groupId" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+            <Label text="artifactId" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+            <Label text="version" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+            <TextField fx:id="groupId" onKeyReleased="#onKeyUp" GridPane.rowIndex="1" />
+            <TextField fx:id="artifactId" onKeyReleased="#onKeyUp" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="version" onKeyReleased="#onKeyUp" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+   </center>
+   <padding>
+      <Insets left="20.0" right="20.0" />
+   </padding>
+</BorderPane>

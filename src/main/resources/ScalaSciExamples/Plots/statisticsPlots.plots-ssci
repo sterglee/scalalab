@@ -1,0 +1,8 @@
+
+import scalaSci.math.array.StatisticSample._
+
+var m = 0.0
+var sigma = 0.5
+var N = 2000
+var x = randomLogNormal(N, m, sigma) // 1000 random 
+plot(x)

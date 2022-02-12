@@ -1,0 +1,25 @@
+ 
+var a = ones(1600, 1200)
+
+var b = ones(1200, 1200)
+
+// default RichDouble2DArray multiply
+tic
+var c = a * b
+var tmDefaultMult = toc
+
+// fast RichDouble2DArray multiply
+tic
+var cb = a *# b
+var tmFastMult = toc
+
+
+
+// benchmark eigendecompositions for RichDouble2DArray
+var m = ones(40,40)
+
+var N = 1000 // repetitions
+var g = bench(N, {()=> var evs = eig(m)})  // using default 
+ 
+var gfevals = bench(N, {()=> var eigvals = eigVals(m)})  // using native BLAS eigenvalues
+var gfevecs = bench(N, {()=> var eigvecs = eigVecs(m)})  // using native BLAS eigenvectors

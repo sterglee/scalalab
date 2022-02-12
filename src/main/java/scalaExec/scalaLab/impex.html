@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101228;16095300">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>impex</B></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US">Solves an initial value problem, given as an autonomous system of  first order differential equations by means of an implicit midpoint rule with smoothing and extrapolation. </SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US">The integration method is based on the computation of two independent solutions with stepsizes <I>h </I><SPAN STYLE="font-style: normal"> and </SPAN><I>h/2 </I><SPAN STYLE="font-style: normal">by the implicit midpoint rule. Passive smoothing and passive extrapolation are performed to obtain stability and high accuracy.</SPAN></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">public class Test_impex extends Object</SPAN></FONT>
+                        <FONT SIZE=3><SPAN LANG="en-US">implements AP_impex_methods {</SPAN></FONT>
+
+  <FONT SIZE=3><SPAN LANG="en-US">static int nfe,nje,point;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">static double print[] = new double[6];</SPAN></FONT>
+   
+<FONT SIZE=3><SPAN LANG="en-US">	public static void main(String args[]) {</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">boolean fail[] = new boolean[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">int n,i,it;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double t,tend,eps,hmax,l,h2,n1,n2;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double y[] = new double[4];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double sw[] = new double[4];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double f1[] = new double[4];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double f2[] = new double[4];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double z[] = new double[4];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double x[] = new double[4];</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">Test_impex testimpex = new Test_impex();</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot;The results with IMPEX are:\n&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">n=3;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">nje=nfe=0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">t=0.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">tend=400.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">eps=1.0e-5;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">hmax=400.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y[1]=y[2]=y[3]=0.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">sw[1]=sw[2]=sw[3]=1.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">print[1]=0.1;  print[2]=1.0;  print[3]=10.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">print[4]=100.0; print[5]=400.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">Basic.dupvec(1,n,0,z,y);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">for (i=1; i&lt;=n; i++)</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">x[i] = (y[i] == 0.0) ? eps : (1.0+eps)*y[i];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">n1=Math.sqrt(Basic.vecvec(1,n,0,x,x))*eps;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">testimpex.deriv(t,x,f1,n);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">for (it=1; it&lt;=5; it++) {</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">testimpex.deriv(t,z,f2,n);</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">Basic.elmvec(1,n,0,f2,f1,-1.0);</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">n2=n1/Math.sqrt(Basic.vecvec(1,n,0,f2,f2));</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">Basic.dupvec(1,n,0,z,x);</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">Basic.elmvec(1,n,0,z,f2,n2);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">testimpex.deriv(t,z,f2,n);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">Basic.elmvec(1,n,0,f2,f1,-1.0);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">l=Math.sqrt(Basic.vecvec(1,n,0,f2,f2))/n1;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">h2=Math.pow(eps*320.0,1.0/5.0)/(4.0*l);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot;EPS = &quot; + fiveDigit.format(eps) +</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">&quot;\nInterval of integration = (&quot; + (int)t + &quot;,&quot; +</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">(int)tend + &quot;)\nMaximally allowed stepsize = &quot; +</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">fiveDigit.format(hmax) + &quot;\n\nLipschconst = &quot; +</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">fiveDigit.format(l) + &quot;\nStarting stepsize = &quot; +</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">fiveDigit.format(h2) + &quot;\nFunctional eval = &quot; +</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">nfe + &quot;\n\n  X     ERROR     Y[1]            Y[2]&quot; +</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">&quot;          NFE     NJE\n&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">Analytic_problems.impex(n,t,tend,y,testimpex,h2,</SPAN></FONT>
+                            <FONT SIZE=3><SPAN LANG="en-US">hmax,false,eps,sw,fail);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot;\nNumber of functional evaluations = &quot; +</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">nfe + &quot;\nNumber of Jacobian evaluations   = &quot; + nje);</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void deriv(double t, double y[], double f1[], int n)</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">nfe++;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">f1[1]=0.2*(y[2]-y[1]);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">f1[2]=10.0*y[1]-(60.0-0.125*y[3])*y[2]+0.125*y[3];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">f1[3]=1.0;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public boolean available(double t, double y[], double a[][], int n)</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">nje++;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">a[1][1] = -0.2;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">a[1][2] = 0.2;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">a[1][3]=a[3][1]=a[3][2]=a[3][3]=0.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">a[2][1]=10.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">a[2][2]=0.125*y[3]-60.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">a[2][3]=0.125*(1.0+y[2]);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">return true;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void update(double sw[], double r1[], int n)</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">int i;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double s1,s2;</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">for (i=1; i&lt;=n; i++) {</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">s1=1.0/sw[i];</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">s2=Math.abs(r1[i]);</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">if (s1 &lt; s2) sw[i]=1.0/s2;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void control(double tp[], double t, double h,</SPAN></FONT>
+                      <FONT SIZE=3><SPAN LANG="en-US">double hnew, double y[][], double err[],</SPAN></FONT>
+                      <FONT SIZE=3><SPAN LANG="en-US">int n, double tend)</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">int i;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double s,s2,s3,s4;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double c[] = new double[6];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double x[] = new double[n+1];</SPAN></FONT>
+    
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat oneDigit = new DecimalFormat(&quot;0.0E0&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">while (true) {</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">s=(t-tp[0])/h;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">s2=s*s;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">s3=s2*s;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">s4=s3*s;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">c[3]=(s2-s)/2.0;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">c[4] = -s3/6.0+s2/2.0-s/3.0;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">c[5]=s4/24.0-s3/4.0+11.0*s2/24.0-s/4.0;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">for (i=1; i&lt;=n; i++)</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">x[i]=y[1][i]-s*y[2][i]+c[3]*y[3][i]+</SPAN></FONT>
+             <FONT SIZE=3><SPAN LANG="en-US">c[4]*y[4][i]+c[5]*y[5][i];</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot; &quot; + tp[0] + &quot;\t&quot; +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">oneDigit.format(err[3]) + &quot;\t&quot; +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">fiveDigit.format(x[1]) + &quot;\t&quot; +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">fiveDigit.format(x[2]) + &quot;\t&quot; +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">nfe + &quot;\t&quot; + nje);</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">if (tp[0] &gt;= tend) break;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">point++;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">tp[0] = print[point];</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">if (tp[0] &gt; t) break;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT></PRE>
+</BODY>
+</HTML>

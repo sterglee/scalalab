@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#onKeyUp" prefHeight="640.0" prefWidth="600.0" stylesheets="@../scalaconsole.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane prefHeight="38.0" prefWidth="600.0" VBox.vgrow="NEVER">
+         <center>
+            <TextField fx:id="searchBox" onKeyPressed="#onEnterInSearchBox" prefHeight="26.0" prefWidth="191.0" BorderPane.alignment="CENTER" />
+         </center>
+         <left>
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="208.0" text="Keyword (e.g. scalaz): " BorderPane.alignment="CENTER_RIGHT" />
+         </left>
+         <right>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="4.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="loadingImg" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/loading.gif" />
+                     </image>
+                  </ImageView>
+                  <Label id="errorMsg" fx:id="errorMsg" opacity="0.0" text="3 chars at least." />
+               </children>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </HBox>
+         </right>
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
+      </BorderPane>
+      <HBox minHeight="100.0" prefHeight="472.0" prefWidth="600.0" spacing="2.0">
+         <children>
+            <ListView fx:id="matchedList" minHeight="100.0" prefHeight="479.0" prefWidth="458.0" />
+            <VBox>
+               <children>
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="136.0" text="Dbclick to select" textAlignment="CENTER">
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                  </Label>
+                  <ListView fx:id="versionList" minHeight="100.0" prefHeight="513.0" prefWidth="136.0" />
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" />
+         </padding>
+      </HBox>
+      <FlowPane fx:id="crossBuildsPane" hgap="4.0" prefHeight="5.0" prefWidth="600.0" vgap="4.0" VBox.vgrow="ALWAYS">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding></FlowPane>
+      <HBox>
+         <children>
+            <Label alignment="CENTER" prefHeight="77.0" prefWidth="271.0" text="Dbclick to deselect" textAlignment="RIGHT" HBox.hgrow="ALWAYS" />
+            <ListView fx:id="selectedVersionList" minHeight="-Infinity" prefHeight="77.0" prefWidth="600.0" />
+         </children>
+         <padding>
+            <Insets left="3.0" right="3.0" />
+         </padding>
+      </HBox>
+      <FlowPane columnHalignment="RIGHT" hgap="20.0" minHeight="-Infinity" nodeOrientation="RIGHT_TO_LEFT" VBox.vgrow="ALWAYS">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onCancel" text="Cancel" />
+            <Button mnemonicParsing="false" onAction="#onOK" text="Ok" textAlignment="CENTER" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="20.0" top="10.0" />
+         </padding>
+      </FlowPane>
+   </children>
+</VBox>

@@ -1,0 +1,55 @@
+/// fast  compute of the sine axis wih a recurrence
+
+object FastTrig {
+ var delta = 0.001
+ var alpha = 2*sin(delta/2)*sin(delta/2)
+ var beta = sin(delta)
+    
+ def init(_delta: Double) = {
+  delta = _delta
+  alpha = 2*sin(delta/2)*sin(delta/2)
+  beta = sin(delta)
+ }
+
+var cosTheta = 0.0
+var sinTheta = 0.0
+var pcosTheta = 0.0
+var psinTheta = 0.0
+
+def setV(v: Double) = {
+ cosTheta = cos(v)
+ sinTheta = sin(v)
+ pcosTheta = cosTheta
+ psinTheta = sinTheta
+}
+/*
+FastTrig.init(0.001)
+FastTrig.setV(0.0)
+var N=5000
+var x = new Array[Double](N)
+tic;
+for (l<-0 to 100) {
+  for (k<-0 until N) 
+  x(k) = FastTrig.fsin
+}
+var tmF=toc
+
+var dx=0.001
+tic
+for (l<-0 to 100) {
+  for (k<-0 until N) 
+  x(k) =  sin(k*dx)
+}
+var tm=toc
+
+
+*/
+def fsin() = {
+  cosTheta = pcosTheta - (alpha*pcosTheta + beta*psinTheta)
+  sinTheta = psinTheta - (alpha*psinTheta - beta*pcosTheta)
+  pcosTheta = cosTheta
+  psinTheta = sinTheta
+ 
+  sinTheta
+ }
+}

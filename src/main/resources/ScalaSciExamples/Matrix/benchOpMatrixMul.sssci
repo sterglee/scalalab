@@ -1,0 +1,63 @@
+
+
+var nreps=10  // number of repetitions
+var INC = 150  // matrix size increment
+
+// matrix sizes array
+var sizes = new Array[Double](nreps)
+
+// arrays to keep times
+var ejml_t = new Array[Double](nreps)
+var mtj_t = new Array[Double](nreps)
+var jama_t = new Array[Double](nreps)
+var numal_t = new Array[Double](nreps)
+var commonMaths_t = new Array[Double](nreps)
+
+for (rep <- 0 until nreps) {
+
+    var cSiz = (rep+1)* INC   // matrix will be of size:  cSiz X cSiz
+    sizes(rep) = cSiz*cSiz  // matrix size
+
+        // EJML
+    var ejml_x = scalaSci.EJML.StaticMathsEJML.rand0(cSiz, cSiz)
+    tic
+    var ejml_mx = ejml_x*ejml_x
+    ejml_t(rep) = toc.toDouble
+
+        // MTJ
+    var mtj_x = scalaSci.MTJ.StaticMathsMTJ.rand0(cSiz, cSiz)
+    tic
+    var mtj_mx = mtj_x * mtj_x
+    mtj_t(rep) = toc.toDouble
+
+        // JAMA
+    var jama_x = scalaSci.StaticMaths.rand0(cSiz, cSiz)
+    tic
+    var jama_mx = jama_x*jama_x
+    jama_t(rep) = toc.toDouble
+
+        // NUMAL
+     var numal_x = scalaSci.StaticMaths.rand1(cSiz, cSiz)
+     tic
+     var numal_mx = numal_x*numal_x
+     numal_t(rep) = toc.toDouble
+
+        
+      // Apache Commons
+      var commonMaths_x = scalaSci.CommonMaths.StaticMathsCommonMaths.rand0(cSiz, cSiz)
+      tic
+      var commonMaths_mx = commonMaths_x*commonMaths_x
+      commonMaths_t(rep) = toc.toDouble
+
+}
+
+figure(1); hold("on")
+plot(sizes, ejml_t, Color.BLUE, "EJML")
+plot(sizes, mtj_t, Color.RED, "MTJ")
+plot(sizes, jama_t, Color.GREEN, "Jama")
+plot(sizes, numal_t, Color.YELLOW, "NUMAL")
+plot(sizes, commonMaths_t, Color.GRAY, "Apache Common Maths")
+
+
+xlabel("Matrix Size"); ylabel("Time (secs)")
+

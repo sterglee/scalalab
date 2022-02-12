@@ -1,0 +1,76 @@
+
+var n=3500
+
+var x = new scalaSci.D2Das1D(n,n)
+
+var x0 = rand(n,n)
+var xejml=rand0(n,n)
+
+var r=0; var c=0
+tic
+while (r<n) {
+    c=0
+    while (c<n) {
+        x(r,c)=x(r,c)+1.0
+        c+=1
+        }
+      r += 1
+   }
+   var tmD2d = toc
+
+r=0   
+tic
+while (r<n) {
+    c=0
+    while (c<n) {
+        x0(r,c)=x0(r,c)+1.0
+        c+=1
+        }
+      r += 1
+   }
+   var tmrda = toc
+   
+   
+r=0   
+tic
+while (r<n) {
+    c=0
+    while (c<n) {
+        xejml(r,c)=xejml(r,c)+1.0
+        c+=1
+        }
+      r += 1
+   }
+   var tmejml = toc
+   println("tmrda = "+tmrda +" tmD2d = "+tmD2d+" tmejml= "+tmejml)
+   
+        
+
+for (r<-0 until n)
+ for (k<-0 until n)
+   x(r, k)=1
+   
+   var M=100000
+   tic
+   for (k<-0 until M)
+      x+x+x+x
+   var tm = toc   
+   
+   
+var xr = ones(n,n)
+   
+   tic
+   for (k<-0 until M)
+     xr+xr+xr+xr
+   var tmr = toc   
+   
+    
+   
+var xm = ones0(n,n)
+   
+   tic
+   for (k<-0 until M)
+     xm+xm+xm+xm
+   var tmm = toc   
+   
+   tmr

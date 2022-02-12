@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20100825;11061695">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2.01cm }
+		P { margin-bottom: 0.2cm }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE>
+
+<FONT SIZE=6><U><B>Eigenvalue computations</B></U></FONT>
+
+ <FONT SIZE=5><B>var (eVecs, eVals) = eig(X) produces a  matrix eVals of eigenvalues and a   full matrix eVecs whose columns are the corresponding eigenvectors so  that eVals*X = eVecs*X.</B></FONT>
+ 
+
+<FONT SIZE=4 STYLE="font-size: 16pt">Since there are some small differences at the interface of each library we consider an example for each one, to highlight the differences.</FONT>
+
+    <FONT SIZE=4 STYLE="font-size: 16pt"><B>1.   Matrix class    (one indexed NUMAL based class)</B></FONT>
+
+<FONT SIZE=4>The eVals matrix is NX2, first column has the real values and the second column the imagenary values of each eigenvector.</FONT>
+
+<FONT SIZE=4 STYLE="font-size: 16pt"><I>var myMat = M1(&quot;5 3 -1; 4 3 2; -4 -1.2 4&quot;) // create an one -indexed Matrix</I></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt"><I>var (eigsVec, eigsVal) = eig(myMat)</I></FONT>
+
+<FONT SIZE=2>eigsVec: scalaSci.Matrix = </FONT>
+ 
+<FONT SIZE=2>-0.639  -0.748  -0.335  </FONT>
+<FONT SIZE=2>1.000  -0.232  0.341  </FONT>
+<FONT SIZE=2>-0.323  1.000  1.000  </FONT>
+
+<FONT SIZE=2>eigsVal: scalaSci.Matrix = </FONT>
+ 
+<FONT SIZE=2>-0.201  0.000  </FONT>
+<FONT SIZE=2>7.269  0.000  </FONT>
+<FONT SIZE=2>4.932  0.000  </FONT>
+
+<FONT SIZE=4 STYLE="font-size: 16pt">// verify eigenvalue equation</FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt">var ev1 =  <FONT SIZE=4 STYLE="font-size: 16pt">eigsVec(':',1)   // first eigenvector</FONT></FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt">var xeVal1 = myMat*ev1</FONT>
+<FONT SIZE=4 STYLE="font-size: 16pt">var xeVal2 = eigsVal(1,1)*ev1</FONT>
+
+<FONT SIZE=4 STYLE="font-size: 16pt">var <FONT SIZE=4 STYLE="font-size: 16pt"> diff = xeVal1 - xeVal2  // should be zero</FONT></FONT>
+
+
+
+<FONT SIZE=4 STYLE="font-size: 16pt"><B>2.   Mat class (scalaSci.Mat, zero indexed JAMA based class)</B></FONT>
+<FONT SIZE=4>This class returns only the real values of the eigenvalues in a diagonal matrix. </FONT>
+
+<FONT SIZE=4><B>Example:</B></FONT>
+<FONT SIZE=4>var myMat0 = M(&quot;5 3 -1; 4 3 2; -4 -1.2 4&quot;) // create a zero-indexed Mat</FONT>
+<FONT SIZE=4><SPAN STYLE="font-weight: medium">var (eigsVec0, eigsVal0) = eig(myMat0)</SPAN><B> </B></FONT>
+
+<FONT SIZE=1 STYLE="font-size: 8pt">eigsVec0: scalaSci.Mat = </FONT>
+ <FONT SIZE=1 STYLE="font-size: 8pt"><FONT SIZE=1 STYLE="font-size: 8pt">0.589  -0.520  0.591  </FONT></FONT>
+<FONT SIZE=1 STYLE="font-size: 8pt">0.183  0.814  -0.600  </FONT>
+<FONT SIZE=1 STYLE="font-size: 8pt">-0.787  -0.263  -1.761  </FONT>
+<FONT SIZE=1 STYLE="font-size: 8pt">eigsVal0: scalaSci.Mat = </FONT>
+<FONT SIZE=1 STYLE="font-size: 8pt">7.269  0.000  0.000  </FONT>
+<FONT SIZE=1 STYLE="font-size: 8pt">0.000  -0.201  0.000  </FONT>
+<FONT SIZE=1 STYLE="font-size: 8pt">0.000  0.000  4.932  </FONT>
+
+<FONT SIZE=4>// verify eigenvalue equation</FONT>
+<FONT SIZE=4>var ev0 =  eigsVec0(':',0)   // first eigenvector</FONT>
+<FONT SIZE=4>var xeVal10 = myMat0*ev0</FONT>
+<FONT SIZE=4>var xeVal20 = eigsVal0(0,0)*ev0</FONT>
+
+<FONT SIZE=4>var  diff0 = xeVal10 - xeVal20  // should be zero</FONT></PRE>
+</BODY>
+</HTML>

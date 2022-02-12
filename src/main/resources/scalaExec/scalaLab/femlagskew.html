@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101229;14495800">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>femlagskew</B></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US">Solves a second order <SPAN STYLE="font-style: normal">s</SPAN><SPAN STYLE="font-style: normal">kew</SPAN><SPAN STYLE="font-style: normal">-adjoint linear two point boundary value problem with spherical coordinates by means of  Galerkin's method with continous piecewise polynomials.</SPAN></SPAN></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+
+import java.text.DecimalFormat;
+import numal.*;
+
+public class Test_femlagskew extends Object
+                             implements AP_femlagskew_methods {
+
+	public static void main(String args[]) {
+
+    int n,i,order;
+    double rho,d;
+    double x[] = new double[21];
+    double y[] = new double[21];
+    double e[] = new double[7];
+
+    Test_femlagskew testfemlagskew = new Test_femlagskew();
+    DecimalFormat twoDigit = new DecimalFormat(&quot;0.00E0&quot;);
+    System.out.println(&quot;FEMLAGSKEW delivers:\n&quot;);
+    for (n=10; n&lt;=20; n += 10) {
+      e[1]=e[4]=1.0;
+      e[2]=e[3]=e[5]=e[6]=0.0;
+      for (i=0; i&lt;=n; i++) x[i]=Math.PI*i/n;
+      System.out.println(&quot;N=&quot; + n);
+      for (order=2; order&lt;=6; order += 2) {
+        Analytic_problems.femlagskew(x,y,n,testfemlagskew,order,e);
+        rho=0.0;
+        for (i=0; i&lt;=n; i++) {
+          d=Math.abs(y[i]-Math.sin(x[i]));
+          if (rho &lt; d) rho=d;
+        }
+        System.out.println(&quot;     ORDER = &quot; + order +
+          &quot;    MAX.ERROR = &quot; + twoDigit.format(rho));
+      }
+    }
+  }
+
+
+  public double q(double x)
+  {
+    return Math.cos(x);
+  }
+
+
+  public double r(double x)
+  {
+    return Math.exp(x);
+  }
+
+
+  public double f(double x)
+  {
+    return Math.sin(x)*(1.0+Math.exp(x))+
+           Math.cos(x)*Math.cos(x);
+  }
+}</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15073800">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>Unconstrained
+optimization</B></FONT></P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>One
+variable – Derivative available</B></FONT></P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>mininder</B></FONT></P>
+<P>Determines a point x \in [a, b] at which the real valued function
+f(x) assumes a minimum value, when the analytical derivative Df(x) of
+the function is available.</P>
+<P><BR><BR>
+</P>
+<P><B>Example: Can be run with F9 within the ScalaLab Editor (Ctrl-E
+to open the editor)</B></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">import
+java.text.DecimalFormat;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">import numal.*;</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public class Test_mininder
+extends Object</FONT></P>
+<P>                           <FONT SIZE=2 STYLE="font-size: 11pt">implements
+AP_mininder_methods {</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">	</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">	public static void
+main(String args[]) {</FONT></P>
+<P><BR><BR>
+</P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">double m;</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">double x[] = new
+double[1];</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">double y[] = new
+double[1];</FONT></P>
+<P><BR><BR>
+</P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">Test_mininder
+testmininder = new Test_mininder();</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">DecimalFormat fiveDigit =
+new DecimalFormat(&quot;0.00000E0&quot;);</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">x[0]=1.01;</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">y[0]=3.99;</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">m=Analytic_problems.mininder(x,y,testmininder);</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">System.out.println(&quot;Minimum
+is  &quot; +</FONT></P>
+<P>      <FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(m) + 
+&quot;\nFor x is  &quot; +</FONT></P>
+<P>      <FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(x[0])
++ &quot;  and y is  &quot; +</FONT></P>
+<P>      <FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(y[0]));</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">	}</FONT></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>  <FONT SIZE=2 STYLE="font-size: 11pt">public double fx(double
+x[])</FONT></P>
+<P>  <FONT SIZE=2 STYLE="font-size: 11pt">{</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">int i;</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">double s,temp;</FONT></P>
+<P><BR><BR>
+</P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">s=0.0;</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">for (i=1; i&lt;=20; i++)
+{</FONT></P>
+<P>      <FONT SIZE=2 STYLE="font-size: 11pt">temp=(i*2-5)/(x[0]-i*i);</FONT></P>
+<P>      <FONT SIZE=2 STYLE="font-size: 11pt">s += temp*temp;</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">return s;</FONT></P>
+<P>  <FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>  <FONT SIZE=2 STYLE="font-size: 11pt">public double dfx(double
+x[])</FONT></P>
+<P>  <FONT SIZE=2 STYLE="font-size: 11pt">{</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">int i;</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">double s,temp1,temp2;</FONT></P>
+<P><BR><BR>
+</P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">s=0.0;</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">for (i=1; i&lt;=20; i++)
+{</FONT></P>
+<P>      <FONT SIZE=2 STYLE="font-size: 11pt">temp1=i*2-5;</FONT></P>
+<P>      <FONT SIZE=2 STYLE="font-size: 11pt">temp2=x[0]-i*i;</FONT></P>
+<P>      <FONT SIZE=2 STYLE="font-size: 11pt">s +=
+(temp1*temp1)/(temp2*temp2*temp2);</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">return -s*2.0;</FONT></P>
+<P>  <FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>  <FONT SIZE=2 STYLE="font-size: 11pt">public double tolx(double
+x[])</FONT></P>
+<P>  <FONT SIZE=2 STYLE="font-size: 11pt">{</FONT></P>
+<P>    <FONT SIZE=2 STYLE="font-size: 11pt">return
+(Math.abs(x[0])*1.0e-6+1.0e-6);</FONT></P>
+<P>  <FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+</BODY>
+</HTML>

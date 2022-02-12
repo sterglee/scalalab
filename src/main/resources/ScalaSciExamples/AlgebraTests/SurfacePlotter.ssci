@@ -1,0 +1,7 @@
+
+
+var sp = new com.googlecode.surfaceplotter.JSurface
+var jf =  new JFrame
+jf.add(sp)
+jf.setSize(500, 700)
+jf.setVisible(true)

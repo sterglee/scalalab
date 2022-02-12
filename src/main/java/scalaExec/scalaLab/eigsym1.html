@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110101;14421600">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>The (ordinary)  eigenvalue problem</B></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US"><B>Real symmetric tridiagonal matrices</B></SPAN></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US"><B>eigsym1</B></SPAN></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">Calculates </SPAN><SPAN STYLE="font-style: normal">the </SPAN><I>m</I><SPAN STYLE="font-style: normal"> largest eigenvalues and corresponding eienvectors of </SPAN><SPAN STYLE="font-style: normal">a</SPAN><SPAN STYLE="font-style: normal">n </SPAN><I>nXn </I><SPAN STYLE="font-style: normal">symmetric matrix </SPAN><I>A </I><SPAN STYLE="font-style: normal">whose upper triangular part is stored in a one-dimensional array,</SPAN></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">for</SPAN> details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+<SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN>
+<SPAN LANG="en-US">import numal.*;</SPAN>
+
+<SPAN LANG="en-US">public class Test_eigsym1 extends Object {</SPAN>
+<SPAN LANG="en-US">	</SPAN>
+<SPAN LANG="en-US">	public static void main(String args[]) {</SPAN>
+
+    <SPAN LANG="en-US">int i,j;</SPAN>
+    <SPAN LANG="en-US">double a[] = new double[11];</SPAN>
+    <SPAN LANG="en-US">double val[] = new double[3];</SPAN>
+    <SPAN LANG="en-US">double em[] = new double[10];</SPAN>
+    <SPAN LANG="en-US">double vec[][] = new double[5][3];</SPAN>
+
+    <SPAN LANG="en-US">em[0]=1.0e-6; em[2]=1.0e-5; em[4]=1.0e-3;</SPAN>
+    <SPAN LANG="en-US">em[6]=1.0e-5; em[8]=5.0;</SPAN>
+    <SPAN LANG="en-US">for (i=1; i&lt;=4; i++)</SPAN>
+      <SPAN LANG="en-US">for (j=i; j&lt;=4; j++) a[(j*j-j)/2+i]=1.0/(i+j-1);</SPAN>
+    <SPAN LANG="en-US">Linear_algebra.eigsym1(a,4,2,val,vec,em);</SPAN>
+    <SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;The eigenvalues:\n   &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(val[1]) + &quot;    &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(val[2]) +</SPAN>
+      <SPAN LANG="en-US">&quot;\n\nThe eigenvectors:\n  &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(vec[1][1]) + &quot;   &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(vec[1][2]) + &quot;\n  &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(vec[2][1]) + &quot;  &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(vec[2][2]) + &quot;\n  &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(vec[3][1]) + &quot;  &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(vec[3][2]) + &quot;\n  &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(vec[4][1]) + &quot;  &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(vec[4][2]) +  </SPAN>
+      <SPAN LANG="en-US">&quot;\n\nEM[1] =  &quot; + fiveDigit.format(em[1]) +   </SPAN>
+      <SPAN LANG="en-US">&quot;\nEM[7] =  &quot; + fiveDigit.format(em[7]) +</SPAN>
+      <SPAN LANG="en-US">&quot;\nEM[3] =  &quot; + (int)em[3] +</SPAN>
+      <SPAN LANG="en-US">&quot;\nEM[5] =  &quot; + (int)em[5] +</SPAN>
+      <SPAN LANG="en-US">&quot;\nEM[9] =  &quot; + (int)em[9]);</SPAN>
+<SPAN LANG="en-US">	}</SPAN>
+<SPAN LANG="en-US">}</SPAN></PRE>
+</BODY>
+</HTML>

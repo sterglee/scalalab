@@ -1,0 +1,10 @@
+
+// tests the exponential integral computation
+
+var v=inc(0.1, 0.01, 16)
+var vl = v.length
+var yo = new Array[Double](vl)
+for (k<-0 to vl-1)
+  yo(k) = numal.Special_functions.ei( v(k))
+
+plot(yo)

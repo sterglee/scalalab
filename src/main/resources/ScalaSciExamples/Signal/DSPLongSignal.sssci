@@ -1,0 +1,34 @@
+
+closeAll()
+ // M is the segment length
+var M = 128
+  // perform power spectral estimation using overlapping data segments
+  // The user sends non-overlapping segments of length M, which are processed
+  // in pairs of 2M, with overlap
+var  spobj = new com.nr.sp.Spectolap(M)
+
+val N = 2*M    // length of the long signal is not a power of 2
+var bw = new com.nr.sp.Hann(N)
+bw
+
+var dN = 10*N
+val t = linspace(0,10,dN)
+val F1 = 4.5; val F2 = 15.8*F1; val F3 = 21.7   // take some frequencies
+val A1 = 0.45; val A2 = 1.5; val A3 = 2   // take some amplitudes
+
+// a synthetic long signal
+var longSignal = A1*sin(F1*t)+A2*cos(F2*t)+A3*sin(F3*t)
+
+ // perform PSD estimation of the long signal
+ // addlongdata() initializes processing of the long signal as
+ // overlapping segments of length 2*M
+spobj.addlongdata(longSignal, bw)
+
+   
+val cspectrum = spobj.spectrum()  // compute spectrum
+val cfreqs = spobj.frequencies()  // the frequencies 
+
+figure(1); subplot(2,1,1); 
+plot(t, longSignal, "r", 1); title("signal")
+subplot(2,1,2);
+plot(cfreqs, cspectrum); title("power spectrum")     

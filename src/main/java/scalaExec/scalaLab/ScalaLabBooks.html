@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1253">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101222;9495767">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21.01cm 29.69cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><FONT SIZE=6 STYLE="font-size: 22pt"><U><B>ScalaLab Scientific
+Resources</B></U></FONT></P>
+<P><BR><BR>
+</P>
+<P>ScalaLab includes a Java 6 compiler and thus it can compile and
+run Java code even without an installed Java compiler. Important and
+powerful Java scientific libraries have been included at the main
+ScalaLab distribution and others can be utilized with the <B>toolbox
+</B><SPAN STYLE="font-weight: medium">loading mechanism.</SPAN></P>
+<P STYLE="font-weight: medium">There are two ways to run Java
+scientific code:</P>
+<P><BR><BR>
+</P>
+<P><SPAN STYLE="font-weight: medium">a. </SPAN><B>The traditional way
+as a Java class</B></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium">Open the ScalaLab Editor
+(with &ldquo;<I>Ctrl-E&rdquo;</I> or &ldquo;<I>Edit&rdquo;, &ldquo;scalaLab
+Editor&rdquo;) </I><SPAN STYLE="font-style: normal">and implement a
+Java class. Then run the class with the &ldquo;</SPAN><I>Java Compile
+and Execute (F9)&rdquo; </I><SPAN STYLE="font-style: normal">option</SPAN></P>
+<P ALIGN=JUSTIFY>For example suppose that we want to use the
+Efficient Java Matrix Library (EJML) from within ScalaLab.
+Specifically, we run the <I>BenchmarkElement </I><SPAN STYLE="font-style: normal">class
+ shipped with the EJML distribution. We proceed as follows.</SPAN></P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal"><B>Step 1. Open the
+ScalaLab Editor and code the BenchmarkElement class as follows.</B></P>
+<P ALIGN=JUSTIFY><FONT SIZE=1 STYLE="font-size: 8pt">import
+org.ejml.*;</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=1 STYLE="font-size: 8pt">import
+org.ejml.data.DenseMatrix64F;</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=1 STYLE="font-size: 8pt">import
+org.ejml.ops.CommonOps;</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=1 STYLE="font-size: 8pt">import
+org.ejml.ops.RandomMatrices;</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=1 STYLE="font-size: 8pt">import
+java.util.Random;</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=1 STYLE="font-size: 8pt">public class
+BenchmarkElement {</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=1 STYLE="font-size: 8pt">static Random
+rand = new Random(234);</FONT></P>
+<P ALIGN=JUSTIFY> <FONT SIZE=1 STYLE="font-size: 8pt">public static
+void main( String args[] ) {</FONT></P>
+<P ALIGN=JUSTIFY>        <FONT SIZE=1 STYLE="font-size: 8pt">long N =
+10000000;</FONT></P>
+<P ALIGN=JUSTIFY>        <FONT SIZE=1 STYLE="font-size: 8pt">double
+num = 2.5;</FONT></P>
+<P ALIGN=JUSTIFY>        <FONT SIZE=1 STYLE="font-size: 8pt">DenseMatrix64F
+A = RandomMatrices.createRandom(10,10,rand);</FONT></P>
+<P ALIGN=JUSTIFY>        <FONT SIZE=1 STYLE="font-size: 8pt">long
+timeBefore = System.currentTimeMillis();</FONT></P>
+<P ALIGN=JUSTIFY>        <FONT SIZE=1 STYLE="font-size: 8pt">for( int
+i = 0; i &lt; N; i++ ) {</FONT></P>
+<P ALIGN=JUSTIFY>            <FONT SIZE=1 STYLE="font-size: 8pt">CommonOps.divide(num,A);</FONT></P>
+<P ALIGN=JUSTIFY>        <FONT SIZE=1 STYLE="font-size: 8pt">}</FONT></P>
+<P ALIGN=JUSTIFY>        <FONT SIZE=1 STYLE="font-size: 8pt">long
+timeAfter = System.currentTimeMillis();</FONT></P>
+<P ALIGN=JUSTIFY>        <FONT SIZE=1 STYLE="font-size: 8pt">System.out.println(&quot;div
+= &quot;+(timeAfter-timeBefore));</FONT></P>
+<P ALIGN=JUSTIFY>        <FONT SIZE=1 STYLE="font-size: 8pt">A =
+RandomMatrices.createRandom(10,10,rand);</FONT></P>
+<P ALIGN=JUSTIFY>        <FONT SIZE=1 STYLE="font-size: 8pt">timeBefore
+= System.currentTimeMillis();</FONT></P>
+<P ALIGN=JUSTIFY>        <FONT SIZE=1 STYLE="font-size: 8pt">for( int
+i = 0; i &lt; N; i++ ) {</FONT></P>
+<P ALIGN=JUSTIFY>            <FONT SIZE=1 STYLE="font-size: 8pt">CommonOps.scale(num,A);</FONT></P>
+<P ALIGN=JUSTIFY>        <FONT SIZE=1 STYLE="font-size: 8pt">}</FONT></P>
+<P ALIGN=JUSTIFY>        <FONT SIZE=1 STYLE="font-size: 8pt">timeAfter
+= System.currentTimeMillis();</FONT></P>
+<P ALIGN=JUSTIFY>        <FONT SIZE=1 STYLE="font-size: 8pt">System.out.println(&quot;scale
+= &quot;+(timeAfter-timeBefore));</FONT></P>
+<P ALIGN=JUSTIFY>    <FONT SIZE=1 STYLE="font-size: 8pt">}</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=1 STYLE="font-size: 8pt">}</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=3><B>Step 2  Save the code in a file
+named BenchmarkElement.java</B></FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=3><B>Step 3  Compile and Execute the Java
+code with the relative popup menu option or with the shortcut F9.</B></FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium"><SPAN STYLE="font-style: normal">b.
+</SPAN><SPAN STYLE="font-style: normal"><B>Scripting with the Scala
+Interpreter</B></SPAN></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium"><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: medium">This
+is the preferable way. Any Java code can be executed within the
+framework of the Scala Interpreter. The basic Java scientific
+libraries are within the </SPAN></SPAN><I><SPAN STYLE="font-weight: medium">ScalaLabLibs.jar</SPAN></I>
+<SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: medium">file
+which exists in the </SPAN></SPAN><I><SPAN STYLE="font-weight: medium">lib
+</SPAN></I><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: medium">folder
+after the installation of ScalaLab. Thus there are accessible from
+the ClassPath and can be directly used.</SPAN></SPAN></P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">The
+following important Java libraries can be used:</P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal"><B>a. The NUMAL numerical
+analysis Java library.</B></P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">This
+library is described with the book:</P>
+<P ALIGN=JUSTIFY>&ldquo;<I><SPAN STYLE="font-weight: medium">A
+Numerical Library in Java for Scientists and Engineers&rdquo;, </SPAN></I><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: medium">of
+Hang T. Lau, Chapman &amp; Hall, 2004</SPAN></SPAN></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><B><SPAN STYLE="font-style: normal">b. The Java
+implementations of numerical code of the book:</SPAN></B></P>
+<P ALIGN=JUSTIFY>&ldquo;<I><SPAN STYLE="font-weight: medium">Object-Oriented
+Implementation of Numerical Methods&rdquo;, </SPAN></I><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: medium">of
+Didier H. Besset, Morgan Kaufman Publishers, 2001</SPAN></SPAN></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+</BODY>
+</HTML>

@@ -1,0 +1,10 @@
+
+/* computes 
+ a)  within class (Sb) 
+ b) the between-class (Sb)
+ c)  the mixture (Sm) scatter matrices for a c-class classification problem
+taken as input (a) an lXN dimensional matrix X, whose ith row is the ith data vector and
+(b)  an N dimensional row vector y whose ith element contains the class label for the ith vector in X
+(the jth class is denoted by the integer j, j=1, ..., c)
+ */
+

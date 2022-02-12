@@ -1,0 +1,26 @@
+def f(x: Double) = x*x*x
+
+var N = 10000000
+tic;  
+var y = new Array[Double](N)
+var k=0
+while  (k< N) {
+  y(k)= f(k)
+  k+= 1
+  }
+  var tm = toc
+  
+// 0.17 sec
+
+// Groovy Code here, do not execute with Scala!!!
+
+ f = { a -> return (double)a*(double)a*(double)a}
+
+N = 10000000
+
+tic()
+y = new double[N]
+for (k in 0..N-1)
+  y[k]= f(k)
+   tm = toc()
+   // 2.08 sec

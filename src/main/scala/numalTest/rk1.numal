@@ -1,0 +1,49 @@
+
+// NUMAL related imports
+     import _root_.java.util.Vector ; 
+    import _root_.numal._ ; 
+    import _root_.numal.Algebraic_eval._;
+    import _root_.numal.Analytic_eval._
+    import _root_.numal.Analytic_problems._
+    import _root_.numal.Approximation._
+    import _root_.numal.Basic._;
+    import _root_.numal.FFT._;
+    import  _root_.numal.Linear_algebra._; 
+    import _root_.numal.Special_functions._;
+    import java.text.DecimalFormat 
+
+
+/*  ROUTINE:  rk1
+
+Compute the solution at x=1 of the differential equation
+    dy/dx = -y
+with initial condition y(0) = 1
+*/
+
+ object testRK1 extends AnyRef  with  AP_rk1_method  {
+
+   def run = {
+       var  first: Boolean = true
+       var x = new  AD(1)
+       var y = new AD(1)
+       var d = new AD(5)
+       var e = new AD(3)
+
+       var fiveDigit = new DecimalFormat("0.00000E0")
+       e(1) = 1.0e-4; e(2) = 1.0e-4
+       first = true
+       Analytic_problems.rk1(x, 0.0, 1.0, y, 1.0, testRK1, e, d, first)
+       println(" RK1 delivers: \n x = "+ fiveDigit.format(x(0)) + "\n y = "+
+            fiveDigit.format(y(0))+"    yexact = "+ fiveDigit.format(Math.exp(-x(0))))
+    }
+
+ def fxy(x: AD, y: AD) = -y(0)
+}
+
+testRK1.run
+
+
+
+   
+
+

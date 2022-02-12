@@ -1,0 +1,40 @@
+// create the 2-D double array
+var d = AAD("7.8 -4 0.55; 8.9 -0.344 9.66; -0.55 6.7 8.9") 
+
+//var d = Rand(800, 800)
+//  create from the same random array Matrices of different types
+
+
+// EJML
+var ed  = new scalaSci.EJML.Mat(d)
+tic
+var invejml=scalaSci.EJML.StaticMathsEJML.inv(ed)
+var ejmltm = toc
+
+
+
+var nd  = new scalaSci.Matrix(d)
+tic
+var invnumal = scalaSci.StaticMaths.inv(nd)
+var numaltm = toc
+
+var nmd = new scalaSci.Mat(d)
+tic
+var invjama = scalaSci.StaticMaths.inv(nmd)
+var tm=toc
+
+var md  = new scalaSci.MTJ.Mat(d)
+tic
+var invmtj=scalaSci.MTJ.StaticMathsMTJ.inv(md)
+var tmmtj = toc
+
+var rrdd = new scalaSci.RichDouble2DArray(d)
+tic
+var invrdda = scalaSci.StaticMaths.inv(rrdd)
+var tmrddda = toc
+
+
+var ad  = new scalaSci.CommonMaths.Mat(d)
+tic
+var invcm=scalaSci.CommonMaths.StaticMathsCommonMaths.inv(ad)
+var tmCommonMaths = toc

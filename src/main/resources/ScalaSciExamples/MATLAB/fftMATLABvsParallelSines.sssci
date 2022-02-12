@@ -1,0 +1,37 @@
+
+
+// demonstrates multithreaded FFT of a random matrix
+var N = 2^^^10
+var SF=0.1
+
+var x = Rand(N,N)
+var row=0
+while (row < N) {
+  x(row) = x(row)+sin(SF*(row+10)*linspace(0,1,N).getv)
+  row += 1
+  }
+  
+  
+// serial FFT of all the rows of the matrix
+tic
+var fxs = fft(x)
+var tms = toc
+
+// mutlithreaded FFT 
+tic
+var fxp = fftp(x)
+var tmp = toc // time for multithreaded FFT
+
+var refxp = fxp._1
+subplot(2,1,1); plot(refxp(0)); subplot(2,1, 2); plot(refxp(N-1))
+
+initMatlabConnection
+
+tic
+var fftm = """
+ym = fft(x);
+"""
+
+@MATLAB
+meval(fftm, Array("x"), Array("ym"))
+@MATLAB

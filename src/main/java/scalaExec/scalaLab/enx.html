@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101229;15514500">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>Exponential integral</B></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US"><B>enx</B></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">Calculates </SPAN><SPAN STYLE="font-style: normal">a</SPAN><I> </I><SPAN STYLE="font-style: normal">sequence of integrals,</SPAN></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US">for details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+<SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN>
+<SPAN LANG="en-US">import numal.*;</SPAN>
+
+<SPAN LANG="en-US">public class Test_enx extends Object {</SPAN>
+<SPAN LANG="en-US">	</SPAN>
+<SPAN LANG="en-US">	public static void main(String args[]) {</SPAN>
+
+  <SPAN LANG="en-US">	int i;</SPAN>
+<SPAN LANG="en-US">	  double b[] = new double[2];</SPAN>
+<SPAN LANG="en-US">	  double a[] = new double[43];</SPAN>
+
+    <SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN>
+  <SPAN LANG="en-US">	System.out.println(&quot;ENX and NONEXPENX deliver:&quot;);</SPAN>
+  <SPAN LANG="en-US">	Special_functions.enx(1.1,40,42,a);</SPAN>
+<SPAN LANG="en-US">	  for (i=40; i&lt;=42; i++)</SPAN>
+<SPAN LANG="en-US">	    System.out.println(&quot; E(&quot; + i + &quot;,1.1) = &quot; +</SPAN>
+<SPAN LANG="en-US">	                       fiveDigit.format(a[i]));</SPAN>
+<SPAN LANG="en-US">	  Special_functions.nonexpenx(50.1,1,1,b);</SPAN>
+<SPAN LANG="en-US">	  System.out.println(&quot;\nEXP(50.1)*E(1,50.1) = &quot; +</SPAN>
+<SPAN LANG="en-US">	                     fiveDigit.format(b[1]));</SPAN>
+<SPAN LANG="en-US">	}</SPAN>
+<SPAN LANG="en-US">}</SPAN></PRE>
+</BODY>
+</HTML>

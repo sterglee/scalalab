@@ -1,0 +1,51 @@
+import java.awt.Dimension
+import java.awt.FlowLayout
+import javax.swing.JFrame
+import javax.swing.JLabel
+import javax.swing.SwingUtilities
+import com.github.sarxos.webcam._
+
+var motionDetector = new DetectMotionExample
+
+class DetectMotionExample extends JFrame with  Runnable with WebcamMotionListener {
+
+   var INTERVAL = 100  // ms
+
+
+   var  webcam = Webcam.getDefault()
+        
+          var  updater = new Thread(this, "updater-thread")
+          updater.setDaemon(true)
+          updater.start()
+             
+                
+           setTitle("Motion Detector")
+        setLayout(new FlowLayout())
+
+        webcam.setViewSize(new Dimension(640, 480))
+
+        var panel = new WebcamPanel(webcam)
+
+        add(panel)
+
+        pack()
+        setVisible(true)
+        
+        override def  run() = {
+
+                var  detector = new WebcamMotionDetector(webcam)
+                detector.setInterval(INTERVAL)
+                      detector.addMotionListener(this)
+                detector.start()
+
+                        
+                }
+
+  override def motionDetected( wme: WebcamMotionEvent) {
+                //println("Detected motion I, alarm turn on you have");
+  //java.awt.Toolkit.getDefaultToolkit().beep()
+   tone(400,1000)
+
+        }
+
+        }

@@ -1,0 +1,67 @@
+
+        import _root_.scalaSci.Vec;
+        import _root_.scalaSci.Matrix ; 
+        import _root_.scalaSci.Vec._ ; 
+        import _root_.scalaSci.RichNumber; 
+        import _root_.scalaSci.Matrix._ ; 
+        import _root_.scalaSci.RichDouble1DArray ; 
+        import _root_.scalaSci.RichDouble2DArray ;
+        import _root_.scalaSci.RichDouble1DArray._ ; 
+        import _root_.scalaSci.RichDouble2DArray._ ;
+        import _root_.scalaSci.CommonMaths.Mat ; 
+        import _root_.scalaSci.CommonMaths.Mat._ ; 
+        import _root_.scalaSci.CommonMaths.StaticMathsCommonMaths._ ; 
+        
+
+close("all")
+
+class CircleODE(c: Array[Double], omega: Double) extends AnyRef with   FirstOrderDifferentialEquations  {
+  
+ 
+def  getDimension = 2
+
+def computeDerivatives(t: Double, y: Array[Double], yDot: Array[Double]) =  {
+  yDot(0) = omega*(c(1)-y(1))
+  yDot(1) = omega*(y(0)-c(0))
+  }
+}
+
+ var stepHandler = new StepHandler() {
+
+   def  reset = { }
+   
+ 
+   var cnt=0
+   var warmUpCnt=5
+   def  handleStep( interpolator: StepInterpolator, isLast: Boolean)= {
+       var  t = interpolator.getCurrentTime()
+       var  y = interpolator.getInterpolatedState()
+       warmUpCnt -= 1
+      if (warmUpCnt < 0) {
+       cnt += 1
+      
+        vt = y(0) :: vt
+        vy = y(1) :: vy
+        }
+      
+     }
+     
+     def requiresDenseOutput = false
+
+}
+ 
+     
+   var vt =  List[Double]() //Array[Double](M)
+   var vy =  List[Double]()
+
+var dp853 =  new DormandPrince853Integrator(1.0e-8, 100.0, 1.0e-10, 1.0e-10)
+dp853.addStepHandler(stepHandler)
+
+
+var ode = new CircleODE( Array(1.0, 1.0), 0.1)
+var y = Array(0.0, 10.0)
+dp853.integrate(ode, 0.0, y, 1600, y)
+
+
+
+plot(vt.toArray, vy.toArray)

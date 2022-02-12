@@ -1,0 +1,73 @@
+
+// testing the BigInteger type of the Java algebra system
+import edu.jas.arith.BigInteger
+import edu.jas.arith.BigInteger._
+import edu.jas.arith.Roots._
+
+import org.junit.Test
+import org.junit.Assert.assertEquals
+
+var  x = new  BigInteger("4567863332")
+
+var r2x =  root(x, 2)  // we take the square root of that BigInteger
+var r3x = root(x, 3)
+
+
+// test random integer
+var a = BigInteger.IRAND(500)
+var b = new BigInteger(""+a)
+var c = BigInteger.IDIF(b, a)
+var d = new BigInteger(b.getVal())
+
+
+// test addition
+val bitlen = 100
+a = BigInteger.IRAND( bitlen )
+b = BigInteger.ISUM(a, a)
+c = BigInteger.IDIF(b, a)
+d = BigInteger.ISUM(a, BigInteger.ZERO)
+d = BigInteger.IDIF(a, BigInteger.ZERO)
+d = BigInteger.IDIF(a, a)
+
+// test multiplication
+a = BigInteger.IRAND( bitlen )
+b = BigInteger.IPROD(a, a)
+c = BigInteger.IQ(b, a)
+d = BigInteger.IPROD(a, BigInteger.ONE)
+d = BigInteger.IQ(a, BigInteger.ONE)
+
+// test distributive law
+var fac = new BigInteger()
+a = fac.random(bitlen)
+b = fac.random(bitlen)
+c = fac.random(bitlen)
+d = a.multiply( b.sum(c))
+var e = a.multiply(b).sum(a.multiply(c))   // should be equal to d
+ 
+ // test gcd
+ a = BigInteger.IRAND(bitlen)
+ b = BigInteger.IRAND(bitlen)
+ c = BigInteger.IGCD(a, b)  // ~1
+
+ var qr = BigInteger.IQR(a, c)
+ d = BigInteger.IPROD( qr(0), c)   
+  assertEquals("a = gcd(a,b)*q1",a, d)
+  assertEquals("a/gcd(a,b) = q*x+0", qr(1), BigInteger.ZERO)
+
+  c = BigInteger.IRAND( bitlen*4 )
+  a = BigInteger.IPROD(a, c)
+  b = BigInteger.IPROD(b, c)
+  c = BigInteger.IGCD(a, b)   // = c
+
+  qr =  BigInteger.IQR(a, c)
+  d = BigInteger.IPROD( qr(0), c)
+  assertEquals(" a = gcd(a, b)*q1", a, d)
+  assertEquals("a/gcd(a, b) = q*x+0", qr(1), BigInteger.ZERO)
+
+  qr = BigInteger.IQR(b, c)
+  d = BigInteger.IPROD( qr(0), c)
+  assertEquals("b = cda, b)*q1", b, d)
+  assertEquals("b/gcd(a, b = q*x+0", qr(1), BigInteger.ZERO)
+   
+        
+

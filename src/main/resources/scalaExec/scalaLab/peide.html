@@ -1,0 +1,292 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101229;15242800">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>Parameter estimation in differential equations</B></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US"><B>Initial value problems</B></SPAN></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US"><B>peide</B></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">Estimates unknown variables in a system of first order differential equations by using a given set of observed values, </SPAN><I> </I><SPAN STYLE="font-style: normal">for details see book of </SPAN><I><B>Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</B></I></SPAN></FONT>
+
+
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+<SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN>
+<SPAN LANG="en-US">import numal.*;</SPAN>
+
+<SPAN LANG="en-US">public class Test_peide extends Object</SPAN>
+                        <SPAN LANG="en-US">implements AP_peide_methods {</SPAN>
+
+<SPAN LANG="en-US">	public static void main(String args[]) {</SPAN>
+
+    <SPAN LANG="en-US">int m,n,nobs;</SPAN>
+    <SPAN LANG="en-US">int bp[] = new int[4];</SPAN>
+    <SPAN LANG="en-US">int nbp[] = new int[1];</SPAN>
+    <SPAN LANG="en-US">double fa;</SPAN>
+    <SPAN LANG="en-US">double par[] = new double[7];</SPAN>
+    <SPAN LANG="en-US">double res[] = new double[27];</SPAN>
+    <SPAN LANG="en-US">double in[] = new double[7];</SPAN>
+    <SPAN LANG="en-US">double out[] = new double[8];</SPAN>
+    <SPAN LANG="en-US">double jtjinv[][] = new double[4][4];</SPAN>
+    
+    <SPAN LANG="en-US">Test_peide testpeide = new Test_peide();</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;        E S C E P - problem&quot;);</SPAN>
+    <SPAN LANG="en-US">m=3;  n=2;  nobs=23;  nbp[0]=3;</SPAN>
+    <SPAN LANG="en-US">par[1]=Math.log(1600.0);  par[2]=Math.log(0.8);</SPAN>
+    <SPAN LANG="en-US">par[3]=Math.log(1.2);</SPAN>
+    <SPAN LANG="en-US">in[0]=1.0e-14;  in[3]=in[4]=1.0e-4;  in[5]=50.0;</SPAN>
+    <SPAN LANG="en-US">in[6]=1.0e-2;   in[1]=1.0e-4;  in[2]=1.0e-5;</SPAN>
+    <SPAN LANG="en-US">bp[1]=17;  bp[2]=19;  bp[3]=21;</SPAN>
+    <SPAN LANG="en-US">fa=4.94;</SPAN>
+    <SPAN LANG="en-US">testpeide.communication(1,fa,n,m,nobs,nbp,par,res,bp,</SPAN>
+                            <SPAN LANG="en-US">jtjinv,in,out,0,0);</SPAN>
+    <SPAN LANG="en-US">Analytic_problems.peide(n,m,nobs,nbp,par,res,bp,jtjinv,</SPAN>
+                            <SPAN LANG="en-US">in,out,testpeide);</SPAN>
+    <SPAN LANG="en-US">testpeide.communication(2,fa,n,m,nobs,nbp,par,res,bp,</SPAN>
+                            <SPAN LANG="en-US">jtjinv,in,out,0,0);</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public void communication(int post, double fa, int n, int m,</SPAN>
+              <SPAN LANG="en-US">int nobs, int nbp[], double par[], double res[],</SPAN>
+              <SPAN LANG="en-US">int bp[], double jtjinv[][], double in[], </SPAN>
+              <SPAN LANG="en-US">double out[], int weight, int nis)</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">int i,j;</SPAN>
+    <SPAN LANG="en-US">double c;</SPAN>
+    <SPAN LANG="en-US">double conf[] = new double[m+1];</SPAN>
+    
+    <SPAN LANG="en-US">DecimalFormat twoDigit = new DecimalFormat(&quot;0.00E0&quot;);</SPAN>
+    <SPAN LANG="en-US">DecimalFormat threeDigit = new DecimalFormat(&quot;0.000E0&quot;);</SPAN>
+    <SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN>
+    <SPAN LANG="en-US">if (post == 5) {</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;\nThe first residual vector\n  I&quot; +</SPAN>
+        <SPAN LANG="en-US">&quot;      RES[I]&quot;);</SPAN>
+      <SPAN LANG="en-US">for (i=1; i&lt;=nobs; i++) </SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot; &quot; + i + &quot;   &quot; +</SPAN>
+          <SPAN LANG="en-US">fiveDigit.format(res[i]));</SPAN>
+    <SPAN LANG="en-US">} else if (post == 3) {</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;\nThe Euclidean norm of the residual &quot; +</SPAN>
+        <SPAN LANG="en-US">&quot;vector : &quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(Math.sqrt(Basic.vecvec(1,nobs,0,res,res))) +</SPAN>
+        <SPAN LANG="en-US">&quot;\nCalculated parameters:\n&quot;);</SPAN>
+      <SPAN LANG="en-US">for (i=1; i&lt;=m; i++)</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;  &quot; + fiveDigit.format(par[i]));</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;Number of integration steps performed: &quot; +</SPAN>
+        <SPAN LANG="en-US">nis);</SPAN>
+    <SPAN LANG="en-US">} else if (post == 4) {</SPAN>
+      <SPAN LANG="en-US">if (nbp[0] == 0)</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;Minimization is started without&quot; +</SPAN>
+          <SPAN LANG="en-US">&quot; break-points&quot;);</SPAN>
+      <SPAN LANG="en-US">else {</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;Minimization is started with weight =&quot; +</SPAN>
+          <SPAN LANG="en-US">weight + &quot;The extra parameters are the observations:&quot;);</SPAN>
+        <SPAN LANG="en-US">for (i=1; i&lt;=nbp[0]; i++)</SPAN>
+          <SPAN LANG="en-US">System.out.println(&quot;  &quot; + bp[i]);</SPAN>
+      <SPAN LANG="en-US">}</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;Starting values of the parameters:&quot;);</SPAN>
+      <SPAN LANG="en-US">for (i=1; i&lt;=m; i++)</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;  \n&quot; + fiveDigit.format(par[i]));</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;Rel. tol. for the Eucl. norm of the &quot; +</SPAN>
+        <SPAN LANG="en-US">&quot;res. vector:&quot; + fiveDigit.format(in[3]) +</SPAN>
+        <SPAN LANG="en-US">&quot;\nAbs. tol. for the Eucl. norm of the res. vector:&quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(in[4]) + &quot;\nRelative starting value &quot; +</SPAN>
+        <SPAN LANG="en-US">&quot;of lambda: &quot; + fiveDigit.format(in[6]));</SPAN>
+    <SPAN LANG="en-US">} else if (post == 1) {</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;\nStarting values of the parameters:&quot;);</SPAN>
+      <SPAN LANG="en-US">for (i=1; i&lt;=m; i++)</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;  &quot; + fiveDigit.format(par[i]));</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;Numer of equations    : &quot; + n +</SPAN>
+        <SPAN LANG="en-US">&quot;\nNumber of observations: &quot; + nobs +</SPAN>
+        <SPAN LANG="en-US">&quot;\n\nMachine precision                         : &quot; +</SPAN>
+        <SPAN LANG="en-US">twoDigit.format(in[0]) +</SPAN>
+        <SPAN LANG="en-US">&quot;\nRelative local error bound for integration: &quot; +</SPAN>
+        <SPAN LANG="en-US">twoDigit.format(in[2]) +</SPAN>
+        <SPAN LANG="en-US">&quot;\nRelative tolerance for residual           : &quot; +</SPAN>
+        <SPAN LANG="en-US">twoDigit.format(in[3]) +</SPAN>
+        <SPAN LANG="en-US">&quot;\nAbsolute tolerance for residual           : &quot; +</SPAN>
+        <SPAN LANG="en-US">twoDigit.format(in[4]) +</SPAN>
+        <SPAN LANG="en-US">&quot;\nMaximum number of integrations to perform : &quot; +</SPAN>
+        <SPAN LANG="en-US">(int)(in[5]) +</SPAN>
+        <SPAN LANG="en-US">&quot;\nRelative starting value of lambda         : &quot; +</SPAN>
+        <SPAN LANG="en-US">twoDigit.format(in[6]) +</SPAN>
+        <SPAN LANG="en-US">&quot;\nRelative minimal steplength               : &quot; +</SPAN>
+        <SPAN LANG="en-US">twoDigit.format(in[1]));</SPAN>
+      <SPAN LANG="en-US">if (nbp[0] == 0)</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;There are no break-points\n&quot;);</SPAN>
+      <SPAN LANG="en-US">else {</SPAN>
+        <SPAN LANG="en-US">System.out.print(&quot;\nBreak-points are the observations:&quot;);</SPAN>
+        <SPAN LANG="en-US">for (i=1; i&lt;=nbp[0]; i++)</SPAN>
+          <SPAN LANG="en-US">System.out.print(&quot;   &quot; + bp[i]);</SPAN>
+      <SPAN LANG="en-US">}</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;\nThe alpha-point of the &quot; +</SPAN>
+        <SPAN LANG="en-US">&quot;f-distribution: &quot; + fa);</SPAN>
+    <SPAN LANG="en-US">} else if (post == 2) {</SPAN>
+      <SPAN LANG="en-US">if (out[1] == 0.0)</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;\nNormal termination of the process\n&quot;);</SPAN>
+      <SPAN LANG="en-US">else if (out[1] == 1.0)</SPAN>
+        <SPAN LANG="en-US">System.out.println(</SPAN>
+               <SPAN LANG="en-US">&quot;Number of integrations allowed was exceeded&quot;);</SPAN>
+      <SPAN LANG="en-US">else if (out[1] == 2.0)</SPAN>
+        <SPAN LANG="en-US">System.out.println(</SPAN>
+               <SPAN LANG="en-US">&quot;Minimal steplength was decreased four times&quot;);</SPAN>
+      <SPAN LANG="en-US">else if (out[1] == 3.0)</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;A call of deriv delivered false&quot;);</SPAN>
+      <SPAN LANG="en-US">else if (out[1] == 4.0)</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;A call of jacdfdy delivered false&quot;);</SPAN>
+      <SPAN LANG="en-US">else if (out[1] == 5.0)</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;A call of jacdfdp delivered false&quot;);</SPAN>
+      <SPAN LANG="en-US">else if (out[1] == 6.0)</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;Precision asked for may not be attained&quot;);</SPAN>
+      <SPAN LANG="en-US">if (nbp[0] == 0)</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;Last integration was performed &quot; +</SPAN>
+          <SPAN LANG="en-US">&quot;without break-points&quot;);</SPAN>
+      <SPAN LANG="en-US">else {</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;The process stopped with Break-points:&quot;);</SPAN>
+        <SPAN LANG="en-US">for (i=1; i&lt;=nbp[0]; i++) System.out.println(&quot;   &quot; + bp[i]);</SPAN>
+      <SPAN LANG="en-US">}</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;\nEucl. norm of the last residual &quot; +</SPAN>
+        <SPAN LANG="en-US">&quot;vector : &quot; + fiveDigit.format(out[2]) +</SPAN>
+        <SPAN LANG="en-US">&quot;\nEucl. norm of the first residual vector: &quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(out[3]) +</SPAN>
+        <SPAN LANG="en-US">&quot;\nNumber of integrations performed       : &quot; +</SPAN>
+        <SPAN LANG="en-US">(int)(out[4]) +</SPAN>
+        <SPAN LANG="en-US">&quot;\nLast improvement of the euclidean norm : &quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(out[6]) +</SPAN>
+        <SPAN LANG="en-US">&quot;\nCondition number of J'*J               : &quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(out[7]) +</SPAN>
+        <SPAN LANG="en-US">&quot;\nLocal error bound was exceeded (maxim.): &quot; +</SPAN>
+        <SPAN LANG="en-US">out[5]);</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;\n   Parameters   Confidence Interval&quot;);</SPAN>
+      <SPAN LANG="en-US">for (i=1; i&lt;=m; i++) {</SPAN>
+        <SPAN LANG="en-US">conf[i]=Math.sqrt(m*fa*jtjinv[i][i]/(nobs-m))*out[2];</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;   &quot; + </SPAN>
+          <SPAN LANG="en-US">fiveDigit.format(par[i]) + &quot;\t&quot; +</SPAN>
+          <SPAN LANG="en-US">fiveDigit.format(conf[i]));</SPAN>
+      <SPAN LANG="en-US">}</SPAN>
+      <SPAN LANG="en-US">c = (nobs == m) ? 0.0 : out[2]*out[2]/(nobs-m);</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;\nCorrelation matrix          &quot; +</SPAN>
+        <SPAN LANG="en-US">&quot;Covariance matrix&quot;);</SPAN>
+      <SPAN LANG="en-US">for (i=1; i&lt;=m; i++) {</SPAN>
+        <SPAN LANG="en-US">for (j=1; j&lt;=m; j++) {</SPAN>
+          <SPAN LANG="en-US">if (i == j)</SPAN>
+            <SPAN LANG="en-US">System.out.print(&quot;                          &quot;);</SPAN>
+          <SPAN LANG="en-US">if (i &gt; j)</SPAN>
+            <SPAN LANG="en-US">System.out.print(&quot;  &quot; + fiveDigit.format(</SPAN>
+              <SPAN LANG="en-US">jtjinv[i][j]/Math.sqrt(jtjinv[i][i]*jtjinv[j][j])));</SPAN>
+          <SPAN LANG="en-US">else</SPAN>
+            <SPAN LANG="en-US">System.out.print(&quot;  &quot; +</SPAN>
+              <SPAN LANG="en-US">fiveDigit.format(jtjinv[i][j]*c));</SPAN>
+        <SPAN LANG="en-US">}</SPAN>
+        <SPAN LANG="en-US">System.out.println();</SPAN>
+      <SPAN LANG="en-US">}</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;\nThe last residual vector\n\n  I&quot; +</SPAN>
+        <SPAN LANG="en-US">&quot;      RES[I]&quot;);</SPAN>
+      <SPAN LANG="en-US">for (i=1; i&lt;=nobs; i++)</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;  &quot; + i + &quot;\t&quot; +</SPAN>
+          <SPAN LANG="en-US">threeDigit.format(res[i]));</SPAN>
+    <SPAN LANG="en-US">}</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public boolean jacdfdp(int n, int m, double par[], double y[],</SPAN>
+                         <SPAN LANG="en-US">double x[], double fp[][])</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">double y2;</SPAN>
+
+    <SPAN LANG="en-US">y2=y[2];</SPAN>
+    <SPAN LANG="en-US">fp[1][1] = fp[1][3]=0.0;</SPAN>
+    <SPAN LANG="en-US">fp[1][2] = y2*Math.exp(par[2]);</SPAN>
+    <SPAN LANG="en-US">fp[2][1] = Math.exp(par[1])*(y[1]*(1.0-y2)-</SPAN>
+               <SPAN LANG="en-US">(Math.exp(par[2])+Math.exp(par[3]))*y2);</SPAN>
+    <SPAN LANG="en-US">fp[2][2] = -Math.exp(par[1]+par[2])*y2;</SPAN>
+    <SPAN LANG="en-US">fp[2][3] = -Math.exp(par[1]+par[3])*y2;</SPAN>
+    <SPAN LANG="en-US">return true;</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public void data(int nobs, double tobs[], double obs[], int cobs[])</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">int i;</SPAN>
+    <SPAN LANG="en-US">double a[]={0.0002, 0.0004, 0.0006, 0.0008, 0.001,</SPAN>
+        <SPAN LANG="en-US">0.0012, 0.0014, 0.0016, 0.0018, 0.002, 0.02, 0.04, 0.06,</SPAN>
+        <SPAN LANG="en-US">0.08, 0.1, 1.0, 2.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0};</SPAN>
+    <SPAN LANG="en-US">double b[]={0.1648, 0.2753, 0.3493, 0.3990, 0.4322,</SPAN>
+        <SPAN LANG="en-US">0.4545, 0.4695, 0.4795, 0.4862, 0.4907, 0.4999, 0.4998,</SPAN>
+        <SPAN LANG="en-US">0.4998, 0.4998, 0.4998, 0.4986, 0.4973, 0.4936, 0.4872,</SPAN>
+        <SPAN LANG="en-US">0.4808, 0.4743, 0.4677, 0.4610};</SPAN>
+
+    <SPAN LANG="en-US">DecimalFormat fourDigit = new DecimalFormat(&quot;0.0000&quot;);</SPAN>
+    <SPAN LANG="en-US">tobs[0]=0.0;</SPAN>
+    <SPAN LANG="en-US">for (i=1; i&lt;=nobs; i++) {</SPAN>
+      <SPAN LANG="en-US">tobs[i]=a[i-1];</SPAN>
+      <SPAN LANG="en-US">obs[i]=b[i-1];</SPAN>
+      <SPAN LANG="en-US">cobs[i]=2;</SPAN>
+    <SPAN LANG="en-US">}</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;\nThe observations were:\n\n&quot; +</SPAN>
+      <SPAN LANG="en-US">&quot;  I     TOBS[I]       COBS[I]   OBS[I]&quot;);</SPAN>
+    <SPAN LANG="en-US">for (i=1; i&lt;=nobs; i++)</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;  &quot; + i + &quot;\t&quot; + </SPAN>
+      <SPAN LANG="en-US">fourDigit.format(tobs[i]) + &quot;\t\t&quot; + cobs[i] +</SPAN>
+      <SPAN LANG="en-US">&quot;\t&quot; + fourDigit.format(obs[i]));</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public void callystart(int n, int m, double par[],</SPAN>
+                         <SPAN LANG="en-US">double y[], double ymax[])</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">y[1]=ymax[1]=ymax[2]=1.0;</SPAN>
+    <SPAN LANG="en-US">y[2]=0.0;</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public boolean deriv(int n, int m, double par[], double y[],</SPAN>
+                       <SPAN LANG="en-US">double x[], double df[])</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">double y2;</SPAN>
+
+    <SPAN LANG="en-US">y2=y[2];</SPAN>
+    <SPAN LANG="en-US">df[1] = -(1.0-y2)*y[1]+Math.exp(par[2])*y2;</SPAN>
+    <SPAN LANG="en-US">df[2]=Math.exp(par[1])*((1.0-y2)*y[1]-(Math.exp(par[2])+</SPAN>
+          <SPAN LANG="en-US">Math.exp(par[3]))*y2);</SPAN>
+    <SPAN LANG="en-US">return true;</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public boolean jacdfdy(int n, int m, double par[], double y[],</SPAN>
+                         <SPAN LANG="en-US">double x[], double fy[][])</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">fy[1][1] = -1.0+y[2];</SPAN>
+    <SPAN LANG="en-US">fy[1][2] = Math.exp(par[2])+y[1];</SPAN>
+    <SPAN LANG="en-US">fy[2][1] = Math.exp(par[1])*(1.0-y[2]);</SPAN>
+    <SPAN LANG="en-US">fy[2][2] = -Math.exp(par[1])*(Math.exp(par[2])+</SPAN>
+                <SPAN LANG="en-US">Math.exp(par[3])+y[1]);</SPAN>
+    <SPAN LANG="en-US">return true;</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public void monitor(int post, int ncol, int nrow, double par[],</SPAN>
+                      <SPAN LANG="en-US">double res[], int weight, int nis[])</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+<SPAN LANG="en-US">}</SPAN>
+</PRE>
+</BODY>
+</HTML>

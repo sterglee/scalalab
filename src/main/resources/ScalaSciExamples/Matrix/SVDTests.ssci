@@ -1,0 +1,11 @@
+
+ var  tMat = scalaSci.EJML.Mat.$(5, 2, 3, null,  1.5, -2,  8, null, -3, 4.7, -0.5)
+
+
+// test EJML library 
+var svdtmat = scalaSci.EJML.StaticMathsEJML.svd(tMat)  // return U, S, V 
+var U = new scalaSci.EJML.Mat(svdtmat._1)   // left singular vectors
+var S = new scalaSci.EJML.Mat(svdtmat._2)  // singular values
+var V = new scalaSci.EJML.Mat(svdtmat._3)  // right singular values
+
+var reconsMat = U*diag(S.getv)*(V~)  // should be the same as tMat

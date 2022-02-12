@@ -1,0 +1,17 @@
+
+import scalaSci.NUMALMat0._
+
+var b = new Array[Double](4)
+var a = Array.ofDim[Double](4, 4)
+
+for (r<-1 to  4) {
+  for (c<-1 to 4) 
+    a(r-1)(c-1) = 1.0/(r+c-1)
+   b(r-1) = a(r-1)(2)
+   }
+    
+
+var  b0  = scalaSci.NUMALMat0.gsssol0(a,b)
+
+// test the solution accuracy
+var shouldBeNearZero = a*b0-b

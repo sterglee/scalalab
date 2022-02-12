@@ -1,0 +1,25 @@
+import org.apache.commons.math.stat.regression.SimpleRegression
+
+
+var regression = new SimpleRegression()
+regression.addData(1d, 2d)
+
+// At this point, with only one observation, all regression statistics will return NaN
+
+regression.addData(3d, 3d)
+
+// with only two observations, slope and intercept can be computed 
+// but inference statistics will return NaN
+regression.addData(3d, 3d)
+
+// Compute some statistics based on observations added so far
+
+// displays the intercept of regression line
+println(regression.getIntercept())
+
+// displays slope of regression line
+println(regression.getSlope())
+
+// displays slope standard error
+println(regression.getSlopeStdErr())
+ 

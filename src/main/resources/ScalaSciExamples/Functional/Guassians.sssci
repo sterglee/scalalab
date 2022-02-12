@@ -1,0 +1,19 @@
+
+// define the Gaussian
+def  gs(x: Double, m: Double, s: Double ) = (1/(2*java.lang.Math.PI*s*s))*(exp(-(x-m)*(x-m)/(2*s*s)))
+
+var m1 = 10.0
+var s1 = 1.0
+var  gs10_1 = gs(_:Double, m1, s1)
+var m2 = 100
+var s2 = 6.0
+var gs100_6 = gs(_: Double, m2, s2)
+
+var Np = 2000
+var t1 = linspace(m1-4*s1, m1+4*s1, Np)
+var t2 = linspace(m2-4*s2, m2+4*s2, Np)
+
+subplot(2,1,1); plot(t1, t1 map gs10_1, Color.RED)
+hold("on")
+subplot(2,1,2); plot(t2, t2 map gs100_6, Color.GREEN )
+

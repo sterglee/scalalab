@@ -1,0 +1,42 @@
+import no.uib.cipr.matrix.Utilities
+import no.uib.cipr.matrix.LowerSPDBandMatrix
+import no.uib.cipr.matrix.SymmBandEVD
+
+var n = 20
+var kd = 3
+
+        
+// Lower symmetrical positive definite banded matrix. It does not enforce this
+// property (except for symmetry), and has the same storage layout as
+//  no.uib.cipr.matrix.LowerSymmBandMatrix LowerSymmBandMatrix
+
+var A = new LowerSPDBandMatrix(n, kd)
+
+// Populates the banded matrix
+//      @param A
+//          Matrix to populate
+//     @param kl
+//  Number of subdiagonls
+//      @param ku
+//  Number of superdiagonals
+//  @return The matrix data in dense format
+
+var Ad = Utilities.bandPopulate(A, kd, kd)
+
+tic
+var evv = new SymmBandEVD(n, false, false)
+var fevv = no.uib.cipr.matrix.SymmBandEVD.factorize(A, kd)
+var tmBanded = toc
+
+var ee = fevv.getEigenvalues
+
+// construct a dense matrix
+var dm = new no.uib.cipr.matrix.DenseMatrix(Ad)
+
+tic
+var dmevd = new no.uib.cipr.matrix.EVD(n)
+var dmfactorize = no.uib.cipr.matrix.EVD.factorize(dm)
+var tmGeneral = toc
+var eevals = dmfactorize.getRealEigenvalues
+
+// e.g. tmBanded = 0.873, tmGeneral = 12.48

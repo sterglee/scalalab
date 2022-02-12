@@ -1,0 +1,26 @@
+
+
+import org.apache.commons.math.distribution._
+
+var gr=1.0f; var bl=0.0f;
+var Ntrials = 200    // number of trials
+var p = 0.01f  // probability of success
+hold("on")
+while (p<1.0) {
+var bn = new BinomialDistributionImpl(Ntrials, p)
+
+var N = Ntrials
+var binomialAxis = new Array[Double](N)
+var binomialValues = new Array[Double](N)
+
+for (x<-0 until N)  {
+	binomialAxis(x) = x
+	binomialValues(x) = bn.probability(x)
+}
+
+gr =( p* rand).asInstanceOf[Double]
+bl = (p*rand).asInstanceOf[Double]
+plot(binomialAxis, binomialValues, ""+p,  new Color(p, gr, bl))
+p += 0.1f
+}
+ 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#onKeyUp" prefHeight="272.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+      <HBox alignment="CENTER">
+         <children>
+            <Label text="Current Dependencies (Double click to reduce)" VBox.vgrow="NEVER" />
+         </children>
+      </HBox>
+      <ListView fx:id="artifactList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+      <AnchorPane prefHeight="41.0" prefWidth="580.0" VBox.vgrow="NEVER">
+         <children>
+            <Button layoutX="447.0" layoutY="8.0" mnemonicParsing="false" onAction="#onOK" text="OK" AnchorPane.rightAnchor="104.0" />
+            <Button layoutX="506.0" layoutY="8.0" mnemonicParsing="false" onAction="#onCancel" text="Cancel" AnchorPane.rightAnchor="14.0" />
+         </children>
+      </AnchorPane>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</VBox>

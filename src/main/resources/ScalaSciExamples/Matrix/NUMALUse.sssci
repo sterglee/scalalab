@@ -1,0 +1,49 @@
+
+var N=400
+var x  = rand(N,  N)
+
+tic
+nreig(x)
+var tm=toc  
+// tm = 1.3 sec
+  
+  tic
+ eig(x)
+ var tmMTJ = toc
+ // tm = 10.8 sec
+ 
+ 
+ feig(x)
+ 
+ x.feig
+ 
+ var x = rand(500,500)  // 0-indexed RichDouble2DArray
+ var y = new Matrix(x)  // 1-indexed matrix suitable for working with NUMAL
+ y.getv
+ 
+ def psvdinv( a: RichDouble2DArray) = {
+   var ma = new Matrix(a)  
+   var em = Array(1.0e-14, 0, 1.0e-12, 0, 1800.0, 0, 1.0e-15, 0)
+   var ca = ma.getv().copy
+   numal.Linear_algebra.psdinv(ca, ca.numRows-1, ca.numColumns-1, em)
+   (new Matrix(ca, true))~
+ }
+   
+   tic
+ var psa = psvdinv(x)
+ var tmNUMAL = toc
+ 
+ psa*x
+ 
+ tic
+ var xx = x.pinv
+ var tmEJML = toc
+ 
+ fpinv
+ xx*x
+ 
+ tic
+ var xxNR = new com.nr.la.SVD(x)
+ var tmNR = toc
+ 
+ 

@@ -1,0 +1,72 @@
+import java.util.Vector 
+
+//   uses  the rke()  of the NUMAL library
+//   the rke() routine solves an initial value problem for a system of first order ordinary differential 
+//   equations dy/dx = f(x,y), from x = x0 to x = xe where y(x0) = y0, by means of a 5-th
+//   order Runge-Kutta method. The system is assumed to be nonstiff.
+
+import scalaExec.Interpreter.GlobalValues
+
+import numal._
+
+             
+var n = 3   // the number of equations of the system
+var x = new Array[Double](1)    // entry:   x(0) is the initial value of the independent variable  
+var xe = new  Array[Double](1)   //  entry:  xe(0) is the final value of the independent variable 
+var  y = new  Array[Double](n+1)    // entry: the dependent variable, the initial values at x = x0
+var data = new Array[Double](7)    // in array data one should give:
+                                        //     data(1):   the relative tolerance
+                                        //      data(2):  the absolute tolerance
+                                        // after each step data(3:6) contains:
+                                        //      data(3):  the steplength used for the last step
+                                        //      data(4):  the number of integration steps performed
+                                        //      data(5):  the number of integration steps rejected
+                                        //      data(6):  the number of integration steps skipped
+                                        // if upon completion of rke data(6) > 0, then results should be considered most criticallly
+
+var fi = true;                        // if fi is true then the integration starts at x0 with a trial step xe-x0; 
+                                        // if fi is false then the integration is continued with a step length data(3)* sign(xe-x0)
+
+
+// a Java class that implements the AP_rke_methods interface should be specified
+// The AP_rke_methods interface requires the implementation of two procedures:
+//    void der(int n, double t, double v[])
+//              this procedure performs an evaluation of the right-hand side of the syste4m with dependent variable v[1:n] and
+//              and independent variable t; upon completion of der the right-hand side should be overwritten on v[1:n]
+//    void out(int n, double x[], double xe[], double y[], double data[])
+//              after each integration step performed, out can be used to obtain information from the solution process,
+//              e.g., the values of x, y[1:n], and data[3:6]; out can also be used to update data, but x and xe remain unchanged
+
+
+       
+y(1) = 0.04840037112900297
+y(2) = 0.13548442252861992 
+y(3) = 0.8792018004421086 
+
+      var xstart = 0;  var xend = 100
+      x(0) = xstart
+      xe(0) = xend
+       
+      data(1) = 1.0e-6
+      data(2) = 1.0e-6
+
+      var xOut:Vector[Array[Double]] = new Vector()
+      var yOut:Vector[Array[Double]] = new Vector()
+      
+
+    var javaClassName = "scalaExec.Functions.Chaotic.Lorenz";
+    var  invocationObject = Class.forName(javaClassName, false, GlobalValues.extensionClassLoader).newInstance()
+
+    var lorenz2RKEObject = invocationObject.asInstanceOf[AP_rke_methods]
+
+    tic()
+    Analytic_problems.rke(x, xe, n, y, lorenz2RKEObject, data, fi,  xOut, yOut)
+    var timeCompute = toc()
+
+  var plotTitle = "Lorenz attractor in ScalaSci, time =  "+timeCompute+ " Runge-Kutta (rke()),  integratin from "+xstart+", to tEnd= "+xend
+
+  var color = Color.RED
+
+  figure3d(1); plotV(yOut, color, plotTitle)
+  
+

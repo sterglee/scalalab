@@ -1,0 +1,19 @@
+
+import numal._
+
+class tzeroin extends AP_zeroin_methods {
+  // fx() is the function for which we seek its minimum
+  override def fx(x: Array[Double]) = Math.exp(-x(0)*3.0)*(x(0)-1)+x(0)*x(0)*x(0)
+  override def tolx(x: Array[Double]) = Math.abs(x(0))*1.0e-6+1.0e-6
+}
+
+  var a = new Array[Double](1)
+  var  b = new Array[Double](1) 
+  var zeroinClass = new  tzeroin() 
+// the interval for which we seek the min
+a(0) = 0.0
+b(0) = 1.0
+
+var m = Analytic_problems.zeroin( a, b, zeroinClass)  // minimum is returned in a(0)
+
+println("Zero is  "+a(0))  

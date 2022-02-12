@@ -1,0 +1,23 @@
+
+   var N = 500
+
+    // construct an MTJ matrix
+  var Amtj = scalaSci.MTJ.StaticMathsMTJ.rand0(N, N)
+   // perform a QR decomposition
+  tic
+  var (qmtj, rmtj) = Amtj.QR
+  var tmMTJ = toc
+  var orthQmtj = qmtj*(qmtj~)  // test that the Q matrix is orthogonal
+  var shouldBeZeroMTJ = qmtj*rmtj-Amtj   // test the validity of the decomposition, that matrix should be zero
+  
+      
+     // construct an EJML matrix
+   var Aejml = scalaSci.EJML.StaticMathsEJML.rand0(N, N)
+     // perform a QR decomposition
+   tic
+   var (qejml, rejml)  = Aejml.QR
+   var tmEJML = toc
+   var orthQejml = qejml*(qejml~)   // test that the Q matrix is orthogonal
+   var shouldBeZeroejml = qejml*rejml-Aejml   // test the validity of the decomposition, that matrix should be zero
+
+    

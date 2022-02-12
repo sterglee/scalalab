@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1253">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20130603;5101319">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2.01cm }
+		P { margin-bottom: 0.2cm }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US">
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Matrix Conversion Routines</B></SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US"><B>You can convert between the different Matrix formats using these routines</B></SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">def Mat2RD2DA(x: scalaSci.Mat) = new scalaSci.RichDouble2DArray(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def Mat2Matrix(x: scalaSci.Mat) = new scalaSci.Matrix(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def Mat2EJMLMat(x: scalaSci.Mat) = new scalaSci.EJML.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def Mat2MTJMat(x: scalaSci.Mat) = new scalaSci.MTJ.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def Mat2CommonMathsMat(x: scalaSci.Mat) = new scalaSci.CommonMaths.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def Mat2JBLASMat(x: scalaSci.Mat) = new scalaSci.JBLAS.Mat(x.toDoubleArray)</SPAN></FONT>
+
+
+<FONT SIZE=3><SPAN LANG="en-US">def MTJMat2RD2DA(x: scalaSci.MTJ.Mat) = new scalaSci.RichDouble2DArray(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def MTJMat2Matrix(x: scalaSci.MTJ.Mat) = new scalaSci.Matrix(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def MTJMat2EJMLMat(x: scalaSci.MTJ.Mat) = new scalaSci.EJML.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def MTJMat2Mat(x: scalaSci.MTJ.Mat) = new scalaSci.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def MTJMat2CommonMathsMat(x: scalaSci.MTJ.Mat) = new scalaSci.CommonMaths.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def MTJMat2JBLASMat(x: scalaSci.Mat) = new scalaSci.JBLAS.Mat(x.toDoubleArray)</SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">def EJMLMat2RD2DA(x: scalaSci.EJML.Mat) = new scalaSci.RichDouble2DArray(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def EJMLMat2Matrix(x: scalaSci.EJML.Mat) = new scalaSci.Matrix(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def EJMLMat2Mat(x: scalaSci.EJML.Mat) = new scalaSci.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def EJMLMat2MTJMat(x: scalaSci.EJML.Mat) = new scalaSci.MTJ.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def EJMLMat2CommonMathsMat(x: scalaSci.EJML.Mat) = new scalaSci.CommonMaths.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def EJMLMat2JBLASMat(x: scalaSci.EJML.Mat) = new scalaSci.JBLAS.Mat(x.toDoubleArray)</SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">def JBLASMat2RD2DA(x: scalaSci.JBLAS.Mat) = new scalaSci.RichDouble2DArray(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def JBLASMat2Matrix(x: scalaSci.JBLAS.Mat) = new scalaSci.Matrix(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def JBLASMat2EJMLMat(x: scalaSci.JBLAS.Mat) = new scalaSci.EJML.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def JBLASMat2MTJMat(x: scalaSci.JBLAS.Mat) = new scalaSci.MTJ.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def JBLASMat2CommonMathsMat(x: scalaSci.JBLAS.Mat) = new scalaSci.CommonMaths.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def JBLASMat2Mat(x: scalaSci.JBLAS.Mat) = new scalaSci.Mat(x.toDoubleArray)</SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">def CommonMathsMat2RD2DA(x: scalaSci.CommonMaths.Mat) = new scalaSci.RichDouble2DArray(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def CommonMathsMat2Matrix(x: scalaSci.CommonMaths.Mat) = new scalaSci.Matrix(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def CommonMathsMat2EJMLMat(x: scalaSci.CommonMaths.Mat) = new scalaSci.EJML.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def CommonMathsMat2MTJMat(x: scalaSci.CommonMaths.Mat) = new scalaSci.MTJ.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def CommonMathsMat2Mat(x: scalaSci.CommonMaths.Mat) = new scalaSci.Mat(x.toDoubleArray)</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">def CommonMathsMat2JBLASMat(x: scalaSci.CommonMaths.Mat) = new scalaSci.JBLAS.Mat(x.toDoubleArray)</SPAN></FONT>
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

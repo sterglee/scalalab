@@ -1,0 +1,30 @@
+ import JSci.maths.wavelet.daubechies2._
+
+var (f1, f2, f3) = (4.5, 0.5, 9.8)  // some frequencies
+var (c1, c2, c3) = (2.5, 1.5, 2.8)  // some coefficients
+var NoiseLevel=1.12
+var N= (2 ^^ 14).toInt
+var t = linspace(0, 4, N)
+
+var noisy = NoiseLevel*vrand(N)
+var sig = c1*cos(f1*t)+c2*cos(f2*t)+c3*cos(f3*t)
+var wsig = noisy+sig
+
+var csig = new Vec(sig.getv)   // make a copy of the signal vector since wavelet transforms work in place
+// create a FastDaubechies2 wavelet
+var fdaub2 = new FastDaubechies2
+fdaub2.transform(csig)
+
+figure(1); subplot(2,1,1); plot(sig); title("original signal"); subplot(2,1,2); plot(csig); title("transformed");
+
+var daub2 = new Daubechies2
+
+jfigure(1); jsubplot(2,1,1); jplot(sig); jtitle("Signal and Noisy")
+jsubplot(2,1,2); jplot(wsig)
+
+var lfsig = daub2.lowpass(sig)
+var lfsig2 = daub2.lowpass(lfsig) // second lowpass
+var hfsig = daub2.highpass(lfsig)
+
+jfigure(2); jsubplot(2,1,1); jplot(lfsig2); jhold(true); jplot(sig, "b"); jsubplot(2,1,2); jplot(hfsig); jtitle("Wavelet Low and High Pass");
+figure(2); subplot(2,1,1); plot(lfsig2); hold on; plot(sig, "b"); subplot(2,1,2); plot(hfsig); title("Wavelet Low and High Pass");

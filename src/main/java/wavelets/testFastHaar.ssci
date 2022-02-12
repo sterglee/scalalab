@@ -1,0 +1,30 @@
+
+closeAll();  // closes any open figures
+t = inc(-30, 0.01, 30);
+N = (int) pow(2, 12);
+
+
+x = 5*sin(0.3*t);
+x2 = x[1..N];   // take signal as a Matrix
+
+x2 = x2+rand(1, N);  // add random noisy
+xv =  x2.getArray()[0];
+
+xvVals = new double[N];
+for (k in 0..N-1) xvVals[k]=xv[k];    // perform a copy since the transform will be in place
+
+JSci.maths.wavelet.haar.FastHaar.transform(xvVals, N);
+
+figure(1);       subplot(2,1,1); plot(xv, "Original Signal");
+                       subplot(2,1,2); plot(xvVals, "Haar  Wavelet Transformed - First Stage"); 
+
+
+xvVals2 = new double[N];
+for (k in 0..N-1) xvVals2[k]=xv[k];    // perform a copy since the transform will be in place
+
+myHaar =  new JSci.maths.wavelet.haar.FastHaar();
+
+myHaar.transform(xvVals2);
+
+figure(2);       subplot(2,1,1); plot(xv, "Original Signal");
+                       subplot(2,1,2); plot(xvVals2, "Haar Wavelet Transformed"); 

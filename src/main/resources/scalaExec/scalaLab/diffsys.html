@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15044800">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>diffsys</B></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US">Integrates the system of first order ordinary differential equations</SPAN></FONT>
+  <FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">dy_i(x) = f_i(x, y)</SPAN></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US">from x = x_0 to x = xe by means of a high order extrapolation method based on the modified midpointg rule. The method is suitable for high accuracy problems and is not suited for stiff equations.</SPAN></FONT>
+
+<FONT SIZE=4><B>Example: Can be run with F9 within the ScalaLab Editor  </B></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">import java.util.Vector;</SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">public class Test_diffsys extends Object</SPAN></FONT>
+                          <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">implements AP_diffsys_methods {</SPAN></SPAN></FONT>
+
+  <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">static int passes,k;</SPAN></SPAN></FONT>
+ 
+        <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">public static void main(String args[]) {</SPAN></SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">int i;</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">double xe,tol,h0;</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">double y[] = new double[5];</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">double s[] = new double[5];</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">double x[] = new double[1];</SPAN></SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">Test_diffsys testdiffsys = new Test_diffsys();</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">System.out.println(&quot;Results with DIFFSYS are :\n&quot; +</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">&quot;  K   DER.EV.    Y[1]        Y[3]&quot;);</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">tol=1.0e-2;</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">for (i=1; i&lt;=5; i++) {</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">tol *= 1.0e-2;</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">passes=k=0;</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">x[0]=0.0;</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">xe=6.192169331396;</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">y[1]=1.2;</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">y[2]=y[3]=0.0;</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">y[4] = -1.04935750983;</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">s[1]=s[2]=s[3]=s[4]=0.0;</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">h0=0.2;</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">Vector xout = new Vector();  </SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">Vector yout = new Vector();</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">Analytic_problems.diffsys(x,xe,4,y,testdiffsys,tol,tol,s,h0, xout, yout);</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">}</SPAN></SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">}</SPAN></SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">public void derivative(int n, double x, double y[], double dy[])</SPAN></SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">{</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">double mu,mu1,y1,y2,y3,y4,s1,s2;</SPAN></SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">mu=1.0/82.45;</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">mu1=1.0-mu;</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">passes++;</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">y1=y[1];</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">y2=dy[1]=y[2];</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">y3=y[3];</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">y4=dy[3]=y[4];</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">s1=(y1+mu)*(y1+mu)+y3*y3;</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">s2=(y1-mu1)*(y1-mu1)+y3*y3;</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">s1 *= Math.sqrt(s1);</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">s2 *= Math.sqrt(s2);</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">dy[2]=y1+2.0*y4-mu1*(y1+mu)/s1-mu*(y1-mu1)/s2;</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">dy[4]=y3-2.0*y2-mu1*y3/s1-mu*y3/s2;</SPAN></SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">}</SPAN></SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">public void output(int n, double x[], double xe,</SPAN></SPAN></FONT>
+                     <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">double y[], double s[])</SPAN></SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">{</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">k++;</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN></SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">if (x[0] &gt;= xe)</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">System.out.println(&quot;  &quot; + k + &quot;   &quot; + passes +</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">&quot;   &quot; + fiveDigit.format(y[1]) +</SPAN></SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">&quot;   &quot; + fiveDigit.format(y[3]));</SPAN></SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">}</SPAN></SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,68 @@
+
+def inCheck( q1: (Int, Int), q2: (Int, Int)) = 
+   q1._1 == q2._1 ||
+   q1._2 == q2._2 ||
+    (q1._1 - q2._1).abs == (q1._2 - q2._2).abs
+    
+    
+     
+def isSafe( queen: (Int, Int), queens: List[(Int, Int)]) =
+   queens forall (q => !inCheck(queen, q))
+   
+
+  def queens(n: Int): List[ List[(Int, Int)]] = {
+      def placeQueens(k: Int): List[ List[(Int, Int)]] =
+        if (k==0)
+            List(List())
+          else
+            for {
+                queens <- placeQueens(k-1)
+                column <- 1 to n
+                queen = (k, column)
+                if isSafe(queen, queens)
+                }
+                yield  queen :: queens
+                
+                    placeQueens(n)
+           }
+           
+
+
+import javax.swing._   
+import java.awt.GridLayout                    
+                            
+var N = 8
+var sol = queens(N)
+
+var sol1 =  sol.head
+sol1 = sol1.reverse
+
+var jp = new JPanel
+var jf = new JFrame("solution 1")
+
+jp.setLayout(new GridLayout(N, N))
+
+var currentPanel: JPanel = _
+for (r <- 1 to N)  {
+    var currentCoords = sol1.head
+    sol1 = sol1.tail
+    var queenColumn = currentCoords._2
+    println("queenColumn = "+queenColumn)
+    
+    var queenLabel =new JLabel(" Queen ")
+    queenLabel.setBackground( Color.RED )
+    
+    for (c <- 1 to N)  {
+        var emptyLabel = new JLabel("  ---  ")
+        emptyLabel.setBackground(Color.GREEN)
+        currentPanel = new JPanel
+        if (c==queenColumn)  currentPanel.add(queenLabel)
+        else  currentPanel.add(emptyLabel)
+        jp.add(currentPanel)
+         }
+        }
+        
+        jf.add(jp)
+        jf.setSize(500, 500)
+        
+        jf.setVisible(true)

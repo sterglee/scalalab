@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110705;16354400">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P><FONT SIZE=6 STYLE="font-size: 22pt"><U><B>Functional Plotting
+routines</B></U></FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4>It is particularly convenient to be able to plot a
+function specified as a text string, within a specified domain.</FONT></P>
+<P><FONT SIZE=4>For example we like to write:</FONT></P>
+<P><FONT SIZE=4><I>splot(&quot;sin(3.4*x)*cos(0.12*x)&quot;, -5, 15)</I></FONT></P>
+<P><FONT SIZE=4>to plot the corresponding function in the interval
+[-5, 15].</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4>Also, we want to be able to easily plot the behavior
+of a defined function object within an interval. For example:</FONT></P>
+<P><BR><BR>
+</P>
+<P><A NAME="__DdeLink__32_1505402942"></A><BR><BR>
+</P>
+<P><A NAME="__DdeLink__10_1505402942"></A><A NAME="__DdeLink__4_1505402942"></A><A NAME="__DdeLink__0_1505402942"></A><A NAME="__DdeLink__2_1505402942"></A>
+<FONT SIZE=4><I>def sigmoid( x: Double) = { val a = 4;
+1/(1+exp(-a*x)) }</I></FONT></P>
+<P><A NAME="__DdeLink__34_1505402942"></A><A NAME="__DdeLink__6_1505402942"></A><A NAME="__DdeLink__8_1505402942"></A>
+<FONT SIZE=4><I>fplot( sigmoid, -2, 2)</I></FONT></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-style: normal"><FONT SIZE=4><B>How splot() is
+implemented</B></FONT></P>
+<P><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal"><FONT SIZE=4><SPAN STYLE="font-weight: normal">In
+order to implement </SPAN><I><SPAN STYLE="font-weight: normal">splot</SPAN></I>
+<SPAN STYLE="font-weight: normal">we should be able to evaluate
+Strings with valid Scala mathematical expressions.</SPAN></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal"><FONT SIZE=4>We explore
+the advanced functional characteristics of the Scala language in
+order to accomplish this task.</FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal"><FONT SIZE=4>Speficically,
+we use a Scala object, the <I>fPlotObj, </I>to keep the
+<I>globalFunction</I><I>1d</I> variable of type <I>Function1[Double,
+Double]</I>, i.e. a function of one variable. The method <I>mkFunction</I><I>1d</I><I>
+</I>constructs a Scala class that extends from <I>Function1[Double,
+Double]. </I>The <I>apply </I>method of the <I>Function1 </I>trait in
+Scala is the one that implements the functionality of the function.
+Therefore, we can easily fill in the expression's text to specify the
+evaluation of the desired function, as :</FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=4><I>def mkFunction1d(expr: String) = {</I></FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=4><I>// instantiate a Function1 trait
+with the function's expression </I></FONT>
+</P>
+<P ALIGN=JUSTIFY><A NAME="__DdeLink__36_1505402942"></A><FONT SIZE=4><I>var
+classText = &quot;&quot;&quot;scalaSci.math.plot.fPlotObj.globalFunction1d
+= </I></FONT>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=4><I>new scala.Function1[Double, Double]
+{ </I></FONT>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=4><I>def apply(x: Double) = &quot;&quot;&quot;+expr+</I></FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=4><I>&quot;&quot;&quot; </I></FONT>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=4><I>}&quot;&quot;&quot;</I></FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=4><I>scalaExec.Interpreter.GlobalValues.globalInterpreter.interpret(classText)</I></FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=4><I>}</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal"><FONT SIZE=4>However,
+finally the <I>scalaSci.math.plot.fPlotObj.globalFunction</I><I>1d</I><I>
+</I>object should be instantiated and this is performed by calling
+the Scala Interpreter to evaluate the piece of |Scala code within the
+<I>classText </I>String.</FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=5><B>Example of functional Plotting</B></FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal">// Demonstrates
+functional style plotting in ScalaLab</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal">// define and plot the
+corresponding 1-D function</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"> def  fx(x:Double) = { x
+-sin(x)*x }</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"> fplot(fx,  1, 10)</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal">// define as String and
+plot the corresponding 1-D function</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal">splot(&quot;sin(x)&quot;,
+1, 5)</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal">// plot with VISAD</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"> vsplot(&quot;sin(x)&quot;,
+1, 5)</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal">// plot with JFreeChart</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"> jsplot(&quot;sin(x)&quot;,
+1, 5)</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal">// define and plot the
+corresponding 2-D function</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal">def  fxy(x:Double, y:
+Double) = { x*sin(x)+x*y*cos(y) }</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal">  figure3d; fplot2d(fxy,
+ 1, 10, 1,5)</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"> 
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal">// define directly as a
+String and plot the corresponding 1-D function</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"> figure3d;
+splot2d(&quot;x*y*cos(x*y)&quot;, -4, 4, -10, 10)</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

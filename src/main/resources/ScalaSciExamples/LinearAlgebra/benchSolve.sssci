@@ -1,0 +1,33 @@
+ 
+var N=2000
+var A= rand(N,N)
+var b = rand(N,1)
+
+
+tic
+var x = A \ b
+var tmj = toc
+
+tic
+var xgsl = A.gsllusolve(b)
+var tmgsl = toc
+
+
+var bb = new Array[Double](N)
+for (k<-0 until N)
+  bb(k) = b(k,0)
+
+tic
+var xcc = A.ccsolv(bb)
+var tmcc = toc
+
+var eA = new scalaSci.EJML.Mat(A)
+var eb = new scalaSci.EJML.Mat(b)
+tic
+var ex = eA.solve(  eb)
+var tmejml = toc
+
+
+
+
+max(max(x-ex))

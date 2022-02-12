@@ -1,0 +1,14 @@
+
+var  dt = 0.01  // sampling frequency
+var xl = -10;  var  xu = 20;  // low and up limits
+var t=inc(xl, dt, xu)   // time axis
+var f11 = 0.23;  var f12 = 3.7  // two frequencies 
+var f21 = 0.25;  var f22 = 3.9  // slightly different frquencies   
+
+var  x1 = sin(f11*t) + cos(f12*t)
+var  x2 = sin(f21*t) + cos(f22*t)
+figure(1);  hold("on"); plot(t, x1, Color.RED, "1st sine")
+plot(t, x2, Color.GREEN, "2nd sine")
+var x12 = x1 cross  x2
+plot(t, x12, Color.BLUE, "x1 .* x2")
+

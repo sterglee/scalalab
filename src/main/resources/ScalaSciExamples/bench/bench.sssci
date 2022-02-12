@@ -1,0 +1,45 @@
+tic()
+var sm = 0.0
+var k = 1
+while (k<=5000000)   {
+  sm += (7.8/k - 0.1234/k)/678999665.8
+  sm /= 3.8
+  k += 1
+ }
+ var tmScala = toc()
+ println("sm = "+sm+", tmScala = "+tmScala)
+// timeScala == 0.46 sec, Double = 8.075537410090186E-16
+
+tic()
+var sm = 0.0
+for (k<-1 to 5000000)   {
+  sm += (7.8/k - 0.1234/k)/678999665.8
+  sm /= 3.8
+  }
+ var tmScalaFor = toc()
+ println("sm = "+sm+", tmScalaFor = "+tmScalaFor)
+ 
+tic()
+ sm = 0.0
+ k = 1
+while (k<5000000)   {
+  sm += (7.8/k - 0.1234/k)/678999665.8
+  sm /= 3.8
+  k++
+ }
+ tmGr = toc()
+ println("sm = "+sm+", tmGroovy = "+tmGr)
+// timeGr = 51.7  sec, 
+
+
+ tic
+ sm = 0.0;
+ k = 1
+while k<5000000,  
+  sm = sm+(7.8/k - 0.1234/k)/678999665.8;
+  sm = sm / 3.8;
+  k = k+1;
+ end
+ tmMat = toc
+ 
+// tmMat = 11.62 sec

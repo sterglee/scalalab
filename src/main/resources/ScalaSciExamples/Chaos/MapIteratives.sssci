@@ -1,0 +1,16 @@
+
+def  f(x:Double) = (3*x - x*x*x)/ 2
+var x = inc(-2, 0.01, 2)
+var y = x map f
+plot(x, y)
+hold("on")
+plot(x, x, Color.BLUE)
+
+def f2(x:Double) = f(f(x))
+var y2 = x map f2
+plot(x, y2, Color.GREEN)
+
+for (k<-0 to 7) 
+  y2 = y2 map f2
+
+plot(x, y2, Color.YELLOW)

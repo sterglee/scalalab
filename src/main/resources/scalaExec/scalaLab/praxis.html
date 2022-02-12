@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15083100">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>More
+variables - No derivatives</B></FONT></P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>praxis</B></FONT></P>
+<P>Determines a point x \in [a, b] at which the real valued function
+f(x) assumes a minimum value.</P>
+<P><BR><BR>
+</P>
+<P><B>Example: Can be run with F9 within the ScalaLab Editor (Ctrl-E
+to open the editor)</B></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">import
+java.text.DecimalFormat;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">import numal.*;</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public class Test_praxis
+extends Object</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">implements AP_praxis_method {</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public static void
+main(String args[]) {</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double x[] = new double[3];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double in[] = new double[10];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double out[] = new double[7];</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">Test_praxis testpraxis = new
+Test_praxis();</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">DecimalFormat fiveDigit = new
+DecimalFormat(&quot;0.00000E0&quot;);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">in[0]=1.0e-6;
+in[1]=in[2]=1.0e-6; in[5]=250.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">in[6]=in[7]=in[8]=in[9]=1.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">x[1] = -1.2; x[2]=1.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">Analytic_problems.praxis(2,x,testpraxis,in,out);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">if (out[1] == 0.0)</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">System.out.println(&quot;Normal
+Termination\n&quot;);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">System.out.println(&quot;Minimum
+is &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(out[2]) +
+&quot;\nFor x is &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(x[1]) + &quot;
+&quot; + </FONT>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(x[2]) +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">&quot;\nThe initial function
+value was &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(out[3]) +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">&quot;\nThe number of
+function evaluations needed was &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">(int)out[4] + &quot;\nThe
+number of line searches was &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">(int)out[5] + &quot;\nThe
+step size in the last &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">&quot;iteration step was &quot;
++ fiveDigit.format(out[6]));</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public double funct(int n,
+double x[])</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">{</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double temp;</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">temp=x[2]-x[1]*x[1];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">return
+temp*temp*100.0+(1.0-x[1])*(1.0-x[1]);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+</BODY>
+</HTML>

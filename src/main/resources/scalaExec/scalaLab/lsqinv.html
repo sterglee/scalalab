@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101230;15504600">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>lsqinv</B></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US">Calculates the inverse of the matrix A^T A, where A is the coefficient matrix of a linear least squares problem.  <I>lsqinv</I><SPAN STYLE="font-style: normal">  can be used for the calculation of the covariance matrix of a linear least squares problem,</SPAN></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US">for details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public class Test_lsqinv extends Object {</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">	</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">	public static void main(String args[]) {</SPAN></FONT>
+
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">int i,j;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">int piv[] = new int[3];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double aid[] = new double[3];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double aux[] = new double[6];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double a[][] = new double[6][3];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double c[][] = new double[6][3];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double t[][] = new double[3][3];</SPAN></FONT>
+
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">aux[2]=1.0e-6;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">a[1][1]=c[1][1] = -2.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">a[2][1]=c[2][1] = -1.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">a[3][1]=c[3][1]=1.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">a[4][1]=c[4][1]=2.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">a[5][1]=c[5][1]=1.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">a[1][2]=a[2][2]=a[3][2]=a[4][2]=c[1][2]=c[2][2]=c[3][2]=c[4][2]=1.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">a[5][2]=c[5][2]=2.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Linear_algebra.lsqortdec(a,5,2,aux,aid,piv);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">if (aux[3] == 2) {</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Linear_algebra.lsqinv(a,2,aid,piv);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">t[1][1]=a[1][1];</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">t[2][2]=a[2][2];</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">t[2][1]=t[1][2]=a[1][2];</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (j=1; j&lt;=2; j++)</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (i=1; i&lt;=5; i++) a[i][j]=Basic.matmat(1,2,i,j,c,t);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">System.out.println(&quot;Aux[2, 3, 5] =  &quot; + </SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(aux[2]) +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;  &quot; + fiveDigit.format(aux[3]) + &quot;  &quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(aux[5]) + &quot;\n\nInverse:\n   &quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(t[1][1]) + &quot;  &quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(t[1][2]) + &quot;\n  &quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(t[2][1]) + &quot;   &quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(t[2][2]) +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;\n\nCheck:  S' * (S * T) :\n  &quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(Basic.tammat(1,5,1,1,c,a)) + &quot;    &quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(Basic.tammat(1,5,1,2,c,a)) + &quot;\n  &quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(Basic.tammat(1,5,2,1,c,a)) + &quot;  &quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(Basic.tammat(1,5,2,2,c,a)));</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">	}</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT></PRE>
+</BODY>
+</HTML>

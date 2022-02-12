@@ -1,0 +1,36 @@
+   
+
+    // Illustrates how to  construct a PlotController object to facilitate the plotting
+    var po = new PlotController()
+    
+    // construct some signals
+    var x = inc(0, 1, 100)
+    var y1 = sin(0.45*x)
+    var y2 = sin(0.778*x)+0.2*cos(3.4*x)
+    var y3 = cos(y1+y2)
+    
+    // construct the first plot object
+    closeAll()  // close any previous figure
+    po.setX(x.getv)  
+    po.setY(y1.getv)
+    po.setColor(Color.GREEN)  // use GREEN color for plotting
+    po.setplotTitle2D(" Demonstrating 2-D plots")
+    po.setDottedLine()
+    po.mkplot()   // plot the first signal
+    
+    po.setContinuousLine();   // set now to continous line plotting
+    po.setColor(Color.RED)
+    po.setlineWidth(15)   // set to thicker width
+    // redefine the new signals for plotting
+    hold("on"); 
+    po.setY(y2)   // we change only the Y signal
+
+    figure; po.mkplot()
+    
+    var z = cos(4.5*x)
+    po.setZ(z)
+    
+    po.setColor(Color.BLUE)  // change the plot color
+    po.setlineWidth(1)  // set the line width to 1
+    po.mkplot3D
+        

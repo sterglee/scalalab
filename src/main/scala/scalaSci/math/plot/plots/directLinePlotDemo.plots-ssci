@@ -1,0 +1,37 @@
+  
+  // directly construct a plot panel
+var p2 = new scalaSci.math.plot.Plot2DPanel()
+
+var N=100; var M=2;
+var XYZ  = Array.ofDim[Double](N, M);
+var XYZlen = XYZ.length;
+val PI = java.lang.Math.PI;
+for ( j <- 0 to XYZlen-1 ) {
+      XYZ(j)(0) = 2*PI*j/XYZ.length;
+      XYZ(j)(1) = sin(XYZ(j)(0));
+   }
+var XYZ2 = Array.ofDim[Double](N, M);
+for (j <- 0 to XYZ2.length-1) {
+    XYZ2(j)(0) = 2*PI*j/XYZ.length;
+    XYZ2(j)(1) = Math.sin(2*XYZ2(j)(0));
+   }
+	
+	p2.addLinePlot("sin" , Color.RED, AbstractDrawer.DOTTED_LINE, XYZ);
+        p2.setBackground(new Color(200,0,0));
+        p2.addLinePlot("sin2", XYZ2);
+		
+	p2.setLegendOrientation(PlotPanel.SOUTH);
+	new FrameView(p2)
+
+// a 3-D plot
+  N=100; M=3;
+  var p = new Plot3DPanel();
+  var XYZ = Array.ofDim[Double](N, M);
+  for ( j <- 0 to XYZ.length-1) {
+	XYZ(j)(0) = 2*PI*j/XYZ.length;
+	XYZ(j)(1) = Math.sin(XYZ(j)(0));
+	XYZ(j)(2) = Math.sin(XYZ(j)(0))*Math.cos(XYZ(j)(1));
+			}
+p.addLinePlot("toto" , XYZ);
+p.setLegendOrientation(PlotPanel.SOUTH);
+new FrameView(p)

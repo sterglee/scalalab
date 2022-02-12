@@ -1,0 +1,13 @@
+
+import org.apache.commons.math.stat._
+
+var arrayOfValues = Array(0.333, -2.34, 4.333, 0.3333, -0.33322)
+
+var mean = StatUtils.mean(arrayOfValues)
+var std = StatUtils.variance(arrayOfValues)
+var median = StatUtils.percentile(arrayOfValues, 50.0)
+
+// compute the mean of the first three values in the array
+var mn = StatUtils.mean(arrayOfValues, 0, 3)
+
+

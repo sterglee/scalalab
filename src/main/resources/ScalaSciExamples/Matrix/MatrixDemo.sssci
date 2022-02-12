@@ -1,0 +1,39 @@
+
+// Script that demonstrates ScalaSci's matrix operations
+
+ var Nrows = 5; var Ncols = 8;
+    // create a random matrix with Nrows rows and Ncols columns
+ var M = rand(Nrows,  Ncols)
+ JOptionPane.showMessageDialog(null, "Matrix M created", " M = rand (Nrows, Ncols)", JOptionPane.INFORMATION_MESSAGE)
+  
+ 
+   
+ var x12 = M(1,2)   // take the corresponding matrix element
+
+ var m24_35 = M(2,4, 3, 5)  // extract the corresponding submatrix 
+ var m24 = M(2,4, ::)  // extract the submatrix consisted of rows 2 to 4, all columns
+ var mc3_5 = M(::, 3,5)  // all rows, 3 to 5 columns
+ 
+var  X = ones(3,2) // create a Matrix, consisting of ones
+var k=1; var l=1;
+M(k,  k+3, l,  l+2) = X   // assign a submatrix within the large matrix
+
+// Perform some Matrix operators
+
+var M2 = 2*M + M*20.4 // i.e. Number*Matrix*Number
+
+// create a Matrix and transpose it
+var mm = rand(4,8)
+var mmt = mm T  // transpose operator
+var mmT = T(mm)  // take the transpose as a method call
+
+  // illustrate Matrix multiplication
+var Ma = rand(Nrows, Ncols)
+var Mb = rand(Ncols, Nrows)
+var Mmul = Ma*Mb
+
+
+// test inv
+var atest = rand(8, 8)  // a square Matrix
+var ainvtest = inv(atest)
+

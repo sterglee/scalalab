@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15053000">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>efsirk</B></FONT>
+
+<SPAN LANG="en-US"><FONT SIZE=4>Solves an initial value problem for a system of first order ordinary differential equations by means of an exponentially fitted, A-stable, semi-implicit</FONT> <FONT SIZE=4>Runge-Kutta method of third order.</FONT></SPAN>
+
+<SPAN LANG="en-US"><B><FONT SIZE=4>Example: Can be run with F9 within the ScalaLab Editor  </FONT></B></SPAN>
+
+
+<FONT SIZE=3><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">public class Test_efsirk extends Object</SPAN></FONT>
+                         <FONT SIZE=3><SPAN LANG="en-US">implements AP_efsirk_methods {</SPAN></FONT>
+
+  <FONT SIZE=3><SPAN LANG="en-US">static double lnx;</SPAN></FONT>
+   
+        <FONT SIZE=3><SPAN LANG="en-US">public static void main(String args[]) {</SPAN></FONT>
+ 
+    <FONT SIZE=3><SPAN LANG="en-US">int n[] = new int[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double xe;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double x[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double delta[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double y[] = new double[3];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double j[][] = new double[3][3];</SPAN></FONT>
+    
+    <FONT SIZE=3><SPAN LANG="en-US">Test_efsirk testefsirk = new Test_efsirk();</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot;EFSIRK delivers:&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">xe=0.4;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">x[0]=0.01;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y[1]=Math.log(0.01);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y[2]=x[0];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">Analytic_problems.efsirk(x,xe,2,y,delta,testefsirk,j,n,</SPAN></FONT>
+                             <FONT SIZE=3><SPAN LANG="en-US">1.0e-2,1.0e-2,0.005,1.5,false);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">xe=8.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">x[0]=0.01;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y[1]=Math.log(0.01);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y[2]=x[0];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">Analytic_problems.efsirk(x,xe,2,y,delta,testefsirk,j,n,</SPAN></FONT>
+                             <FONT SIZE=3><SPAN LANG="en-US">1.0e-2,1.0e-2,0.005,1.5,false);</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void derivative(int m, double y[], double delta[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double y2;</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">y2=y[2];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">delta[0] = -Math.exp(y2);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">lnx=Math.log(y2);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y[1]=(y[1]-lnx)*delta[0]+1.0/y2;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">y[2]=1.0;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void jacobian(int m, double j[][], double y[],</SPAN></FONT>
+                       <FONT SIZE=3><SPAN LANG="en-US">double delta[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double y2;</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">y2=y[2];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">j[1][1]=delta[0];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">j[1][2]=(y[1]-lnx-1.0/y2)*delta[0]-1.0/(y2*y2);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">j[2][1]=j[2][2]=0.0;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void output(double x[], double xe, int m, double y[],</SPAN></FONT>
+                     <FONT SIZE=3><SPAN LANG="en-US">double delta[], double j[][], int n[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double y1;</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat oneDigit = new DecimalFormat(&quot;0.0E0&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat twoDigit = new DecimalFormat(&quot;0.00&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">if (x[0] == xe) {</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">y1=y[1];</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">lnx=Math.log(x[0]);</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot;\n N = &quot; + n[0] + &quot;    X = &quot; +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">x[0] + &quot;    Y(X) = &quot; + fiveDigit.format(y1) +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">&quot;   DELTA = &quot; + twoDigit.format(delta[0]) +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">&quot;\n ABS.ERR. = &quot; + oneDigit.format(Math.abs(y1-lnx)) + </SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">&quot;    REL.ERR. = &quot; +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">oneDigit.format(Math.abs((y1-lnx)/lnx)));</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT></PRE>
+</BODY>
+</HTML>

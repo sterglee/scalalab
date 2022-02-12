@@ -1,0 +1,258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110201;1584289">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>arkmat</B></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US">Solves an initial value problem, <SPAN STYLE="font-style: normal">given as a system of </SPAN><SPAN STYLE="font-style: normal"><B>first order </B></SPAN><SPAN STYLE="font-style: normal">(nonlinear) differential equations</SPAN></SPAN></FONT>
+        <FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal"><B>DU(t) = F(t, U(t))</B></SPAN></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">where D = d/dt and U is an </SPAN><I>nXm</I> <SPAN STYLE="font-style: normal">matrix, with </SPAN><I>U(t0)</I> <SPAN STYLE="font-style: normal">prescribed, over the range t0 &lt;= t &lt;= te,  by means of a stabilized Runge-Kutta method. This procedure is suitable for the integration of systems where the dependent variable and the right-hand side are stored in a rectangular array instead of a vector. The integration stepsize used will depend on </SPAN></SPAN></FONT>
+ <FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">(a) the type of the system to be solved (i.e. , hyperbolic or parabolic)</SPAN></SPAN></FONT>
+ <FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">(b) the spectral radius of the Jacobian matrix of the system, and</SPAN></SPAN></FONT>
+ <FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">(c) the indicated order of the particular Runge-Kutta method</SPAN></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><I>arkmat </I> <SPAN STYLE="font-style: normal">is especially intended for systems of differential equations arising from initial boundary value problems in two dimensions, e.g. when the method of lines is applied to this kind of problem, the right-hand side of the resulting system is much easier to describe in matrix than in vector form.</SPAN></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Procedure Parameters:</B></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><I><B>void   arkmat(t, te, m, n, u, method, type, order, spr)</B></I></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>t</B>:  double t[0:0];   the independent variable;</SPAN></FONT>
+                        <FONT SIZE=4><SPAN LANG="en-US">entry:  initial value of t0;</SPAN></FONT>
+                        <FONT SIZE=4><SPAN LANG="en-US">exit:  the final value te;</SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><B>te:</B> double;    entry:  the final value of t;</SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><B>m</B>:  int;   entry:  the number of  columns of u;</SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><B>n</B>:   int;   entry:  the number of rows of u;</SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><B>u</B>:   double[1:n, 1:m];  </SPAN></FONT>
+   <FONT SIZE=4><SPAN LANG="en-US">entry: the initial values of the solution of the system of differential equations at t=t0;</SPAN></FONT>
+   <FONT SIZE=4><SPAN LANG="en-US">exit:  the values of the solution at t=te;</SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US">method:  a class that defines two procedures <B>der</B> and <B>out, </B>this class must implement the <B>AP_arkmat_methods </B>   interface;</SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>double der(int m, int n, double t, double [][]u, double [][] ftu)</B></SPAN></FONT>
+      <FONT SIZE=4><SPAN LANG="en-US">This procedure must be given by the user and performs an evaluation of the right-hand side F(t,u) of the system; upon completion of </SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"><B>der</B></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US">, upon completion of </SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"><B>der</B></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US">, the right-hand side should be stored in the array ftu[1:n, 1:m];</SPAN></FONT>
+  <FONT SIZE=4><SPAN LANG="en-US"><B>double out( double []t, double tr, int m, int n, double [][] u, int type,</B></SPAN></FONT>
+     <FONT SIZE=4><SPAN LANG="en-US"><B>int  [] order, double [] spr)</B></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US">after each integration step the user can print some parameters such as t, u, type, order, or possibly update spr</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>type</B>:  int;</SPAN></FONT>
+        <FONT SIZE=4><SPAN LANG="en-US">entry: the type of the system of differential equations to be solved; the user should supply one of the following values:</SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US">type = 1;  if no specification of the type can be made;</SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US">type = 2; if the eigenvalues of the Jacobian matrix of the right-hand side are negative real;</SPAN></FONT>
+   <FONT SIZE=4><SPAN LANG="en-US">type = 3; if the eigenvalues of the Jacobian matrix of the right-hand side are purely imaginary;</SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><B>order:</B> <SPAN STYLE="font-weight: medium">int order[0:0];</SPAN></SPAN></FONT>
+  <FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">the order of the Runge-Kutta method used;</SPAN></SPAN></FONT>
+     <FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">entry: for type=2 the user may choose </SPAN></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: medium">order=1 </SPAN></I></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">or </SPAN></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: medium">order=2; order </SPAN></I></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">should be 2 for the other types;</SPAN></SPAN></FONT>
+     <FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">exit:  if </SPAN></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: medium">order </SPAN></I></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">is set to another value, it is assumed to be (if type=2 then 1 else 2)</SPAN></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><B>spr: </B> <SPAN STYLE="font-weight: medium">double  spr[0:0];</SPAN></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">entry:  the spectral radius of the Jacobian matrix of the right-hand side, when the system is written in one dimensional form (i.e., vector form);</SPAN></SPAN></FONT>
+                 <FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">the integration step will equal constant/spr</SPAN></SPAN></FONT>
+               <FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">if necessary </SPAN></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: medium">spr</SPAN></I></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"> </SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-weight: medium">can be updated (after each step) by means of the procedure </SPAN></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: medium">out</SPAN></I></SPAN></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Scala Example: Can be run by paste over ScalaLab's console  </B></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><B>import java.text.DecimalFormat</B></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><B>import numal._</B></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>object  testarkmat extends AnyRef  with AP_arkmat_methods {</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var hpi = 0.5*java.lang.Math.PI</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var h2 = 1.0/9.0</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var h1 = (2.0*hpi)/9.0</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var n = 10; var m=10;</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var h1k = h1*h1;</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var h2k = h2*h2;</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var tel = 0</B></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><B>var     te = 1.0</B></SPAN></FONT>
+
+       <FONT SIZE=4><SPAN LANG="en-US"><B>def  test() = {</B></SPAN></FONT>
+
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var  orde= new Array[Int](1)</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var   spr = new Array[Double](1)</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var   t = new Array[Double](1)</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var  u = Array.ofDim[Double](21, 11)</B></SPAN></FONT>
+    
+
+    <FONT SIZE=4><SPAN LANG="en-US"><B>t(0) = 0.0</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>for (j&lt;-1 to  m) u(n, j) = Math.sin(h1*(j-1))</B></SPAN></FONT>
+     <FONT SIZE=4><SPAN LANG="en-US"><B>for (i   &lt;- 1 to  n) {</B></SPAN></FONT>
+       <FONT SIZE=4><SPAN LANG="en-US"><B>var cos1 = Math.cos(h2*hpi*(i-1))</B></SPAN></FONT>
+      <FONT SIZE=4><SPAN LANG="en-US"><B>for (j &lt;- 1 to m)  u(i, j) = u(n, j)*cos1;</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>}</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>Basic.inimat(n+1,n+n,1,m,u,0.0)</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var typ = 3</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>orde(0) = 2</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>spr(0) = 80.0</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>println(&quot;The program delivers:\n\n    X    &quot; +</B></SPAN></FONT>
+      <FONT SIZE=4><SPAN LANG="en-US"><B>&quot;  Y       U(1,X,Y)      U(1,X,Y)\n           &quot; +</B></SPAN></FONT>
+      <FONT SIZE=4><SPAN LANG="en-US"><B>&quot;        COMPUTED      EXACT\n&quot;);</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>Analytic_problems.arkmat(t,te,m,n+n,u,testarkmat,typ,orde,spr);</B></SPAN></FONT>
+  <FONT SIZE=4><SPAN LANG="en-US"><B>}</B></SPAN></FONT>
+
+
+ <FONT SIZE=4><SPAN LANG="en-US"><B>def   der(m: Int,   nn: Int,  t: Double,  u: Array[Array[Double]], du: Array[Array[Double]])</B></SPAN></FONT>
+  <FONT SIZE=4><SPAN LANG="en-US"><B>{</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var n = nn</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>n=n/2;</B></SPAN></FONT>
+
+    <FONT SIZE=4><SPAN LANG="en-US"><B>for (i &lt;- 2 to n-1)</B></SPAN></FONT>
+      <FONT SIZE=4><SPAN LANG="en-US"><B>for (j&lt;- 2 to  m-1) {</B></SPAN></FONT>
+        <FONT SIZE=4><SPAN LANG="en-US"><B>du(i,j) = u(i+n, j)</B></SPAN></FONT>
+        <FONT SIZE=4><SPAN LANG="en-US"><B>du(i+n, j) = (u(i, j+1)-2.0*u(i, j)+u(i,j-1))/h1k+</B></SPAN></FONT>
+                   <FONT SIZE=4><SPAN LANG="en-US"><B>(u(i+1,j)-2.0*u(i,j)+u(i-1,j))/h2k;</B></SPAN></FONT>
+      <FONT SIZE=4><SPAN LANG="en-US"><B>}</B></SPAN></FONT>
+ <FONT SIZE=4><SPAN LANG="en-US"><B>var j=1</B></SPAN></FONT>
+ <FONT SIZE=4><SPAN LANG="en-US"><B>while (j&lt;m) {</B></SPAN></FONT>
+      <FONT SIZE=4><SPAN LANG="en-US"><B>Basic.inimat(n+1, n+n, j, j, du,0.0)</B></SPAN></FONT>
+      <FONT SIZE=4><SPAN LANG="en-US"><B>for (i &lt;-  1 to n)  du(i, j) = u(n+1, j)</B></SPAN></FONT>
+      <FONT SIZE=4><SPAN LANG="en-US"><B>j += (m-1)</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>}</B></SPAN></FONT>
+
+ <FONT SIZE=4><SPAN LANG="en-US"><B>var i=1</B></SPAN></FONT>
+ <FONT SIZE=4><SPAN LANG="en-US"><B>while (i &lt;=n ) {</B></SPAN></FONT>
+  <FONT SIZE=4><SPAN LANG="en-US"><B>var j=2</B></SPAN></FONT>
+  <FONT SIZE=4><SPAN LANG="en-US"><B>while (j&lt;=m-1) {</B></SPAN></FONT>
+        <FONT SIZE=4><SPAN LANG="en-US"><B>du(i, j) = u(i+n, j)</B></SPAN></FONT>
+        <FONT SIZE=4><SPAN LANG="en-US"><B>if (i == 1)</B></SPAN></FONT>
+          <FONT SIZE=4><SPAN LANG="en-US"><B>du(n+1, j) = 1// ( u(1, j+1) &ndash; 2.0*u(1,j)+u(1,j-1) )/h1k+( 2.0*u(2,j)-2.0*u(1,j) )/h2k;</B></SPAN></FONT>
+        <FONT SIZE=4><SPAN LANG="en-US"><B>else</B></SPAN></FONT>
+          <FONT SIZE=4><SPAN LANG="en-US"><B>du(2*n, j)=0.0;</B></SPAN></FONT>
+
+     <FONT SIZE=4><SPAN LANG="en-US"><B>j += 1</B></SPAN></FONT>
+      <FONT SIZE=4><SPAN LANG="en-US"><B>}</B></SPAN></FONT>
+   <FONT SIZE=4><SPAN LANG="en-US"><B>i += n-1</B></SPAN></FONT>
+  <FONT SIZE=4><SPAN LANG="en-US"><B>}</B></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><B>}</B></SPAN></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>def   out(t: Array[Double], te: Double, m: Int, n: Int, u: Array[Array[Double]], </B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>typ: Int, order: Array[Int], spr: Array[Double])</B></SPAN></FONT>
+  <FONT SIZE=4><SPAN LANG="en-US"><B>{</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var  threeDigit = new DecimalFormat(&quot;0.000&quot;)</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>var  fiveDigit = new DecimalFormat(&quot;0.00000&quot;)</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>tel += 1</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>if (t(0) == te) {</B></SPAN></FONT>
+      <FONT SIZE=4><SPAN LANG="en-US"><B>for (i &lt;-  1 to  10)</B></SPAN></FONT>
+   <FONT SIZE=4><SPAN LANG="en-US"><B>println(&quot;  &quot; + threeDigit.format((i-1)*h1) +</B></SPAN></FONT>
+          <FONT SIZE=4><SPAN LANG="en-US"><B>&quot;  &quot; + threeDigit.format((i-1)*h2) + &quot;    &quot; +</B></SPAN></FONT>
+          <FONT SIZE=4><SPAN LANG="en-US"><B>fiveDigit.format(u(i,i)) + &quot;\t&quot; + </B></SPAN></FONT>
+          <FONT SIZE=4><SPAN LANG="en-US"><B>fiveDigit.format(Math.sin(h1*(i-1))*</B></SPAN></FONT>
+                           <FONT SIZE=4><SPAN LANG="en-US"><B>Math.cos(hpi*h2*(i-1))*</B></SPAN></FONT>
+                           <FONT SIZE=4><SPAN LANG="en-US"><B>Math.cos(t(0)*Math.sqrt(1.0+hpi*hpi))))</B></SPAN></FONT>
+      <FONT SIZE=4><SPAN LANG="en-US"><B>System.out.println(&quot;\nThe number of integration steps: &quot; +</B></SPAN></FONT>
+        <FONT SIZE=4><SPAN LANG="en-US"><B>te + &quot;\n Type is &quot; + typ + &quot;   Order is &quot; + order(0))</B></SPAN></FONT>
+    <FONT SIZE=4><SPAN LANG="en-US"><B>}</B></SPAN></FONT>
+  <FONT SIZE=4><SPAN LANG="en-US"><B>}</B></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><B>}</B></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>testarkmat.test()</B></SPAN></FONT>
+
+
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Java Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public class Test_arkmat extends Object</SPAN></FONT>
+                         <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">implements AP_arkmat_methods {</SPAN></FONT>
+
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">static int tel;</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">static double h1k,h2k,hpi,h1,h2;</SPAN></FONT>
+
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public static void main(String args[]) {</SPAN></FONT>
+
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">int i,j,n,m,typ;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">int orde[] = new int[1];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double te,cos1;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double spr[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double t[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double u[][] = new double[21][11];</SPAN></FONT>
+    
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Test_arkmat testarkmat = new Test_arkmat();</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">hpi=0.5*Math.PI;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">h2=1.0/9.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">h1=(2.0*hpi)/9.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">n=m=10;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">h1k=h1*h1;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">h2k=h2*h2;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">tel=0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">t[0]=0.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">te=1.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (j=1; j&lt;=m; j++) u[n][j]=Math.sin(h1*(j-1));</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (i=1; i&lt;=n; i++) {</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">cos1=Math.cos(h2*hpi*(i-1));</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (j=1; j&lt;=m; j++) u[i][j]=u[n][j]*cos1;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Basic.inimat(n+1,n+n,1,m,u,0.0);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">typ=3;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">orde[0]=2;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">spr[0]=80.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">System.out.println(&quot;The program delivers:\n\n    X    &quot; +</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;  Y       U(1,X,Y)      U(1,X,Y)\n           &quot; +</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;        COMPUTED      EXACT\n&quot;);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Analytic_problems.arkmat(t,te,m,n+n,u,testarkmat,typ,orde,spr);</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public void der(int m, int n, double t, double u[][], double du[][])</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">int i,j;</SPAN></FONT>
+
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">n=n/2;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (i=2; i&lt;=n-1; i++)</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (j=2; j&lt;=m-1; j++) {</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">du[i][j]=u[i+n][j];</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">du[i+n][j]=(u[i][j+1]-2.0*u[i][j]+u[i][j-1])/h1k+</SPAN></FONT>
+                   <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">(u[i+1][j]-2.0*u[i][j]+u[i-1][j])/h2k;</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (j=1; j&lt;=m; j += m-1) {</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Basic.inimat(n+1,n+n,j,j,du,0.0);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (i=1; i&lt;=n; i++) du[i][j]=u[n+1][j];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (i=1; i&lt;=n; i += n-1)</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (j=2; j&lt;=m-1; j++) {</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">du[i][j]=u[i+n][j];</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">if (i == 1)</SPAN></FONT>
+          <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">du[n+1][j]=(u[1][j+1]-2.0*u[1][j]+u[1][j-1])/h1k+</SPAN></FONT>
+                     <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">(2.0*u[2][j]-2.0*u[1][j])/h2k;</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">else</SPAN></FONT>
+          <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">du[2*n][j]=0.0;</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public void out(double t[], double te, int m, int n,</SPAN></FONT>
+                  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double u[][], int type, int order[], double spr[])</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">int i;</SPAN></FONT>
+
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">DecimalFormat threeDigit = new DecimalFormat(&quot;0.000&quot;);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000&quot;);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">tel++;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">if (t[0] == te) {</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (i=1; i&lt;=10; i++)</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">System.out.println(&quot;  &quot; + threeDigit.format((i-1)*h1) +</SPAN></FONT>
+          <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;  &quot; + threeDigit.format((i-1)*h2) + &quot;    &quot; +</SPAN></FONT>
+          <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(u[i][i]) + &quot;\t&quot; + </SPAN></FONT>
+          <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(Math.sin(h1*(i-1))*</SPAN></FONT>
+                           <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Math.cos(hpi*h2*(i-1))*</SPAN></FONT>
+                           <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Math.cos(t[0]*Math.sqrt(1.0+hpi*hpi))));</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">System.out.println(&quot;\nThe number of integration steps: &quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">tel + &quot;\n Type is &quot; + type + &quot;   Order is &quot; + order[0]);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,16 @@
+
+def oddEvenF( oddf: Double => Double, evenf: Double => Double, a: Array[Double]) =  {
+    var k=0
+    var l = a.length
+    var r = new Array[Double](l)
+    while (k<l-1) {
+        r(k) = evenf(a(k))
+        r(k+1) = oddf(a(k+1))
+        k += 2
+        }
+      }
+    
+def oddf(x: Double) = sin(x)
+def evenf(x: Double) = cos(x)
+var a = Inc(0, 0.01, 10)
+var fa = oddEvenF( oddf, evenf, a)

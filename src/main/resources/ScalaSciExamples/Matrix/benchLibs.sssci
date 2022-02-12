@@ -1,0 +1,64 @@
+
+var N = 400
+var da = new Array[Double](N)
+
+// construct the diagonal elements
+for (k<-0 until N) da(k)= k
+
+// construct the 2-D diagonal Array[Array[Double]]
+var a= diag(da)
+
+// test the JAMA based eigenvalue routine
+var jamaA = new scalaSci.Mat(a)
+tic
+var eajama = scalaSci.Mat.eig(jamaA)
+var tmJama = toc
+var eigenvecsJAMA = eajama._1  // take the eigenvectors
+var eigenvalsJAMA = eajama._2  // take the eigenvalues
+
+// test the EJML based eigenvalue routine
+var ejmlA = new scalaSci.EJML.Mat(a)
+tic
+var eaejml = scalaSci.EJML.Mat.eig(ejmlA)
+var tmEJML = toc
+var eigenvecsEJML = eaejml._1  // take the eigenvectors
+var eigenvalsEJML = eaejml._2  // take the eigenvalues
+
+
+// extract the eigenvalues using MTJ library
+var amtj = new scalaSci.MTJ.Mat(a)
+tic
+var eamtj = scalaSci.MTJ.Mat.eig(amtj)
+var tmMTJ = toc
+var eigenvalsMTJ = eamtj._1  // take the eigenvalues
+var eigenvecsMTJ = eamtj._1  // take the eigenvectors
+
+
+
+
+// construct a tridiagonal matrix
+var bama = new no.uib.cipr.matrix.BandMatrix(N, 0, 0)
+
+// set the diagonal
+for (k<-0 until N) bama.set(k, k, da(k))
+
+// construct a tridiagonal EVD
+var baevd = new no.uib.cipr.matrix.SymmBandEVD(N, false, false)
+baevd.Factorize(bama)
+var ff=symmtridiagj.getEigenvalues
+
+
+
+var aejml = new scalaSci.EJML.Mat(a)
+tic
+var eaejml = scalaSci.EJML.Mat.eig(aejml)
+var tmEJML = toc
+
+
+
+var anumal = scalaSci.NUMAL.A1(a)
+var anumalMatrix = new scalaSci.Matrix(anumal)
+tic
+var eanumal =  scalaSci.Matrix.eigcom(anumalMatrix)
+var tmNUMAL = toc
+

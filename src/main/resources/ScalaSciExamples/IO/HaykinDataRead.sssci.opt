@@ -1,0 +1,16 @@
+
+// loads and recovers some .mat file from the Haykin's "Neural Networks and Learning Machines" book
+load("gridseq.mat")
+load("c.mat")
+load("C.mat")
+load("nCor_ekf.mat")
+load("seq.mat")
+
+matVars
+
+val data_shuffled_ini = getMatArray("data_shuffled_ini")
+val seq = getMatArray("seq")
+val nCor_ekf = getMatArray("nCor_ekf")
+val gridseq = getMatArray("gridseq")
+val C = getMatArray("C")
+

@@ -1,0 +1,74 @@
+
+        close all;   // closes any previous figures
+
+        var  t = inc(0, 0.01, 20)
+        var  x = sin(0.2*t)
+        var  y = sin(0.2*t)+5*cos(0.23*t)
+        var  z = exp(-0.2*y)
+        figure(1)
+        hold on;
+        plot(t, x, Color.RED, "sin(0.2*t)")
+        plot(t, y, Color.BLUE, "sin(0.2*t)+5*cos(0.23*t)")
+        plot(t, z, Color.GREEN, "exp(-0.2*y)")
+        xlabel("x-Time axis")
+        ylabel("x-y-z plots")
+        title("With hold on")
+
+        figure(2)
+        plot(t,x)
+        hold off;
+        plot(t, y)
+        xlabel("x-Time axis")
+        ylabel("y-sin(0.2*t)")
+        title("With hold off")
+
+        figure(3)  
+        plot(t, x, Color.RED)
+        hold on; 
+        plot(t, y, Color.BLUE)
+        xlabel("x-Time axis")
+        ylabel("y-sin(0.2*t)")
+        title("With hold on")
+
+        var fig = figure(4)
+// specify labels explicitly for the fig PlotPanel object
+        fig.xlabel("x - Time axis ")
+        fig.ylabel("y - sin(0.2*t)+5*cos(0.23*t)")
+        x = t
+        y = sin(0.2*t)+5*cos(0.23*t)
+        plot(x,y)
+
+        z = sin(1.2*t)+0.5*cos(0.23*t)
+        fig = figure3d(5)
+        plot(t, y,  z, Color.GREEN)
+// specify labels explicitly for the fig PlotPanel object
+         fig.xlabel("x - Time axis  t");
+         fig.ylabel("y = sin(0.2*t)+5*cos(0.23*t)")
+         fig.zlabel("z = sin(1.2*t)+0.5*cos(0.23*t)")
+
+
+         var  zcross = z cross z
+         fig = figure3d(6)
+         plot(t, y,  zcross)
+// specify labels explicitly for the fig PlotPanel object
+         xlabel("x - Time axis ")
+         ylabel("y - sin(0.2*t)+5*cos(0.23*t)")
+         zlabel("(sin(1.2*t)+0.5*cos(0.23*t)) .* (sin(1.2*t)+0.5*cos(0.23*t))")
+
+         var zcross2 =  zcross cross zcross
+         fig = figure3d(7) 
+         subplot3d(2,1,1) 
+         plot(t, y, zcross)
+// specify labels explicitly for the fig PlotPanel object
+         xlabel("x - Time axis ")
+         ylabel("y - sin(0.2*t)+5*cos(0.23*t)")
+         zlabel("(sin(1.2*t)+0.5*cos(0.23*t)) .* (sin(1.2*t)+0.5*cos(0.23*t))")
+
+        subplot3d(2,1,2)
+        plot(t, y, zcross)
+         
+// specify labels explicitly for the fig PlotPanel object
+         xlabel("x - Time axis ")
+         ylabel("y - sin(0.2*t)+5*cos(0.23*t)")
+         zlabel("zcross")
+

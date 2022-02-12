@@ -1,0 +1,37 @@
+
+
+var fs = 1000; // 2050;
+var dt = 1.0/fs;
+var t =  inc(1, dt, 2);
+
+var yl = t.length;  // length of the Vec t
+
+if ( yl % 2 > 0)  // truncate to even lengths
+  t=t(0, yl-2); 
+yl = t.length;  // length of the Vec t
+
+var PI = java.lang.Math.PI
+var y = sin(2*PI*30*t);
+
+y = y+0.9*vrand(yl);
+
+// compute the analysis wavelet
+var analWavelet = new JSci.maths.wavelet.daubechies3.Daubechies3();
+
+var signal = new JSci.maths.wavelet.Signal(y);  // represent the matrix as a Signal
+
+// transform
+signal.setFilter(analWavelet);  // set the analysis filter for this  
+var NLevels=1;
+var sCoef = signal.fwt(NLevels); // for some level int
+var myCoefs = sCoef.getCoefs();
+
+
+figure(1); subplot(2,1,1); plot(myCoefs(0)); title("First Level Coefficients");
+
+var recons = sCoef.rebuildSignal(analWavelet).evaluate(0);  
+
+subplot(2,1, 2);
+plot(recons, "Reconstructed Signal");
+
+

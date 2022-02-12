@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110101;14553200">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>reaeig3</B></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">for</SPAN> details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+import java.text.DecimalFormat;
+import numal.*;
+
+public class Test_reaeig3 extends Object {
+	
+	public static void main(String args[]) {
+
+    int i,j,m;
+    double val[] = new double[5]; 
+    double em[] = new double[6];
+    double a[][] = new double[5][5];
+    double vec[][] = new double[5][5];
+
+    for (i=1; i&lt;=4; i++)
+      for (j=1; j&lt;=4; j++)
+        a[i][j] = (i == 1) ? 1.0 : 1.0/(i+j-1);
+    em[0]=1.0e-6;
+    em[2]=1.0e-5;
+    em[4]=40.0;
+    m=Linear_algebra.reaeig3(a,4,em,val,vec);
+    DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);
+    System.out.println(&quot;The number of not calculated eigenvalues: &quot; +
+      m + &quot;\n\nThe eigenvalues and corresponding eigenvectors:\n &quot;);
+    for (i=m+1; i&lt;=4; i++)
+      System.out.println(&quot;\t&quot; + 
+        fiveDigit.format(val[i]) + &quot;\t&quot; +
+        fiveDigit.format(vec[1][i]) + &quot;\n\t\t\t&quot; +
+        fiveDigit.format(vec[2][i]) + &quot;\n\t\t\t&quot; +
+        fiveDigit.format(vec[3][i]) + &quot;\n\t\t\t&quot; +
+        fiveDigit.format(vec[4][i]) + &quot;\n&quot;);
+    System.out.println(&quot;EM[1] =  &quot; + fiveDigit.format(em[1]) +
+      &quot;\nEM[3] =  &quot; + fiveDigit.format(em[3]) +
+      &quot;\nEM[5] =  &quot; + (int)em[5]);
+	}
+}
+
+</PRE>
+</BODY>
+</HTML>

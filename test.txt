@@ -1,0 +1,10 @@
+
+
+var n=3000
+
+var x=rand0(n,n)
+
+
+tic
+var xx=x*x
+var tm=toc

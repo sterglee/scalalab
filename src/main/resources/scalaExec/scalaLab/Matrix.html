@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1253">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110308;23044223">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21.01cm 29.69cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P><FONT SIZE=6 STYLE="font-size: 22pt"><U><B>Description of the
+Matrix class</B></U></FONT></P>
+<P STYLE="font-weight: medium; text-decoration: none">The <B>Matrix</B>
+class implements one-indexed two-dimensional dense matrices in
+ScalaSci that are very useful for using the powerful <B>NUMAL</B>
+Numerical Library supplied with the book:</P>
+<P STYLE="text-decoration: none">&ldquo;<I><SPAN STYLE="font-weight: medium">A
+Numerical</SPAN></I> <SPAN STYLE="font-weight: medium">Library in
+Java for Scientists &amp; Engineers&rdquo;, Hang T. Lau, Chapman &amp;
+Hall/CRC</SPAN></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4><U><B>Constructors</B></U></FONT></P>
+<P><BR><BR>
+</P>
+<P><SPAN STYLE="text-decoration: none"><B>Matrix(rows: Integer, cols:
+Integer) </B></SPAN><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: medium">//
+Creates a Matrix of size rows, cols initialized to zeros</SPAN></SPAN></P>
+<P STYLE="font-weight: medium; text-decoration: none"><I>var m=new
+Matrix(2, 3)</I></P>
+<P><BR><BR>
+</P>
+<OL START=3>
+	<P><B>Construction by specifying the initial elements, e.g.</B></P>
+	<P STYLE="font-weight: medium"><I>var m = M1(&quot;4.5 5.6 -4; 4.5 3
+	-3.4&quot;) // space separated</I></P>
+	<P STYLE="font-weight: medium"><I>var m = M1(&quot;4.5, 5.6, -4;
+	4.5, 3, -3.4&quot;) // comma separated</I></P>
+</OL>
+<P STYLE="font-weight: medium; text-decoration: none"><A NAME="DDE_LINK2"></A><A NAME="DDE_LINK"></A>
+// construct Matrix by copying the array values</P>
+<P><A NAME="DDE_LINK3"></A><SPAN STYLE="text-decoration: none"><B>Matrix(da:
+Array[Array[Double]]) </B></SPAN><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: medium">//
+Creates a Matrix initialized with the da array</SPAN></SPAN></P>
+<P>var dd = Array.ofDim[Double](2,4)</P>
+<P><I>dd(1)(1)=11</I></P>
+<P><A NAME="DDE_LINK1"></A><A NAME="DDE_LINK4"></A><I>var mdd = new
+Matrix(dd)</I></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-style: normal">// construct a Matrix by <B>reference
+an existing double array</B>,</P>
+<P STYLE="font-style: normal">// in order to avoid duplicating the
+array</P>
+<P><I>var tm = new Matrix(1,1) // a small Matrix object</I></P>
+<P><A NAME="DDE_LINK5"></A><I>tm.setv(dd, 1, 3) // set its value
+content to an existing double array of size 2X4</I></P>
+<P><BR><BR>
+</P>
+<P><SPAN STYLE="text-decoration: none"><B>Matrix(rows: Integer, cols:
+Integer, initValue: Double) </B></SPAN><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: medium">//
+Creates a Matrix of size rows, cols initialized to initValue</SPAN></SPAN></P>
+<P STYLE="font-weight: medium; text-decoration: none"><I>var m=new
+Matrix(3, 4, 3.4)</I></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: medium; text-decoration: none">// construct a
+Matrix from a two-dimensional double array without copying the array
+values</P>
+<P STYLE="font-style: normal"><SPAN STYLE="text-decoration: none"><B>Matrix(da:
+Array[Array[Double]], flag: Boolean) </B></SPAN><SPAN STYLE="text-decoration: none"><SPAN STYLE="font-weight: medium">//
+Creates a Matrix initialized with a reference to the da array</SPAN></SPAN></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-style: normal; font-weight: medium; text-decoration: none">
+// construct a Matrix from an one-dimensional double array</P>
+<P STYLE="font-style: normal; text-decoration: none"><B>Matrix(da:
+Array[Double])</B></P>
+<P STYLE="font-weight: medium; text-decoration: none"><I>var od = new
+Array[Double](10)</I></P>
+<P STYLE="font-weight: medium; text-decoration: none"><I>od(2)=2.2</I></P>
+<P STYLE="font-weight: medium; text-decoration: none"><I>var odm =
+new Matrix(od)</I></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P STYLE="font-style: normal"><U><B>Basic Methods</B></U></P>
+<P STYLE="font-style: normal; text-decoration: none"><B>def size: Int
+</B><SPAN STYLE="font-weight: medium">// Returns the number of rows
+and columns of the Mat</SPAN></P>
+<P STYLE="font-style: normal; text-decoration: none"><B>def length:
+Int </B><SPAN STYLE="font-weight: medium">// Returns the number of
+rows of Mat</SPAN></P>
+<P STYLE="font-style: normal; text-decoration: none"><B>def Nrows:
+Int </B><SPAN STYLE="font-weight: medium">// Returns the number of
+rows of Mat</SPAN></P>
+<P><B>def Ncols: Int</B> <SPAN STYLE="font-weight: medium">// Returns
+the number of columns of Mat</SPAN></P>
+<P><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><B>Implicit Conversions</B></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium">var m=Rand(9,9) //
+returns a Double[][]</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium">var mm: Matrix = 8+m //
+implicitly convert 8 as a Matrix, range 1..N-1, 1..M-1 of matrix is
+used</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium">var mmm: Mat = 8+m <SPAN STYLE="font-weight: medium">//
+implicitly convert 8 as a Mat</SPAN></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P><B>Routines</B></P>
+<P><BR><BR>
+</P>
+<P><B>def ones(n: Int): Matrix - </B><SPAN STYLE="font-weight: medium">constructs
+a nXn Matrix of ones</SPAN></P>
+<P><B>def ones(n: Int, m: Int): Matrix </B><SPAN STYLE="font-weight: medium">-
+constructs a nXm Matrix of ones</SPAN></P>
+<P><B>def zeros(n: Int): Matrix - </B><SPAN STYLE="font-weight: medium">constructs
+a nXn Matrix of zeros</SPAN></P>
+<P><B>def zeros(n: Int, m: Int): Matrix </B><SPAN STYLE="font-weight: medium">-
+constructs a nXm Matrix of zeros</SPAN></P>
+<P><BR><BR>
+</P>
+<P><B>def rand(n: Int): Matrix - </B><SPAN STYLE="font-weight: medium">constructs
+a nXn Matrix of random values</SPAN></P>
+<P><B>def rand(n: Int, m: Int): Matrix </B><SPAN STYLE="font-weight: medium">-
+constructs a nXm Matrix of random values</SPAN></P>
+<P><B>def eye(n: Int): Matrix - </B><SPAN STYLE="font-weight: medium">constructs
+a nXn Matrix of zero everywhere except the diagonal</SPAN></P>
+<P><SPAN STYLE="font-weight: medium">d</SPAN><B>ef eye(n: Int, m:
+Int): Matrix </B><SPAN STYLE="font-weight: medium">- constructs a nXm
+Matrix of zero everywhere except the diagonal</SPAN></P>
+<P><I><SPAN STYLE="font-weight: medium">Transpose operator ~
+transposes the Matrix, e.g. var mt = m~</SPAN></I></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><B>Assign to Matrix subrange</B></P>
+<P STYLE="font-weight: medium"><BR><BR>
+</P>
+<P><B>Example</B></P>
+<P STYLE="font-weight: medium">var a=ones(8)</P>
+<P STYLE="font-weight: medium"> var aa = rand(3)</P>
+<P STYLE="font-weight: medium"> a(1, 4, 2, 5)=aa  // assign to this
+range</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

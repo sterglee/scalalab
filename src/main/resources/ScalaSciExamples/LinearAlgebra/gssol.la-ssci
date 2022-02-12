@@ -1,0 +1,54 @@
+// NUMAL related imports
+     import _root_.java.util.Vector ; 
+    import _root_.numal._ ; 
+    import _root_.numal.Algebraic_eval._;
+    import _root_.numal.Analytic_eval._
+    import _root_.numal.Analytic_problems._
+    import _root_.numal.Approximation._
+    import _root_.numal.Basic._;
+    import _root_.numal.FFT._;
+    import  _root_.numal.Linear_algebra._; 
+    import _root_.numal.Special_functions._;
+    import java.text.DecimalFormat 
+
+    // gsssol:
+   // Solves a linear system. gsssol first calls gsselm to decompose the matrix and then solelm to solve the linear system
+  //    Procedure parameters
+  //        def  gsssol(a: Matrix, aux: Array[Double], b: Array[Double])
+//  a:  entry: the n-th order matrix
+//        exit:   the calculated lower triangular matrix and unit upper triangular matrix with its unit diagonal omitted
+//  aux: Array[Double](1:7)
+//       entry: aux(2):  a relative tolerance; a reasonable choice for this value is an estimate of the relative precision of the matrix elements
+//                aux(4):  a value used for controlling the pivoting, see gsselm
+//       exit:   aux(1):  if R is the number of elimination steps performed (see aux(3)), then aux(1) equals 1 if the determinant of the principal submatrix of
+//                            order R is positive, else aux(1)=-1
+//                aux(3): the number of elimination steps performed, if aux(3) < a.N then the process is terminated and no solution will be calculated
+//                aux(5): the modulus of an element which is of maximum absolute value for the matrix given in array a
+//                aux(7): an upper bound for the growth, see gsselm
+// b: Array[Double](1:n)
+//      entry: the right-hand side of the linear system
+//      exit:  if aux(3)=n, then the calculated solution of the linear system is overwritten on b, else b remains unaltered
+
+
+// Example:
+//  Solve the 4X4 linear system of equations Ax=b, where A is the Hilbert matrix, for which
+//  A_{ij} = 1/(i+j-1), i, j=1, ..., 4, and b_i = 1, ..., 4, (so that the solution is the third unit vector: (0, 0, 1, 0)^T)
+
+
+var  b = new Array[Double](5)
+var  aux = new Array[Double](8)
+var  a = new Matrix(5, 5)
+
+ for (i <- 1 to 4) {
+      for (j <- 1 to 4) a(i, j) = 1.0/(i+j-1)
+      b(i) = a(i,3)
+   }
+    aux(2) = 1.0e-5
+    aux(4) = 8
+    gsssol(a, aux, b)
+  
+    println("Solution:  " + b(1) +  "  " + b(2) + "  " + b(3) + "  " +b(4))
+    println("Sign(Det) = " + aux(1).asInstanceOf[Int] +  "\nNumber of eliminations = " + aux(3).asInstanceOf[Int] +  "\nMax(abs(a[i,j])) = " + aux(5).asInstanceOf[Int] + 
+      "\nUpper bound growth = " + aux(7).asInstanceOf[Int])
+	
+

@@ -1,0 +1,24 @@
+
+// illustrates the ccsolvps routine of CCMath
+// used for solving symmetric positive definite linear systems
+var N=500
+var A = rand(N, N)  // a random matrix
+var Aspd = A * (A~)   // make it symmetric positive definite
+
+var b = Ones(N)
+
+// use symmetric positive definitive CCMath solver
+tic
+var x = ccsolvps(Aspd, b)
+var tmSPD = toc
+
+
+// use general solver
+tic
+var xg = solve(Aspd, b)
+var tmg = toc
+
+var shouldBeTheSame = xg-x   // the solutions should agree
+
+var shouldBeZero = Aspd*x - b   // x should be indeed a solution
+ 

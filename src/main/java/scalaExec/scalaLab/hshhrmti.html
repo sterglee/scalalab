@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110101;14304900">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>hshhrmtri</B></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">to Hessenberg form  complex Hermitian</SPAN><SPAN STYLE="font-style: normal">,</SPAN></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">for</SPAN> details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+<SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN>
+<SPAN LANG="en-US">import numal.*;</SPAN>
+
+<SPAN LANG="en-US">public class Test_hshhrmtri extends Object {</SPAN>
+<SPAN LANG="en-US">	</SPAN>
+<SPAN LANG="en-US">	public static void main(String args[]) {</SPAN>
+
+    <SPAN LANG="en-US">double d[] = new double[5];</SPAN>
+    <SPAN LANG="en-US">double b[] = new double[5];</SPAN>
+    <SPAN LANG="en-US">double bb[] = new double[5];</SPAN>
+    <SPAN LANG="en-US">double tr[] = new double[4];</SPAN>
+    <SPAN LANG="en-US">double ti[] = new double[4];</SPAN>
+    <SPAN LANG="en-US">double em[] = new double[2];</SPAN>
+    <SPAN LANG="en-US">double a[][] = new double[5][5];</SPAN>
+    
+    <SPAN LANG="en-US">Basic.inimat(1,4,1,4,a,0.0);</SPAN>
+    <SPAN LANG="en-US">a[1][1]=a[2][2]=3.0;</SPAN>
+    <SPAN LANG="en-US">a[1][2]=a[3][3]=a[3][4]=a[4][4]=1.0;</SPAN>
+    <SPAN LANG="en-US">a[3][2]=2.0;</SPAN>
+    <SPAN LANG="en-US">a[4][1] = -2.0;</SPAN>
+    <SPAN LANG="en-US">em[0]=1.0e-6;</SPAN>
+    <SPAN LANG="en-US">Linear_algebra.hshhrmtri(a,4,d,b,bb,em,tr,ti);</SPAN>
+    <SPAN LANG="en-US">DecimalFormat threeeDigit = new DecimalFormat(&quot;0.000&quot;);</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;HSHHRMTRI delivers\n\nD[1:4]:   &quot; +</SPAN>
+      <SPAN LANG="en-US">threeeDigit.format(d[1]) + &quot;  &quot; +</SPAN>
+      <SPAN LANG="en-US">threeeDigit.format(d[2]) + &quot;  &quot; +</SPAN>
+      <SPAN LANG="en-US">threeeDigit.format(d[3]) + &quot;  &quot; +</SPAN>
+      <SPAN LANG="en-US">threeeDigit.format(d[4]) + &quot;\nB[1:3]:   &quot; +</SPAN>
+      <SPAN LANG="en-US">threeeDigit.format(b[1]) + &quot;  &quot; +</SPAN>
+      <SPAN LANG="en-US">threeeDigit.format(b[2]) + &quot;  &quot; +</SPAN>
+      <SPAN LANG="en-US">threeeDigit.format(b[3]) + &quot;\nBB[1:3]:  &quot; +</SPAN>
+      <SPAN LANG="en-US">threeeDigit.format(bb[1]) + &quot;  &quot; +</SPAN>
+      <SPAN LANG="en-US">threeeDigit.format(bb[2]) + &quot;  &quot; +</SPAN>
+      <SPAN LANG="en-US">threeeDigit.format(bb[3]) + &quot;\nEM[1]:    &quot; +</SPAN>
+      <SPAN LANG="en-US">threeeDigit.format(em[1]));</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+<SPAN LANG="en-US">}</SPAN>
+</PRE>
+</BODY>
+</HTML>

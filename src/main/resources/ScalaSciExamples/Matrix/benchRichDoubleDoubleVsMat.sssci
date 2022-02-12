@@ -1,0 +1,65 @@
+
+var N = 2000
+
+var x = ones0(N, N)
+var xr = ones(N, N)
+
+tic
+var xx = x map (_ * 100)
+var tmTrait1 = toc
+tic
+var xrxr = xr map (_ *100)
+var tmRDD1 = toc
+
+
+var NN = 4
+var MM = 5
+var xs = ones(NN, MM)
+var xs0 = ones0(NN, MM)
+var vMM  = vfill(MM, 8.88)
+var vNN = vfill(NN, -7.77)
+
+var Nreps = 155000000
+tic
+var rep =0 
+while (rep< Nreps) {
+ xs(1, ::)  = vMM  // assign to the row 1
+ xs(::, 1) = vNN  // assign to the column 1
+ rep+=1
+}
+var tmRDD2 = toc
+
+
+tic
+rep = 0
+while (rep< Nreps) {
+ xs0(1, ::)  = vMM  // assign to the row 1
+ xs0(::, 1) = vNN  // assign to the column 1
+ rep += 1
+}
+var tm2 = toc
+
+// update: tmRDD2 = 5.366, tm2 = 6.068
+
+
+tic
+ rep =0 
+ Nreps = 1000000
+while (rep< Nreps) {
+ var x1 = xs(1, ::)
+ var x2 = xs(::, 1)  // assign to the column 1
+ rep+=1
+}
+var tmRDD2apply = toc
+
+
+tic
+rep = 0
+while (rep< Nreps) {
+ var x1 = xs0(1, ::)  // assign to the row 1
+ var x2 = xs0(::, 1)  // assign to the column 1
+ rep += 1
+}
+var tm2apply = toc
+
+//  tmRDD2apply: String = 0.359,  tm2apply: String = 0.515

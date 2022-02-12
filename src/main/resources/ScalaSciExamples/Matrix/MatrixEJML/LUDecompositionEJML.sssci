@@ -1,0 +1,31 @@
+
+import org.ejml.alg.dense.decomposition.lu._
+import org.ejml.alg.dense.decomposition.TriangularSolver
+import org.ejml.alg.dense.misc.DeterminantFromMinor
+import org.ejml.data.DenseMatrix64F
+import org.ejml.ops.RandomMatrices
+import org.junit.Test
+
+import java.util.Random
+
+
+
+var randnum  =    new Random(0x3344)
+
+// Compare the determinant computed from LU to the value computed from the minor matrix method.
+var width = 10
+
+var A = RandomMatrices.createRandom(width,width,randnum)
+
+var  minor = new DeterminantFromMinor(width)
+var  minorVal = minor.compute(A)
+
+
+var  alg = new LUDecompositionAlt()
+alg.decompose(A)
+var  luVal = alg.computeDeterminant()
+
+var diffInDeterminants = minorVal-luVal  // should be near zero
+
+
+

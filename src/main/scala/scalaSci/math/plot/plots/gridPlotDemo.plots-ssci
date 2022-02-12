@@ -1,0 +1,33 @@
+
+closeAll  // closes any open figure
+
+var n=100
+var m = 100
+var X = new Array[Double](n)
+var Y = new Array[Double](m)
+var Z1 = Array.ofDim[Double](m, n)
+var Z2 = Array.ofDim[Double](m, n)
+
+var alpha1 = getDouble("Plotting exponential. Specify alpha in Y = exp(-alpha*(X+Y))",  4)
+var alpha2 = getDouble("Plotting exponential. Specify alpha in Y = exp(-alpha*(X+Y))",  15)
+var i=0; var j=0;
+var xlen = X.length
+var xlen2 = xlen/2.0
+var ylen = Y.length
+var ylen2 = ylen/2.0
+while ( i < xlen) {
+  X(i) = (i-xlen2)/xlen2
+  j=0
+  while (j<ylen) {
+     Y(j)= (j-ylen2)/ylen2
+     Z1(j)(i) = Math.exp(-alpha1*(X(i)+Y(j)))
+     Z2(j)(i) = Math.exp(-alpha2*(X(i)+Y(j)))
+     j += 1
+     }
+   i += 1
+ }
+
+
+  subplot3d(2,1,1); surf(X, Y, Z1, "alpha = "+alpha1)
+subplot3d(2,1,2);  surf(X, Y, Z2, "alpha = "+alpha2)
+

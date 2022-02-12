@@ -1,0 +1,24 @@
+
+import org.ejml.data._
+import  org.ejml.alg.block._
+
+import java.util.Random
+
+import org.ejml.ops._
+
+var  bm = new BlockMatrix64F(20, 20,  10)
+
+MatrixVisualization.show(bm, "test")
+
+
+// stergEJML
+// test  eigen ops
+
+var A= $(0.053610, 0.030405, 0.892620, null, 0.090954, 0.074065, 0.875797, null, 0.105369, 0.928981, 0.965506)
+var u = $(-0.4502917, null, -0.4655377, null, -0.7619134)
+var value = computeEigenValue(A,u)   // should be 1.595
+
+
+//  Give it a matrix that describes a Markov process and see if it produces 1
+
+var Ar = RandomMatrices.createRandom(3, 3, rand)

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110101;13123000">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>determbnd</B></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US">Calculates the determinant of the Gaussian eliminated upper triangular matrix,</SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US">for details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+import java.text.DecimalFormat;
+import numal.*;
+
+public class Test_solbnd extends Object {
+	
+	public static void main(String args[]) {
+
+    int i;
+    int rowind[] = new int[6];
+    double band[] = new double[14];
+    double mult[] = new double[5];
+    double right[] = new double[6];
+    double aux[] = new double[6];
+
+    for (i=1; i&lt;=13; i++)
+      band[i] = (((i+1)/3)*3 &lt; i) ? 2.0 : -1.0;
+    right[1]=right[5]=1.0;
+    right[2]=right[3]=right[4]=0.0;
+    aux[2]=1.0e-12;
+    Linear_algebra.decbnd(band,5,1,1,aux,mult,rowind);
+    if (aux[3] == 5) {
+      Linear_algebra.solbnd(band,5,1,1,mult,rowind,right);
+      DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);
+      System.out.println(&quot;Delivers: &quot; +
+        fiveDigit.format(right[1]) + &quot;  &quot; +
+        fiveDigit.format(right[2]) + &quot;  &quot; +
+        fiveDigit.format(right[3]) + &quot;  &quot; +
+        fiveDigit.format(right[4]) + &quot;  &quot; +
+        fiveDigit.format(right[5]) + &quot;\nDeterminant is  &quot; +
+        fiveDigit.format(
+          Linear_algebra.determbnd(band,5,1,1,(int)aux[1])));
+    }
+  }
+}</PRE>
+</BODY>
+</HTML>

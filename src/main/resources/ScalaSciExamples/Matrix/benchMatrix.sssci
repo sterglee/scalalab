@@ -1,0 +1,27 @@
+
+
+// GroovySci matrix math bench
+var start = System.currentTimeMillis()
+var NLoop=1000
+var N=100
+// m = rand(N, N);
+var m = Array.ofDim[Double](N, N)
+var reps = 0
+var r=0; var c=0
+while (reps < NLoop-1) {
+ r= 0
+while  (r < N-1) {
+   c=0
+   while (c < N-1) {
+      m(r, c) = NLoop*r*c
+      c+=1
+     }
+   r+=1
+  }
+reps+=1
+}
+
+var end = System.currentTimeMillis();
+var delay  = end-start;
+JOptionPane.showMessageDialog(null, "Delay = "+delay);
+

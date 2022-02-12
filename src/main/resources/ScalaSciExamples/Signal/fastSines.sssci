@@ -1,0 +1,31 @@
+/// fast  compute of the sine axis wih a recurrence
+
+var delta = 0.01
+var alpha = 2*sin(delta/2)*sin(delta/2)
+var beta = sin(delta)
+
+var lowLimit = 0
+var highLimit = 20
+var cosTheta = cos(0)
+var sinTheta = sin(0)
+var pcosTheta = cosTheta
+var psinTheta = sinTheta
+
+var Np = ((highLimit-lowLimit)/delta).asInstanceOf[Int]+1
+
+var vSines = new Array[Double](Np)
+var vCosines = new Array[Double](Np)
+
+var cnt=0
+while (cnt < Np) {
+  cosTheta = pcosTheta - (alpha*pcosTheta + beta*psinTheta)
+  sinTheta = psinTheta - (alpha*psinTheta - beta*pcosTheta)
+  vSines(cnt) = cosTheta
+  vCosines(cnt) = sinTheta
+  pcosTheta = cosTheta;  psinTheta = sinTheta
+  cnt += 1
+}
+
+
+plot(vSines); hold("on"); plot(vCosines, Color.BLUE)
+

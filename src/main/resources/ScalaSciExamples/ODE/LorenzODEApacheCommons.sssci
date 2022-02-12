@@ -1,0 +1,70 @@
+
+import org.apache.commons.math._
+import org.apache.commons.math.ode._ 
+import org.apache.commons.math.ode.events._ 
+import org.apache.commons.math.ode.nonstiff._
+import org.apache.commons.math.ode.sampling._
+
+
+
+figure3d(1); hold("on")
+var warmUpCnt=100
+
+class LorenzODE() extends AnyRef with   FirstOrderDifferentialEquations  {
+  
+ 
+def  getDimension = 3
+
+def computeDerivatives(t: Double, y: Array[Double], yDot: Array[Double]) =  {
+  var    xx=y(0);   var   yy=y(1);    var zz=y(2); 
+
+    yDot(0) = 10*(yy-xx);  
+    yDot(1) = -xx*zz+143*xx - yy;  
+    yDot(2) = xx*yy - 2.66667*zz;  
+  
+  }
+}
+
+ var stepHandler = new StepHandler() {
+
+   def  reset = { }
+   
+ 
+   var cnt=0
+   def  handleStep( interpolator: StepInterpolator, isLast: Boolean)= {
+       var  t = interpolator.getCurrentTime()
+       var  y = interpolator.getInterpolatedState()
+       warmUpCnt -= 1
+      if (warmUpCnt < 0) {
+       cnt += 1
+      
+        vx = y(0) :: vx
+        vy = y(1) :: vy
+        vz = y(2) :: vz
+        }
+   
+        
+     }
+     
+     def requiresDenseOutput = false
+
+}
+ 
+     
+   var vx =  List[Double]() 
+   var vy =  List[Double]()
+   var vz =  List[Double]()
+
+var dp853 =  new DormandPrince853Integrator(1.0e-8, 100.0, 1.0e-10, 1.0e-10)
+dp853.addStepHandler(stepHandler)
+
+
+var ode = new LorenzODE()
+var y = Array(0.0, 1.0, 1.0)
+tic
+dp853.integrate(ode, 0.0, y, 1600, y)
+var tm=toc
+
+scatterPlotsOn
+plot(vx.toArray, vy.toArray, vz.toArray)
+title("Integrated with Dormand Prince, time = "+tm+" num of points = "+vx.length)

@@ -1,0 +1,21 @@
+
+
+var v = rand0(3,3)
+var vc = v.copy(4, 6)
+
+
+var v34 = ones0(3, 4)
+var v45 = ones(4, 5)
+var vmul = v34 * v45
+
+var A = M0("2.3 0.3 -1.2; 0.2 -0.1 2.1; 0.4 -0.2 0.9")
+var b = M0("2 3.2 0.1; -0.9 0.3 -0.3")
+b = b~   // tranpose since column vectors  correspond to individual right hand side parts
+
+var solution = A.solve(b)
+var x0 = solution(::, 0)   // take solution for first b
+// test now
+var shouldBeZero0 = A*x0 - b(::, 0)
+var x1 = solution(::, 1)  // take solution for second b
+var shoulsBeZero1 = A*x1 - b(::, 1)
+

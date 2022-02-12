@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101229;15430300">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>Exponential integral</B></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US"><B>ei</B></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">C</SPAN><SPAN STYLE="font-style: normal">alculates the exponential integral</SPAN><I>,</I></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US">for details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+import java.text.DecimalFormat;
+import numal.*;
+
+public class Test_ei extends Object {
+	
+	public static void main(String args[]) {
+
+    DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);
+    System.out.println(&quot;EI delivers:  &quot; +
+          (fiveDigit.format(-Special_functions.ei(-0.5))));
+	}
+}</PRE>
+</BODY>
+</HTML>

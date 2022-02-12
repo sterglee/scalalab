@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1253">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101212;10241384">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21.01cm 29.69cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P ALIGN=JUSTIFY>The figure system is implemented by keeping an array
+of <I>FrameView </I><SPAN STYLE="font-style: normal">objects to keep
+the set of active figure frame. Also, a 3-D array of </SPAN><I>PlotPanel
+</I><SPAN STYLE="font-style: normal">objects keeps references to the
+subplots, i.e. each FrameView maps to a 2-D array of PlotPanel
+objects that keep the subplots of that figure frame.</SPAN></P>
+<P><FONT SIZE=6 STYLE="font-size: 22pt"><U><B>Plotting routines</B></U></FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4><B>figure( figId: Int)</B></FONT></P>
+<P STYLE="font-weight: medium">Create figure window.</P>
+<P STYLE="font-weight: medium"><B>figure</B>, by itself, creates a
+new figure window, and returns its handle.</P>
+<P STYLE="font-weight: medium"><B>figure</B>(H) makes H the current
+figure, forces it to become visible, and raises it above all other
+figures on the screen. If Figure H does not exist, and H is an
+integer, a new figure is created with handle H.</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4><B>subplot(m: Int, n: Int, p: Int)</B></FONT></P>
+<P STYLE="font-weight: medium">Create axes in tiled positions.</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium">subplot(m,n,p), breaks
+the Figure window into an m-by-n matrix of small axes, selects the
+p-th axes for the current plot, and returns the axis handle. The axes
+are counted along the top row of the Figure window, then the second
+row, etc. For example,</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium">var t = inc(0,0.01,10)</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium">var x = sin(0.13*t); var
+y= cos(3.4*t)</P>
+<P STYLE="font-weight: medium">subplot(2,1,1); plot(x); 
+</P>
+<P STYLE="font-weight: medium">subplot(2,1,2); plot(y)</P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: medium">plots <B>x</B> on the top half of the
+window and <B>y</B> on the bottom half.</P>
+<P><BR><BR>
+</P>
+<P><B>closeAll, close(&quot;all</B><SPAN STYLE="font-weight: medium">&quot;)</SPAN></P>
+<P STYLE="font-weight: medium">closes all figures</P>
+<P><B>close(fig: Int)</B></P>
+<P STYLE="font-weight: medium">closes the figure with identifier fig</P>
+<P><B>var f = figure</B></P>
+<P STYLE="font-weight: medium">constructs a new 2-D figure and
+returns its integer handle</P>
+<P><B>var f3 = figure3d</B></P>
+<P STYLE="font-weight: medium">constructs a new 3-D figure and
+returns its integer handle</P>
+<P><BR><BR>
+</P>
+<P><B>var plPanel = figure(figId: Int): scalaSci.math.plot.PlotPanel </B>
+</P>
+<P STYLE="font-weight: medium">focuses on figure with identifier
+figId if it exists,</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium">otherwise constructs
+this object</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium">returns the PlotPanel
+object of figure figId</P>
+<P><BR><BR>
+</P>
+<P><B>var plPanel = figure3d(figId: Int):
+scalaSci.math.plot.PlotPanel </B>
+</P>
+<P STYLE="font-weight: medium">focuses on figure with identifier
+figId if it exists,</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium">otherwise constructs
+this object</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium">returns the PlotPanel
+object of figure figId</P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: medium"><I>hold(&quot;on&quot;), hold(&quot;off&quot;),
+hold(true), hold(false)</I></P>
+<P STYLE="font-weight: medium"><I>var N=pow(2, 15).toInt; var
+t=linspace(0, 10, N); </I>
+</P>
+<P STYLE="font-weight: medium"><I>var (noise, sig) = (vrand(N),
+sin(2.3*t))</I></P>
+<P STYLE="font-weight: medium"><I>var (fftNoise, fftSig) =
+(fft(noise), fft(sig))</I></P>
+<P STYLE="font-weight: medium"><I>figure(1); subplot(2,1,1); plot(t,
+sig, Color.BLUE, &quot;signal&quot;); hold(&quot;on&quot;); plot(t,
+noise, Color.RED, &quot;noise&quot;);</I></P>
+<P STYLE="font-weight: medium"><I>subplot(2,1,2); plot(fftSig,
+Color.BLUE, &quot;FFT of signal&quot;); hold(&quot;on&quot;);
+plot(fftNoise, Color.RED, &quot;FFT of noise&quot;)</I></P>
+<P STYLE="font-style: normal"><B>clf( figId: Int)</B></P>
+<P STYLE="font-style: normal; font-weight: medium">clears the
+contents of figure with identifier figId</P>
+<P><U><B>Example</B></U></P>
+<P>closeAll</P>
+<P>var N = pow(2, 12).toInt // a power of 2 integer</P>
+<P>var t = linspace(0, 2, N) // get N samples from 0 to 2 with linear
+sampling</P>
+<P>var (f1, f2, f3) = (2.23, 4.5, 9.8) // some frequencies for
+signals</P>
+<P>var sig = sin(f1*t)+4.5*cos(f2*t)+1.9*sin(f3*t)</P>
+<P>var x1 = vrand(N)+sig // add some noisy</P>
+<P>var fftX1 = fft(x1) // perform FFT</P>
+<P>subplot(2,1,1); plot(t, x1, &quot;signal&quot;)</P>
+<P>subplot(2,1,2); plot( fftX1, &quot;ffT&quot;)</P>
+<P>f2 = getDouble(&quot;Get new signal frequency&quot;, 8.0)</P>
+<P>sig = sin(f2*t)</P>
+<P>var fftX2 = fft(sig)</P>
+<P>clf(1, 1, 2) // clears all plots from the second subplot of figure
+1</P>
+<P>subplot(2, 1, 2)</P>
+<P>plot(fftX2, &quot;fft for the new frequency = &quot;+f2)</P>
+<P>clf(1, 1, 1)</P>
+<P>subplot(2, 1, 1)</P>
+<P>plot(sig); title(&quot;the new signal&quot;)</P>
+<P><BR><BR>
+</P>
+<P><B>Marked Line Plots</B></P>
+<P STYLE="font-weight: medium"><BR><BR>
+</P>
+<P STYLE="font-weight: medium">// display a plot with  'X' connected
+by a line 
+</P>
+<P STYLE="font-weight: medium">var t= inc(0, 0.1, 10);</P>
+<P STYLE="font-weight: medium">var x = sin(0.23*t)+0.2252*cos(3.4*t)</P>
+<P STYLE="font-weight: medium"><BR><BR>
+</P>
+<P STYLE="font-weight: medium">plotMarkedLine(t,x, Color.GREEN)</P>
+<P STYLE="font-weight: medium"><BR><BR>
+</P>
+<P STYLE="font-weight: medium"><BR><BR>
+</P>
+</BODY>
+</HTML>

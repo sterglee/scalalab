@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1253">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20111219;9364685">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2.01cm }
+		P { margin-bottom: 0.2cm }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>Reading/Writing ASCII Data Files</B></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">You can read/write double arrays to ASCII data files with the following routines:</SPAN></SPAN></FONT>
+
+
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B><SPAN STYLE="font-style: normal">def saveAscii(d: Array[Double], fileName: String): Unit  </SPAN></B></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><U><B><SPAN STYLE="font-style: normal">Example: </SPAN></B></U></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><I><B>var d = vrand(10).getv  // a random Array[Double]</B></I></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><I><B>saveAscii(d, &quot;dv.txt&quot;)   // save to file dv.txt</B></I></SPAN></FONT>
+
+
+  
+<FONT SIZE=4><SPAN LANG="en-US"><B><SPAN STYLE="font-style: normal">def saveAscii(dd: Array[Array[Double]], fileName: String, sepChar: Char= ' '): Unit  </SPAN></B></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><U><B><FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">Example:</SPAN></SPAN></FONT></B></U></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><I><B><FONT SIZE=4><SPAN LANG="en-US">var dd = Rand(10, 20)   // a random Array[Array[Double]]</SPAN></FONT></B></I></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><I><B><FONT SIZE=4><SPAN LANG="en-US">saveAscii(dd, &quot;ddv.txt&quot;)    </SPAN></FONT></B></I></SPAN></FONT>
+    
+<FONT SIZE=4><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal"><B>def readAscii( fileName: String): Array[Array[Double]] </B></SPAN></SPAN></FONT><SPAN STYLE="font-style: normal">    </SPAN></SPAN></FONT>
+      
+<FONT SIZE=4><SPAN LANG="en-US"><U><B><SPAN STYLE="font-style: normal">Example:</SPAN></B></U></SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><I><B><SPAN STYLE="text-decoration: none">var rd = readAscii(</SPAN><FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="text-decoration: none">&quot;dv.txt&quot;)   // read back the saved 1-D array</SPAN></SPAN></FONT></B></I></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><I><B><FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="text-decoration: none">var rdd = readAscii(&quot;ddv.txt&quot;)   // read back the saved 2-D array</SPAN></SPAN></FONT></B></I></SPAN></FONT></PRE>
+</BODY>
+</HTML>

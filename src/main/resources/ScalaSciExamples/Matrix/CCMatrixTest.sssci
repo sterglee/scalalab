@@ -1,0 +1,35 @@
+
+
+import no.uib.cipr.matrix
+import no.uib.cipr.matrix.sparse
+
+
+var nrows = 10; var ncols = 10
+var d = Array.ofDim[Double](nrows, ncols)
+d(2)(3) = 10
+d(4)(4) = 44
+// create a sparse matrix from the double [][] array
+var sd = new CCMatrix(d)
+
+var mtjCCM = sd.getCCM()   // get the MTJ based column cmpressed matrix representation
+
+d(3)(5) =35
+var sd2 = new CCMatrix(d)
+
+// set an entry using putAt
+sd(2, 1) =  21
+
+// get entries using implicitly getAt
+var elem2_1 = sd(2,1)
+var elem2_2 = sd(2,2)
+
+
+// test matrix addition
+var sd1  = sd+sd2
+sd
+sd1
+
+var sd10 = sd*100
+sd10
+
+var sdd = sd1-sd1

@@ -1,0 +1,10 @@
+
+
+
+var N = 1000000
+var t = linspace(0, 5, N)
+var x =  sin(0.78*t)+3.4*cos(4.5*t)
+
+fastPlotsOn()   // enable fast plotting
+setMaximumPlotPoints(2000)   // any signal larger than this is sub-sampled in plotting
+plot(t,x)

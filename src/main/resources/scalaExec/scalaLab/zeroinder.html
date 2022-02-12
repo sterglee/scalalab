@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15113000">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>Analytic
+Problems</B></FONT></P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>zeroinder</B></FONT></P>
+<P ALIGN=JUSTIFY><FONT SIZE=4><SPAN STYLE="font-style: normal">Given
+the values, x_0 and y_0,of the end points of an interval assumed to
+contain a zero of the function f(x), </SPAN><I>zeroinder</I> <SPAN STYLE="font-style: normal">attempts
+to find, by use of a combination of interpolation and extrapolation
+based upon the use of a fractional linear function, and of bisection,
+x_n and y_n, of the end points of a smaller interval containing the
+zero.</SPAN></FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><FONT SIZE=4><B><SPAN STYLE="font-style: normal">Example:
+Can be run with F9 within the ScalaLab Editor (Ctrl-E to open the
+editor)</SPAN></B></FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P><A NAME="__DdeLink__6_1135676563"></A><FONT SIZE=2 STYLE="font-size: 11pt">import
+java.text.DecimalFormat;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">import numal.*;</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public class Test_zeroinder
+extends Object</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">implements
+AP_zeroinder_methods {</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public static void
+main(String args[]) {</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double x[] = new double[1];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double y[] = new double[1];</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">Test_zeroinder testzeroinder
+= new Test_zeroinder();</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">DecimalFormat fiveDigit = new
+DecimalFormat(&quot;0.00000E0&quot;);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">x[0]=0.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">y[0]=1.0;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">if
+(Analytic_problems.zeroinder(x,y,testzeroinder))</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">System.out.println(&quot;Calculated
+zero and function value:&quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">&quot;\n &quot; +
+fiveDigit.format(x[0]) + &quot; &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(testzeroinder.fx(x))
++</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">&quot;\nOther straddling
+approximation and function value:&quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">&quot;\n &quot; +
+fiveDigit.format(y[0]) + &quot; &quot; +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">fiveDigit.format(testzeroinder.fx(y)));</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">else</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">System.out.println(&quot;No
+zero found.&quot;);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public double fx(double x[])</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">{</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">return
+Math.exp(-x[0]*3.0)*(x[0]-1.0)+x[0]*x[0]*x[0];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public double tolx(double
+x[])</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">{</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">return
+Math.abs(x[0])*1.0e-6+1.0e-6;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public double dfx(double x[])</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">{</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">return
+Math.exp(-x[0]*3.0)*(-3.0*x[0]+4.0)+3.0*x[0]*x[0];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+</BODY>
+</HTML>

@@ -1,0 +1,1102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110320;16222900">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4 STYLE="font-size: 16pt"><U><B>Routines from NUMAL
+Library</B></U></FONT></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=4>The
+routines from the NUMAL library have been adapted at the context of
+ScalaLab in order to extend the functionality of the standard Scala
+<B>Array[Array[Double]] </B>type. </FONT>
+</P>
+<P STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=4>ScalaLab
+offers a scripting easier to use interface to these routines.</FONT></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=4>The
+reference for these routines is the book:</FONT></P>
+<P STYLE="text-decoration: none">“<FONT SIZE=4><I><SPAN STYLE="font-weight: normal">A
+Numerical Library in Java for Scientists and Engineers”, Hang. T.
+Lau</SPAN></I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=4>The
+purpose of this documentation is to present the routines that are
+currently interfaced with the Scala interpreter and to document the
+interface of each routine. <SPAN STYLE="font-style: normal">We</SPAN>
+denote the section of the book where each routine is described.</FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=4>ScalaLab
+presents these methods to the Scala Interpreter by implementing
+interface methods in the object <I>RichDouble2DArray </I><SPAN STYLE="font-style: normal">(implemented
+in the source file </SPAN><I>RichDouble2DArray.scala). </I><SPAN STYLE="font-style: normal">Since
+each Scala object implements static methods, we have them all
+available to the Scala Interpreter by importing the RichDouble2DArray
+object.</SPAN></FONT></P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Singular
+Values</B></FONT></P>
+<P><BR><BR>
+</P>
+<P STYLE="text-decoration: none"><FONT SIZE=4 STYLE="font-size: 16pt"><B>3.15.2.
+Real full matrices</B></FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4><B>A. qrsngval</B></FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4>Computes the singular
+values of a given matrix.</FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><I>int qrisngval(a, m, n,
+values, em)</I></FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><I>qrisngval:</I> returns
+the number of singular values not found, i.e., a number not equal to
+zero if the number of iterations exceeds <I>em[4]</I></FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><I>a</I>: entry: the
+input matrix</FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><I>m</I>: int; entry: the
+number of rows of the matrix <I>a</I></FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><I>n</I><SPAN STYLE="font-style: normal">:
+int; entry: the number of columns of </SPAN><I>a, n </I><SPAN STYLE="font-style: normal">should
+satisfy </SPAN><I>n &lt;= m</I></FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><I>values</I><SPAN STYLE="font-style: normal">:
+double </SPAN><I>values[1:n]; </I><SPAN STYLE="font-style: normal">exit:
+the singular values</SPAN></FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><I>em:</I> <SPAN STYLE="font-style: normal">double
+</SPAN><I>em[0:7];</I></FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><SPAN STYLE="font-style: normal">entry:
+</SPAN><I>em[0]:</I> <SPAN STYLE="font-style: normal">the machine
+precision;</SPAN></FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><I>em[2]:</I> <SPAN STYLE="font-style: normal">the
+relative precision in the singular values</SPAN></FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><I>em[4]: </I><SPAN STYLE="font-style: normal">the
+maximal number of iterations to be performed</SPAN></FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><I>em[6]: </I><SPAN STYLE="font-style: normal">the
+minimal nonneglectable singular value</SPAN></FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><SPAN STYLE="font-style: normal">exit:
+</SPAN><I>em[1]:</I> <SPAN STYLE="font-style: normal">the infinity
+norm of the matrix</SPAN></FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><I>em[3]: </I><SPAN STYLE="font-style: normal">the
+maximal neglected superdiagonal element</SPAN></FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><I>em[5]:</I> <SPAN STYLE="font-style: normal">the
+number of iterations performed</SPAN></FONT></P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><I>em[7]:</I> <SPAN STYLE="font-style: normal">the
+numerical rank of the matrix; i.e., the number of </SPAN></FONT>
+</P>
+<P STYLE="font-weight: normal"><FONT SIZE=4><SPAN STYLE="font-style: normal">singular
+values greater than or equal to </SPAN><I>em[6] </I></FONT>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>  def dec(a: Array[Array[Double]], n: Int, aux: Array[Double], p:
+Array[Int]) =</P>
+<P>    numal.Linear_algebra.dec(a, n, aux, p)</P>
+<P><BR><BR>
+</P>
+<P>  /*  Example:</P>
+<P>   var A = new Matrix(4, 4)</P>
+<P>   for (i&lt;-1 to 4)</P>
+<P>    for (j&lt;-1 to 4)</P>
+<P>      A(i, j) = 1.0/(i+j-1.0)</P>
+<P>    var aux = new Array[Double](8)</P>
+<P>    var ri = new Array[Int](5)</P>
+<P>    var ci = new Array[Int](5)</P>
+<P>    aux(2) = 1.0e-5</P>
+<P>    aux(4) = 8</P>
+<P>    var addd=A.getv</P>
+<P>     gsselm(addd, 4, aux, ri, ci)</P>
+<P><BR><BR>
+</P>
+<P>   var dtrm =</P>
+<P>     if (aux(4)==4.0)  determ(addd, 4, aux(1).asInstanceOf[Int])</P>
+<P>       else</P>
+<P>       0.0</P>
+<P>       
+</P>
+<P><BR><BR>
+</P>
+<P>   *</P>
+<P>   */</P>
+<P>  def gsselm(a: Array[Array[Double]], n: Int, aux: Array[Double],
+ri: Array[Int], ci: Array[Int] ) =</P>
+<P>    numal.Linear_algebra.gsselm(a, n, aux, ri, ci)</P>
+<P><BR><BR>
+</P>
+<P>  def onenrminv(a: Array[Array[Double]], n: Int) =
+numal.Linear_algebra.onenrminv(a, n)</P>
+<P><BR><BR>
+</P>
+<P>  def erbelm(n: Int, aux: Array[Double], nrminv: Double) =
+numal.Linear_algebra.erbelm(n, aux, nrminv)</P>
+<P><BR><BR>
+</P>
+<P>  def gsserb(a: Array[Array[Double]], n: Int, aux: Array[Double],
+ri: Array[Int], ci: Array[Int]) =</P>
+<P>    numal.Linear_algebra.gsserb(a, n, aux, ri, ci)</P>
+<P><BR><BR>
+</P>
+<P>  def  gssnri(a: Array[Array[Double]], n: Int, aux: Array[Double],
+ri: Array[Int], ci: Array[Int]) =</P>
+<P>    numal.Linear_algebra.gssnri(a, n, aux, ri, ci)</P>
+<P><BR><BR>
+</P>
+<P>  def det(a: Array[Array[Double]]) = numal.Linear_algebra.det(a)</P>
+<P><BR><BR>
+</P>
+<P>  def determ(a: Array[Array[Double]], n: Int, sign: Int) =
+numal.Linear_algebra.determ(a, n, sign)</P>
+<P><BR><BR>
+</P>
+<P>  def sol(a: Array[Array[Double]], n: Int, p: Array[Int], b:
+Array[Double]) =</P>
+<P>    numal.Linear_algebra.sol(a, n, p, b)</P>
+<P><BR><BR>
+</P>
+<P>  def decsol(a: Array[Array[Double]], n: Int, aux: Array[Double],
+b: Array[Double]) =</P>
+<P>    numal.Linear_algebra.decsol(a, n, aux, b)</P>
+<P><BR><BR>
+</P>
+<P>  def solelm(a: Array[Array[Double]], n: Int, ri: Array[Int], ci:
+Array[Int], b: Array[Double]) =</P>
+<P>    numal.Linear_algebra.solelm(a, n, ri, ci, b)</P>
+<P><BR><BR>
+</P>
+<P>  def gsssol(a: Array[Array[Double]], n: Int, aux: Array[Double],
+b: Array[Double]) =</P>
+<P>    numal.Linear_algebra.gsssol(a, n, aux, b)</P>
+<P><BR><BR>
+</P>
+<P>  def gsssolerb(a: Array[Array[Double]], n: Int, aux:
+Array[Double], b: Array[Double]) =</P>
+<P>    numal.Linear_algebra.gsssolerb(a, n, aux, b)</P>
+<P><BR><BR>
+</P>
+<P> def  inv(a: Array[Array[Double]], n: Int, p: Array[Int]) =</P>
+<P>   numal.Linear_algebra.inv(a, n, p)</P>
+<P><BR><BR>
+</P>
+<P>def decinv(a: Array[Array[Double]], n: Int, aux: Array[Double]) =</P>
+<P>  numal.Linear_algebra.decinv(a, n, aux)</P>
+<P><BR><BR>
+</P>
+<P>def  inv1(a: Array[Array[Double]], n: Int, ri: Array[Int], ci:
+Array[Int], withnorm: Boolean) =</P>
+<P>  numal.Linear_algebra.inv1(a, n, ri, ci, withnorm)</P>
+<P><BR><BR>
+</P>
+<P>def gssinv(a: Array[Array[Double]], n: Int, aux: Array[Double]) =</P>
+<P>  numal.Linear_algebra.gssinv(a, n, aux)</P>
+<P><BR><BR>
+</P>
+<P>def gssinverb(a: Array[Array[Double]], n: Int, aux: Array[Double])
+=</P>
+<P>    numal.Linear_algebra.gssinverb(a, n, aux)</P>
+<P><BR><BR>
+</P>
+<P>def itisol(a: Array[Array[Double]], lu: Array[Array[Double]], n:
+Int, aux: Array[Double], ri: Array[Int], ci: Array[Int], b:
+Array[Double]) =</P>
+<P>  numal.Linear_algebra.itisol(a, lu, n, aux, ri, ci, b)</P>
+<P><BR><BR>
+</P>
+<P>def gssitisol(a: Array[Array[Double]], n: Int, aux: Array[Double],
+b: Array[Double]) =</P>
+<P>  numal.Linear_algebra.gssitisol(a, n, aux, b)</P>
+<P><BR><BR>
+</P>
+<P>def itisolerb(a: Array[Array[Double]], lu: Array[Array[Double]],
+n: Int, aux: Array[Double], ri: Array[Int], ci: Array[Int], b:
+Array[Double]) =</P>
+<P>  numal.Linear_algebra.itisolerb(a, lu, n, aux, ri, ci, b)</P>
+<P><BR><BR>
+</P>
+<P>def gssitisolerb(a: Array[Array[Double]], n: Int, aux:
+Array[Double], b: Array[Double]) =</P>
+<P>  numal.Linear_algebra.gssitisolerb(a, n, aux, b)</P>
+<P><BR><BR>
+</P>
+<P>def  chldec2(a: Array[Array[Double]], n: Int, aux: Array[Double])
+=</P>
+<P>  numal.Linear_algebra.chldec2(a, n, aux)</P>
+<P><BR><BR>
+</P>
+<P>def chldec1(a: Array[Double], n: Int, aux: Array[Double]) =</P>
+<P>  numal.Linear_algebra.chldec1(a, n, aux)</P>
+<P><BR><BR>
+</P>
+<P>def chldeterm2(a: Array[Array[Double]], n: Int) =</P>
+<P>  numal.Linear_algebra.chldeterm2(a, n)</P>
+<P><BR><BR>
+</P>
+<P>def chldeterm1(a: Array[Double], n: Int) =
+numal.Linear_algebra.chldeterm1(a, n)</P>
+<P><BR><BR>
+</P>
+<P>def chlsol2(a: Array[Array[Double]], n: Int, b: Array[Double]) =</P>
+<P>  numal.Linear_algebra.chlsol2(a, n, b)</P>
+<P><BR><BR>
+</P>
+<P>def chlsol1(a: Array[Double], n: Int, b: Array[Double]) =</P>
+<P>  numal.Linear_algebra.chlsol1(a, n, b)</P>
+<P><BR><BR>
+</P>
+<P>def chldecsol2(a: Array[Array[Double]], n: Int, aux:
+Array[Double], b: Array[Double]) =</P>
+<P>  numal.Linear_algebra.chldecsol2(a, n, aux, b)</P>
+<P><BR><BR>
+</P>
+<P>def chldecsol1(a: Array[Double], n: Int, aux: Array[Double], b:
+Array[Double]) =</P>
+<P>  numal.Linear_algebra.chldecsol1(a, n, aux, b)</P>
+<P><BR><BR>
+</P>
+<P>def chlinv2(a: Array[Array[Double]], n: Int) =</P>
+<P>  numal.Linear_algebra.chlinv2(a, n)</P>
+<P><BR><BR>
+</P>
+<P>def chlinv1(a: Array[Double], n: Int) =</P>
+<P>  numal.Linear_algebra.chlinv1(a, n)</P>
+<P><BR><BR>
+</P>
+<P>def  chldecinv2(a: Array[Array[Double]], n: Int, aux:
+Array[Double])  =</P>
+<P>  numal.Linear_algebra.chldecinv2(a, n, aux)</P>
+<P><BR><BR>
+</P>
+<P>def chldecinv1(a: Array[Double], n: Int, aux: Array[Double]) =</P>
+<P>  numal.Linear_algebra.chldecinv1(a, n, aux)</P>
+<P><BR><BR>
+</P>
+<P>def decsym2(a: Array[Array[Double]], n: Int, tol: Double, aux:
+Array[Int], p: Array[Int], detaux: Array[Double]) =</P>
+<P>  numal.Linear_algebra.decsym2(a, n, tol, aux, p, detaux)</P>
+<P><BR><BR>
+</P>
+<P>def determsym2(detaux: Array[Double], n: Int, aux: Array[Int]) =</P>
+<P>  numal.Linear_algebra.determsym2(detaux, n, aux)</P>
+<P><BR><BR>
+</P>
+<P>def solsym2(a: Array[Array[Double]], n: Int, b: Array[Double], p:
+Array[Int], detaux: Array[Double]) =</P>
+<P>  numal.Linear_algebra.solsym2(a, n, b, p, detaux)</P>
+<P><BR><BR>
+</P>
+<P>def decsolsym2(a: Array[Array[Double]], n: Int, b: Array[Double],
+tol: Double, aux: Array[Int]) =</P>
+<P>  numal.Linear_algebra.decsolsym2(a, n, b, tol, aux)</P>
+<P><BR><BR>
+</P>
+<P> def lsqortdec(a: Array[Array[Double]], n: Int, m: Int, aux:
+Array[Double], aid: Array[Double], ci: Array[Int]) =</P>
+<P>   numal.Linear_algebra.lsqortdec(a, n, m, aux, aid, ci)</P>
+<P><BR><BR>
+</P>
+<P> def lsqdglinv(a: Array[Array[Double]], m: Int, aid:
+Array[Double], ci: Array[Int], diag: Array[Double]) =</P>
+<P>   numal.Linear_algebra.lsqdglinv(a, m, aid, ci, diag)</P>
+<P><BR><BR>
+</P>
+<P>def lsqsol(a: Array[Array[Double]], n: Int, m: Int, aid:
+Array[Double], ci: Array[Int], b: Array[Double]) =</P>
+<P>  numal.Linear_algebra.lsqsol(a, n, m, aid, ci, b)</P>
+<P><BR><BR>
+</P>
+<P>def lsqortdecsol(a: Array[Array[Double]], n: Int, m: Int, aux:
+Array[Double], diag: Array[Double], b: Array[Double]) =</P>
+<P>  numal.Linear_algebra.lsqortdecsol(a, n, m, aux, diag, b)</P>
+<P><BR><BR>
+</P>
+<P>def lsqinv(a: Array[Array[Double]], m: Int, aid: Array[Double], c:
+Array[Int]) =</P>
+<P>  numal.Linear_algebra.lsqinv(a, m, aid, c)</P>
+<P><BR><BR>
+</P>
+<P>def lsqdecomp(a: Array[Array[Double]], n: Int, m: Int, n1: Int,
+aux: Array[Double], aid: Array[Double], ci: Array[Int]) =</P>
+<P>  numal.Linear_algebra.lsqdecomp(a, n, m, n1, aux, aid, ci)</P>
+<P><BR><BR>
+</P>
+<P>def lsqrefsol(a: Array[Array[Double]], qr: Array[Array[Double]],
+n: Int, m: Int, n1: Int, aux: Array[Double],</P>
+<P>        aid: Array[Double], ci: Array[Int], b: Array[Double], idx:
+Array[Double], x: Array[Double], res: Array[Double] ) =</P>
+<P>                numal.Linear_algebra.lsqrefsol(a, qr, n, m, n1,
+aux, aid, ci, b, idx, x, res)</P>
+<P><BR><BR>
+</P>
+<P>def solsvdovr(u: Array[Array[Double]], values: Array[Double], v:
+Array[Array[Double]], m: Int, n: Int, x: Array[Double], em:
+Array[Double]) =</P>
+<P>  numal.Linear_algebra.solsvdovr(u, values, v, m, n, x, em)</P>
+<P><BR><BR>
+</P>
+<P>/*</P>
+<P>var A = Array( Array(0.0, 0.0, 0.0), Array(0,2.1, 3), 
+Array(0,3.4,2.9))</P>
+<P>var m=2; var n=2</P>
+<P>var x = Array(0.0, 2, 7.6)</P>
+<P>var em= Array(0.00001, 0.0, 0.0,  0.00001, 0, 10, 0, 0.01)</P>
+<P>solovr(A, m, n, x, em)</P>
+<P><BR><BR>
+</P>
+<P> */</P>
+<P>  def solovr(a: Array[Array[Double]], m: Int, n: Int, x:
+Array[Double], em: Array[Double]) =</P>
+<P>  numal.Linear_algebra.solovr(a, m, n, x, em)</P>
+<P><BR><BR>
+</P>
+<P>def solsvdund(u: Array[Array[Double]], values: Array[Double], v:
+Array[Array[Double]], m: Int, n: Int, x: Array[Double],
+em:Array[Double]) =</P>
+<P>  numal.Linear_algebra.solsvdund(u, values, v, m, n, x, em)</P>
+<P><BR><BR>
+</P>
+<P>def solund(a: Array[Array[Double]], m: Int, n: Int, x:
+Array[Double], em: Array[Double]) =</P>
+<P>  numal.Linear_algebra.solund(a, m, n, x, em)</P>
+<P><BR><BR>
+</P>
+<P>def homsolsvd(u: Array[Array[Double]], values: Array[Double], v:
+Array[Array[Double]], m: Int, n: Int) =</P>
+<P>  numal.Linear_algebra.homsolsvd(u, values, v, m, n)</P>
+<P><BR><BR>
+</P>
+<P>def homsol(a: Array[Array[Double]], m: Int, n: Int, v:
+Array[Array[Double]], em: Array[Double]) =</P>
+<P>  numal.Linear_algebra.homsol(a, m, n, v, em)</P>
+<P><BR><BR>
+</P>
+<P>def psdinvsvd(u: Array[Array[Double]], values: Array[Double], v:
+Array[Array[Double]], m: Int, n: Int, em: Array[Double]) =</P>
+<P>  numal.Linear_algebra.psdinvsvd(u, values, v, m, n, em)</P>
+<P><BR><BR>
+</P>
+<P>def psdinv(a: Array[Array[Double]], m: Int, n: Int, em:
+Array[Double]) =</P>
+<P>  numal.Linear_algebra.psdinv(a, m, n, em)</P>
+<P><BR><BR>
+</P>
+<P>def decbnd(a: Array[Double], n: Int, lw: Int, rw: Int, aux:
+Array[Double], m: Array[Double], p: Array[Int]) =</P>
+<P>  numal.Linear_algebra.decbnd(a, n, lw, rw, aux, m, p)</P>
+<P><BR><BR>
+</P>
+<P>def determbnd(a: Array[Double], n: Int, lw: Int, rw: Int, sgndet:
+Int)  =</P>
+<P>  numal.Linear_algebra.determbnd(a, n, lw, rw, sgndet)</P>
+<P><BR><BR>
+</P>
+<P>def solbnd(a: Array[Double], n: Int, lw: Int, rw: Int, m:
+Array[Double], p: Array[Int], b: Array[Double]) =</P>
+<P>  numal.Linear_algebra.solbnd(a, n, lw, rw, m, p, b)</P>
+<P><BR><BR>
+</P>
+<P>def decsolbnd(a: Array[Double], n: Int, lw: Int, rw: Int, aux:
+Array[Double], b: Array[Double]) =</P>
+<P>  numal.Linear_algebra.decsolbnd(a, n, lw, rw, aux, b)</P>
+<P><BR><BR>
+</P>
+<P>def dectri(sub: Array[Double], diag: Array[Double], supre:
+Array[Double], n: Int, aux: Array[Double]) =</P>
+<P>  numal.Linear_algebra.dectri(sub, diag, supre, n, aux)</P>
+<P><BR><BR>
+</P>
+<P>def dectripiv(sub: Array[Double], diag: Array[Double], supre:
+Array[Double], n: Int, aid: Array[Double], aux: Array[Double], piv:
+Array[Boolean]) =</P>
+<P>  numal.Linear_algebra.dectripiv(sub, diag, supre, n, aid, aux,
+piv)</P>
+<P><BR><BR>
+</P>
+<P>def soltri(sub: Array[Double], diag: Array[Double], supre:
+Array[Double], n: Int, b: Array[Double]) =</P>
+<P>  numal.Linear_algebra.soltri(sub, diag, supre, n, b)</P>
+<P><BR><BR>
+</P>
+<P>def decsoltri(sub: Array[Double], diag: Array[Double], supre:
+Array[Double], n: Int, aux: Array[Double], b: Array[Double]) =</P>
+<P>  numal.Linear_algebra.decsoltri(sub, diag, supre, n, aux, b)</P>
+<P><BR><BR>
+</P>
+<P>def soltripiv(sub: Array[Double], diag: Array[Double], supre:
+Array[Double], n: Int, aid: Array[Double], piv: Array[Boolean], b:
+Array[Double]) =</P>
+<P>  numal.Linear_algebra.soltripiv(sub, diag, supre, n, aid, piv, b)</P>
+<P><BR><BR>
+</P>
+<P>def decsoltripiv(sub: Array[Double], diag: Array[Double], supre:
+Array[Double], n: Int, aux: Array[Double], b: Array[Double]) =</P>
+<P>  numal.Linear_algebra.decsoltripiv(sub, diag, supre, n, aux, b)</P>
+<P><BR><BR>
+</P>
+<P>def chldecbnd(a: Array[Double], n: Int, w: Int, aux:
+Array[Double]) =</P>
+<P>  numal.Linear_algebra.chldecbnd(a, n, w, aux)</P>
+<P><BR><BR>
+</P>
+<P>def chldetermbnd(a: Array[Double], n: Int, w: Int) =</P>
+<P>  numal.Linear_algebra.chldetermbnd(a, n, w)</P>
+<P><BR><BR>
+</P>
+<P>def chlsolbnd(a: Array[Double], n: Int, w: Int, b: Array[Double])
+=</P>
+<P>  numal.Linear_algebra.chlsolbnd(a, n, w, b)</P>
+<P><BR><BR>
+</P>
+<P>def chldecsolbnd(a: Array[Double], n: Int, w: Int, aux:
+Array[Double], b: Array[Double]) =</P>
+<P>  numal.Linear_algebra.chldecsolbnd(a, n, w, aux, b)</P>
+<P><BR><BR>
+</P>
+<P>def decsymtri(diag: Array[Double], co: Array[Double], n: Int, aux:
+Array[Double]) =</P>
+<P>  numal.Linear_algebra.decsymtri(diag, co, n, aux)</P>
+<P><BR><BR>
+</P>
+<P>def solsymtri(diag: Array[Double], co: Array[Double], n: Int, b:
+Array[Double]) =</P>
+<P>  numal.Linear_algebra.solsymtri(diag, co, n, b)</P>
+<P><BR><BR>
+</P>
+<P>def decsolsymtri(diag: Array[Double], co: Array[Double], n: Int,
+aux: Array[Double], b: Array[Double]) =</P>
+<P>  numal.Linear_algebra.decsolsymtri(diag, co, n, aux, b)</P>
+<P><BR><BR>
+</P>
+<P>def conjgrad(method: numal.LA_conjgrad_methods, x: Array[Double],
+r: Array[Double], l: Int, n: Int, iterate: Array[Int], norm2:
+Array[Double]) =</P>
+<P>  numal.Linear_algebra.conjgrad(method, x, r, l, n, iterate,
+norm2)</P>
+<P><BR><BR>
+</P>
+<P>def eqilbr(a: Array[Array[Double]], n: Int, em: Array[Double], d:
+Array[Double], inter: Array[Int]) =</P>
+<P>  numal.Linear_algebra.eqilbr(a, n, em, d, inter)</P>
+<P><BR><BR>
+</P>
+<P>def baklbr(n: Int, n1: Int, n2: Int, d: Array[Double], inter:
+Array[Int], vec: Array[Array[Double]]) =</P>
+<P>  numal.Linear_algebra.baklbr(n, n1, n2, d, inter, vec)</P>
+<P><BR><BR>
+</P>
+<P>def eqilbrcom(a1: Array[Array[Double]], a2: Array[Array[Double]],
+n: Int, em: Array[Double], d: Array[Double], inter: Array[Int])   =</P>
+<P>  numal.Linear_algebra.eqilbrcom(a1, a2, n, em, d, inter)</P>
+<P><BR><BR>
+</P>
+<P>def baklbrcom(n: Int, n1: Int, n2: Int, d: Array[Double], inter:
+Array[Int], vr: Array[Array[Double]], vi: Array[Array[Double]]) =</P>
+<P>  numal.Linear_algebra.baklbrcom(n, n1, n2, d, inter, vr, vi)</P>
+<P><BR><BR>
+</P>
+<P>def tfmsymtri2(a: Array[Array[Double]], n: Int, d: Array[Double],
+b: Array[Double], bb: Array[Double], em: Array[Double]) =</P>
+<P>  numal.Linear_algebra.tfmsymtri2(a, n, d, b, bb, em)</P>
+<P><BR><BR>
+</P>
+<P>def baksymtri2(a: Array[Array[Double]], n: Int, n1: Int, n2: Int,
+vec: Array[Array[Double]]) =</P>
+<P>  numal.Linear_algebra.baksymtri2(a, n, n1, n2, vec)</P>
+<P><BR><BR>
+</P>
+<P>def tfmprevec(a: Array[Array[Double]], n: Int) =</P>
+<P>    numal.Linear_algebra.tfmprevec(a, n)</P>
+<P><BR><BR>
+</P>
+<P> def tfmsymtri1(a: Array[Double], n: Int, d: Array[Double], b:
+Array[Double], bb: Array[Double], em: Array[Double]) =</P>
+<P>   numal.Linear_algebra.tfmsymtri1(a, n, d, b, bb, em)</P>
+<P><BR><BR>
+</P>
+<P>def baksymtri1(a: Array[Double], n: Int, n1: Int, n2: Int, vec:
+Array[Array[Double]]) =</P>
+<P>  numal.Linear_algebra.baksymtri1(a, n, n1, n2, vec)</P>
+<P><BR><BR>
+</P>
+<P> def tfmreahes(a: Array[Array[Double]], n: Int, em: Array[Double],
+index: Array[Int]) =</P>
+<P>   numal.Linear_algebra.tfmreahes(a, n, em, index)</P>
+<P><BR><BR>
+</P>
+<P> def bakreahes1(a: Array[Array[Double]], n: Int, index:
+Array[Int], v: Array[Double]) =</P>
+<P>   numal.Linear_algebra.bakreahes1(a, n, index, v)</P>
+<P><BR><BR>
+</P>
+<P> def bakreahes2(a: Array[Array[Double]], n: Int, n1: Int, n2: Int,
+index: Array[Int], vec: Array[Array[Double]]) =</P>
+<P>   numal.Linear_algebra.bakreahes2(a, n, n1, n2, index, vec)</P>
+<P><BR><BR>
+</P>
+<P> def hshhrmtri(a: Array[Array[Double]], n: Int, d: Array[Double],
+b: Array[Double], bb: Array[Double], em: Array[Double], tr:
+Array[Double], ti: Array[Double]) =</P>
+<P>   numal.Linear_algebra.hshhrmtri(a, n, d, b, bb, em, tr, ti)</P>
+<P><BR><BR>
+</P>
+<P> def hshhrmtrival(a: Array[Array[Double]], n: Int, d:
+Array[Double], bb: Array[Double], em: Array[Double]) =</P>
+<P>   numal.Linear_algebra.hshhrmtrival(a, n, d, bb, em)</P>
+<P><BR><BR>
+</P>
+<P>def bakhrmtri(a: Array[Array[Double]], n: Int, n1: Int, n2: Int,
+vecr: Array[Array[Double]], veci: Array[Array[Double]], tr:
+Array[Double], ti: Array[Double]) =</P>
+<P>  numal.Linear_algebra.bakhrmtri(a, n, n1, n2, vecr, veci, tr, ti)</P>
+<P><BR><BR>
+</P>
+<P>def hshcomhes(ar: Array[Array[Double]], ai: Array[Array[Double]],
+n: Int, em: Array[Double], b: Array[Double], tr: Array[Double], ti:
+Array[Double], del: Array[Double] ) =</P>
+<P>  numal.Linear_algebra.hshcomhes(ar, ai, n, em, b, tr, ti, del)</P>
+<P><BR><BR>
+</P>
+<P>def bakcomhes(ar: Array[Array[Double]], ai: Array[Array[Double]],
+tr: Array[Double], ti: Array[Double], del: Array[Double],</P>
+<P>              vr: Array[Array[Double]], vi: Array[Array[Double]],
+n: Int, n1: Int, n2: Int ) =</P>
+<P>                numal.Linear_algebra.bakcomhes(ar, ai, tr, ti,
+del, vr, vi, n, n1, n2)</P>
+<P><BR><BR>
+</P>
+<P>def hshreadbid(a: Array[Array[Double]], m: Int, n: Int, d:
+Array[Double], b: Array[Double], em: Array[Double]) =</P>
+<P>  numal.Linear_algebra.hshreabid(a, m, n, d, b, em)</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P> def psttfmmat(a: Array[Array[Double]], n: Int, v:
+Array[Array[Double]], b: Array[Double]) =</P>
+<P>   numal.Linear_algebra.psttfmmat(a, n, v, b)</P>
+<P><BR><BR>
+</P>
+<P>  def pretfmmat(a: Array[Array[Double]], m: Int, n: Int, d:
+Array[Double]) =</P>
+<P>    numal.Linear_algebra.pretfmmat(a, m, n, d)</P>
+<P><BR><BR>
+</P>
+<P> def valsymtri(d: Array[Double], bb: Array[Double], n: Int, n1:
+Int, n2: Int, values: Array[Double], em: Array[Double]) =</P>
+<P>   numal.Linear_algebra.valsymtri(d, bb, n, n1, n2, values, em)</P>
+<P><BR><BR>
+</P>
+<P>  def vecsymtri(d: Array[Double], b: Array[Double], n: Int, n1:
+Int, n2: Int, values: Array[Double], vec: Array[Array[Double]], em:
+Array[Double]) =</P>
+<P>    numal.Linear_algebra.vecsymtri(d, b, n, n1, n2, values, vec,
+em)</P>
+<P><BR><BR>
+</P>
+<P> def qrivalsymtri(d: Array[Double], bb: Array[Double], n: Int, em:
+Array[Double]) =</P>
+<P>   numal.Linear_algebra.qrivalsymtri(d, bb, n, em)</P>
+<P><BR><BR>
+</P>
+<P> def qrisymtri(a: Array[Array[Double]], n: Int, d: Array[Double],
+b: Array[Double], bb: Array[Double], em: Array[Double]) =</P>
+<P>   numal.Linear_algebra.qrisymtri(a, n, d, b, bb, em)</P>
+<P><BR><BR>
+</P>
+<P> def eigvalsym2(a: Array[Array[Double]], n: Int, numval: Int,
+values: Array[Double], em: Array[Double]) =</P>
+<P>   numal.Linear_algebra.eigvalsym2(a, n, numval, values, em)</P>
+<P><BR><BR>
+</P>
+<P>  def eigsym2(a: Array[Array[Double]], n: Int, numval: Int,
+values: Array[Double], vec: Array[Array[Double]], em: Array[Double])
+=</P>
+<P>    numal.Linear_algebra.eigsym2(a, n, numval, values, vec, em)</P>
+<P><BR><BR>
+</P>
+<P>def eigvalsym1(a: Array[Double], n: Int, numval: Int, values:
+Array[Double], vec: Array[Array[Double]], em: Array[Double]) =</P>
+<P>   numal.Linear_algebra.eigvalsym1(a, n, numval, values, em)</P>
+<P><BR><BR>
+</P>
+<P>def eigsym1(a: Array[Double], n: Int, numval: Int, values:
+Array[Double], vec: Array[Array[Double]], em: Array[Double]) =</P>
+<P>    numal.Linear_algebra.eigsym1(a, n, numval, values, vec, em)</P>
+<P><BR><BR>
+</P>
+<P>def qrivalsym2(a: Array[Array[Double]], n: Int, values:
+Array[Double], em:Array[Double]) =</P>
+<P>  numal.Linear_algebra.qrivalsym2(a, n, values, em)</P>
+<P><BR><BR>
+</P>
+<P>def qrisym(a: Array[Array[Double]], n: Int, values: Array[Double],
+em: Array[Double]) =</P>
+<P>    numal.Linear_algebra.qrisym(a, n, values, em)</P>
+<P><BR><BR>
+</P>
+<P>def qrivalsym1(a: Array[Double], n: Int, values: Array[Double],
+em: Array[Double]) =</P>
+<P>    numal.Linear_algebra.qrivalsym1(a, n, values, em)</P>
+<P><BR><BR>
+</P>
+<P>def  mergesort(a: Array[Double],  p: Array[Int], low: Int, up:
+Int) =</P>
+<P>  numal.Linear_algebra.mergesort(a, p, low, up)</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>def orthog(n: Int, lc: Int, uc: Int, x: Array[Array[Double]]) =</P>
+<P>  numal.Linear_algebra.orthog(n, lc, uc, x)</P>
+<P><BR><BR>
+</P>
+<P>def symeigimp(n: Int, a: Array[Array[Double]], vec:
+Array[Array[Double]], values: Array[Double], lbound: Array[Double], 
+</P>
+<P>               ubound: Array[Double], aux: Array[Double] ) =</P>
+<P>   numal.Linear_algebra.symeigimp(n, a, vec, values, lbound,
+ubound, aux)</P>
+<P><BR><BR>
+</P>
+<P>def reavalqri(a: Array[Array[Double]], n: Int, em: Array[Double],
+values: Array[Double])  =</P>
+<P>  numal.Linear_algebra.reavalqri(a, n, em, values)</P>
+<P><BR><BR>
+</P>
+<P>def reaveches(a: Array[Array[Double]], n: Int, lambda: Double, em:
+Array[Double], v: Array[Double]) =</P>
+<P>  numal.Linear_algebra.reaveches(a, n, lambda, em, v)</P>
+<P><BR><BR>
+</P>
+<P> def reaqri(a: Array[Array[Double]], n: Int, em: Array[Double],
+values: Array[Double], vec: Array[Array[Double]]) =</P>
+<P>   numal.Linear_algebra.reaqri(a, n, em, values, vec)</P>
+<P><BR><BR>
+</P>
+<P>def comvalqri(a: Array[Array[Double]], n: Int, em: Array[Double],
+re: Array[Double], im: Array[Double]) =</P>
+<P>  numal.Linear_algebra.comvalqri(a, n, em, re, im)</P>
+<P><BR><BR>
+</P>
+<P>  def comveches(a: Array[Array[Double]], n: Int, lambda: Double,
+mu: Double, em: Array[Double], u: Array[Double], v: Array[Double]) =</P>
+<P>    numal.Linear_algebra.comveches(a, n, lambda, mu, em, u, v)</P>
+<P><BR><BR>
+</P>
+<P>def reaeigval(a: Array[Array[Double]], n: Int, em: Array[Double],
+values: Array[Double]) =</P>
+<P>  numal.Linear_algebra.reaeigval(a, n, em, values)</P>
+<P><BR><BR>
+</P>
+<P>def reaeig1(a: Array[Array[Double]], n: Int, em: Array[Double],
+values: Array[Double], vec: Array[Array[Double]]) =</P>
+<P>  numal.Linear_algebra.reaeig1(a, n, em, values, vec)</P>
+<P><BR><BR>
+</P>
+<P> def reaeig3(a: Array[Array[Double]], n: Int, em: Array[Double],
+values: Array[Double], vec: Array[Array[Double]]) =</P>
+<P>   numal.Linear_algebra.reaeig3(a, n, em, values, vec)</P>
+<P><BR><BR>
+</P>
+<P>  def comeigval(a: Array[Array[Double]], n: Int, em:
+Array[Double], re: Array[Double], im: Array[Double]) =</P>
+<P>    numal.Linear_algebra.comeigval(a, n, em, re, im)</P>
+<P><BR><BR>
+</P>
+<P>  def comeig1(a: Array[Array[Double]], n: Int, em: Array[Double],
+re: Array[Double], im: Array[Double], vec: Array[Array[Double]]) =</P>
+<P>    numal.Linear_algebra.comeig1(a, n, em, re, im, vec)</P>
+<P><BR><BR>
+</P>
+<P>  def eigvalhrm(a: Array[Array[Double]], n: Int, numval: Int,
+values: Array[Double], em: Array[Double]) =</P>
+<P>    numal.Linear_algebra.eigvalhrm(a, n, numval, values, em)</P>
+<P><BR><BR>
+</P>
+<P>  def eighrm(a: Array[Array[Double]], n: Int, numval: Int, values:
+Array[Double], vecr: Array[Array[Double]], veci:
+Array[Array[Double]], em: Array[Double]) =</P>
+<P>    numal.Linear_algebra.eighrm(a, n, numval, values, vecr, veci,
+em)</P>
+<P><BR><BR>
+</P>
+<P>  def qrivalhrm(a: Array[Array[Double]], n: Int, values:
+Array[Double], em: Array[Double]) =</P>
+<P>    numal.Linear_algebra.qrivalhrm(a, n, values, em)</P>
+<P><BR><BR>
+</P>
+<P>  def qrihrm(a: Array[Array[Double]], n: Int, values:
+Array[Double],  vr: Array[Array[Double]], vi: Array[Array[Double]],
+em: Array[Double]) =</P>
+<P>    numal.Linear_algebra.qrihrm(a, n, values, vr, vi, em)</P>
+<P><BR><BR>
+</P>
+<P>  def valqricom(a1: Array[Array[Double]], a2:
+Array[Array[Double]], b: Array[Double], n: Int, em: Array[Double],</P>
+<P>                val1: Array[Double], val2: Array[Double] ) =</P>
+<P>                  numal.Linear_algebra.valqricom(a1, a2, b, n, em,
+val1, val2)</P>
+<P>  
+</P>
+<P>def  qricom(a1: Array[Array[Double]], a2: Array[Array[Double]], b:
+Array[Double], n: Int, em: Array[Double], val1: Array[Double],</P>
+<P>         val2: Array[Double], vec1: Array[Array[Double]], vec2:
+Array[Array[Double]]) =</P>
+<P>           numal.Linear_algebra.qricom(a1, a2, b, n, em, val1,
+val2, vec1, vec2)</P>
+<P><BR><BR>
+</P>
+<P>def eigvalcom(ar: Array[Array[Double]], ai: Array[Array[Double]],
+n: Int, em: Array[Double], valr: Array[Double], vali: Array[Double])
+= 
+</P>
+<P>  numal.Linear_algebra.eigvalcom(ar, ai, n, em, valr, vali)</P>
+<P><BR><BR>
+</P>
+<P> def  eigcom(ar: Array[Array[Double]], ai: Array[Array[Double]],
+n: Int, em: Array[Double], valr: Array[Double], vali: Array[Double],</P>
+<P>    vr: Array[Array[Double]], vi: Array[Array[Double]]) =</P>
+<P>      numal.Linear_algebra.eigcom(ar, ai, n, em, valr, vali, vr,
+vi)</P>
+<P><BR><BR>
+</P>
+<P> def  qzival( n: Int, a: Array[Array[Double]], b:
+Array[Array[Double]], alfr: Array[Double], alfi: Array[Double], beta:
+Array[Double], 
+</P>
+<P>    iter: Array[Int], em: Array[Double]) =</P>
+<P>      numal.Linear_algebra.qzival(n, a, b, alfr, alfi, beta, iter,
+em)</P>
+<P><BR><BR>
+</P>
+<P>  def qzi(n: Int, a: Array[Array[Double]], b:
+Array[Array[Double]], x: Array[Array[Double]], alfr: Array[Double],
+alfi: Array[Double],</P>
+<P>    beta: Array[Double], iter: Array[Int], em: Array[Double]) =</P>
+<P>      numal.Linear_algebra.qzi(n, a, b, x, alfr, alfi, beta, iter,
+em)</P>
+<P><BR><BR>
+</P>
+<P> def hshdecmul(n: Int, a: Array[Array[Double]], b:
+Array[Array[Double]], dwarf: Double)  =</P>
+<P>   numal.Linear_algebra.hshdecmul(n, a, b, dwarf)</P>
+<P><BR><BR>
+</P>
+<P>def hestgl3(n: Int, a: Array[Array[Double]], b:
+Array[Array[Double]], x: Array[Array[Double]]) =</P>
+<P>  numal.Linear_algebra.hestgl3(n, a, b, x)</P>
+<P><BR><BR>
+</P>
+<P>def hestgl2(n: Int, a: Array[Array[Double]], b:
+Array[Array[Double]]) = 
+</P>
+<P>  numal.Linear_algebra.hestgl2(n, a, b)</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>def qrisngvalbid(d: Array[Double], b: Array[Double], n: Int, em:
+Array[Double]) =</P>
+<P>  numal.Linear_algebra.qrisngvalbid(d, b, n, em)</P>
+<P><BR><BR>
+</P>
+<P>def  qrisngvaldecbid(d: Array[Double], b: Array[Double], m: Int,
+n: Int, u: Array[Array[Double]], v: Array[Array[Double]], em:
+Array[Double]) =</P>
+<P>  numal.Linear_algebra.qrisngvaldecbid(d, b, m, n, u, v, em)</P>
+<P><BR><BR>
+</P>
+<P>def qrisngval(a: Array[Array[Double]], m: Int, n: Int, values:
+Array[Double], em: Array[Double]) =</P>
+<P>  numal.Linear_algebra.qrisngval(a, m, n, values, em)</P>
+<P><BR><BR>
+</P>
+<P>def qrisngvaldec(a: Array[Array[Double]], m: Int, n: Int, values:
+Array[Double], v: Array[Array[Double]], em: Array[Double]) =</P>
+<P>  numal.Linear_algebra.qrisngvaldec(a, m, n, values, v, em)</P>
+<P><BR><BR>
+</P>
+<P>def zerpol(n: Int, a: Array[Double], em: Array[Double], re:
+Array[Double], im: Array[Double], d: Array[Double]) =</P>
+<P>  numal.Linear_algebra.zerpol(n, a, em, re, im, d)</P>
+<P><BR><BR>
+</P>
+<P>def bounds(n: Int, a: Array[Double], re: Array[Double], im:
+Array[Double], rele: Double, abse: Double, recentre: Array[Double],</P>
+<P>  imcentre: Array[Double], bound: Array[Double]) =</P>
+<P>    numal.Linear_algebra.bounds(n, a, re, im, rele, abse,
+recentre, imcentre, bound)</P>
+<P><BR><BR>
+</P>
+<P> def allzerortpol(n: Int, b: Array[Double], c: Array[Double], zer:
+Array[Double], em: Array[Double]) =</P>
+<P>   numal.Linear_algebra.allzerortpol(n, b, c, zer, em)</P>
+<P><BR><BR>
+</P>
+<P> def lupzerortpol(n: Int, m: Int, b: Array[Double], c:
+Array[Double], zer: Array[Double], em: Array[Double]) =</P>
+<P>   numal.Linear_algebra.lupzerortpol(n, m, b, c, zer, em)</P>
+<P><BR><BR>
+</P>
+<P> def  selzerortpol(n: Int, n1: Int, n2: Int, b: Array[Double], c:
+Array[Double], zer: Array[Double], em: Array[Double]) =</P>
+<P>   numal.Linear_algebra.selzerortpol(n, n1, n2, b, c, zer, em)</P>
+<P><BR><BR>
+</P>
+<P> def alljaczer(n: Int, alfa: Double, beta: Double, zer:
+Array[Double]) =</P>
+<P>   numal.Linear_algebra.alljaczer(n, alfa, beta, zer)</P>
+<P><BR><BR>
+</P>
+<P>  def alllagzer(n: Int, alfa: Double, beta: Double, zer:
+Array[Double]) =</P>
+<P>    numal.Linear_algebra.alllagzer(n, alfa, zer)</P>
+<P>  
+</P>
+<P>  def comkwd(pr: Double, pi: Double, qr: Double, qi: Double, gr:
+Array[Double], gi: Array[Double], kr: Array[Double], ki:
+Array[Double]) =</P>
+<P>    numal.Linear_algebra.comkwd(pr, pi, qr, qi, gr, gi, kr, ki)</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>  // Analytic Evaluations</P>
+<P><BR><BR>
+</P>
+<P>  def euler(method: numal.AE_euler_method, eps: Double, tim: Int)
+=</P>
+<P>    numal.Analytic_eval.euler(method, eps, tim)</P>
+<P><BR><BR>
+</P>
+<P>  def sumposseries( method: numal.AE_sumposseries_method,
+maxaddup: Int, maxzero: Double, maxrecurs: Int, machexp: Int, tim:
+Int) =</P>
+<P>    numal.Analytic_eval.sumposseries(method, maxaddup, maxzero,
+maxrecurs, machexp, tim)</P>
+<P><BR><BR>
+</P>
+<P>  def  qadrat(a: Double, b: Double, method:
+numal.AE_qadrat_method, e: Array[Double]) =</P>
+<P>    numal.Analytic_eval.qadrat(a, b, method, e)</P>
+<P><BR><BR>
+</P>
+<P>  def integral(a: Double, b: Double, method:
+numal.AE_integral_method, e: Array[Double], ua: Boolean, ub: Boolean)
+=</P>
+<P>    numal.Analytic_eval.integral(a, b, method, e, ua, ub)</P>
+<P><BR><BR>
+</P>
+<P>  def tricub(xi: Double, yi: Double, xj: Double, yj: Double, xk:
+Double, yk: Double, method: numal.AE_tricub_method, re: Double, ae:
+Double) =</P>
+<P>    numal.Analytic_eval.tricub(xi, yi, xj, yj, xk, yk, method, re,
+ae)</P>
+<P><BR><BR>
+</P>
+<P>  def  reccof(n: Int, m: Int, method: numal.AE_reccof_method, b:
+Array[Double], c: Array[Double], l: Array[Double], sym: Boolean ) =</P>
+<P>    numal.Analytic_eval.reccof(n, m, method, b, c, l, sym)</P>
+<P><BR><BR>
+</P>
+<P>  def gsswts(n: Int, zer: Array[Double], b: Array[Double], c:
+Array[Double], w: Array[Double]) =</P>
+<P>    numal.Analytic_eval.gsswts(n, zer, b, c, w)</P>
+<P><BR><BR>
+</P>
+<P>  def gsswtssym(n: Int, zer: Array[Double], c: Array[Double], w:
+Array[Double]) =</P>
+<P>    numal.Analytic_eval.gsswtssym(n, zer, c, w)</P>
+<P><BR><BR>
+</P>
+<P>  def gssjacwghts(n: Int, alfa: Double, beta: Double, x:
+Array[Double], w: Array[Double]) =</P>
+<P>    numal.Analytic_eval.gssjacwghts(n, alfa, beta, x, w)</P>
+<P><BR><BR>
+</P>
+<P>   def gsslagwghts(n: Int, alfa: Double, x: Array[Double], w:
+Array[Double]) =</P>
+<P>     numal.Analytic_eval.gsslagwghts(n, alfa, x, w)</P>
+<P><BR><BR>
+</P>
+<P>  def jacobnnf(n: Int, x: Array[Double], f: Array[Double], jac:
+Array[Array[Double]],  method: numal.AE_jacobnnf_methods) =</P>
+<P>    numal.Analytic_eval.jacobnnf(n, x, f, jac, method)</P>
+<P><BR><BR>
+</P>
+<P>   def jacobnmf(n: Int, m: Int, x: Array[Double], f:
+Array[Double], jac: Array[Array[Double]],  method:
+numal.AE_jacobnmf_methods) =</P>
+<P>     numal.Analytic_eval.jacobnmf(n, m, x, f, jac, method)</P>
+<P><BR><BR>
+</P>
+<P>  def jacobnbndf(n: Int, lw: Int, rw: Int, x: Array[Double], f:
+Array[Double], jac: Array[Double],  method:
+numal.AE_jacobnbndf_methods) =</P>
+<P>    numal.Analytic_eval.jacobnbndf(n, lw, rw, x, f, jac, method)</P>
+<P><BR><BR>
+</P>
+<P>  // Analytic Problems</P>
+<P><BR><BR>
+</P>
+<P>  def zeroin(x: Array[Double], y: Array[Double], method:
+numal.AP_zeroin_methods) =</P>
+<P>    numal.Analytic_problems.zeroin(x, y, method)</P>
+<P><BR><BR>
+</P>
+<P>  def zeroinrat(x: Array[Double], y: Array[Double], method:
+numal.AP_zeroinrat_methods) =</P>
+<P>    numal.Analytic_problems.zeroinrat(x, y, method)</P>
+<P><BR><BR>
+</P>
+<P>   def zeroinder(x: Array[Double], y: Array[Double], method:
+numal.AP_zeroinder_methods) =</P>
+<P>    numal.Analytic_problems.zeroinder(x, y, method)</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>  def quanewbnd(n: Int, lw: Int, rw: Int, x: Array[Double], f:
+Array[Double], jac: Array[Double],</P>
+<P>                method: numal.AP_quanewbnd_method, in:
+Array[Double], out: Array[Double]) =</P>
+<P>                  numal.Analytic_problems.quanewbnd(n, lw, rw, x,
+f, jac, method, in, out)</P>
+<P><BR><BR>
+</P>
+<P>def quanewbnd1(n: Int, lw: Int, rw: Int, x: Array[Double], f:
+Array[Double],</P>
+<P>                method: numal.AP_quanewbnd_method, in:
+Array[Double], out: Array[Double]) =</P>
+<P>                  numal.Analytic_problems.quanewbnd1(n, lw, rw, x,
+f,  method, in, out)</P>
+<P>  
+</P>
+<P>def minin(x: Array[Double], a: Array[Double], b: Array[Double],
+method: numal.AP_minin_methods) =</P>
+<P>  numal.Analytic_problems.minin(x, a, b, method)</P>
+<P><BR><BR>
+</P>
+<P>def mininder(x: Array[Double], y: Array[Double], method:
+numal.AP_mininder_methods) =</P>
+<P>  numal.Analytic_problems.mininder(x, y, method)</P>
+<P><BR><BR>
+</P>
+<P> def linemin(n: Int, x: Array[Double], d: Array[Double], nd:
+Double, alfa: Array[Double], g: Array[Double],</P>
+<P> method: numal.AP_linemin_method, f0: Double, f1: Array[Double],
+df0: Double, df1: Array[Double], evlmax: Array[Int],</P>
+<P>strongsearch: Boolean, in: Array[Double]) =</P>
+<P>  numal.Analytic_problems.linemin(n, x, d, nd, alfa, g, method,
+f0, f1, df0, df1, evlmax, strongsearch, in)</P>
+<P><BR><BR>
+</P>
+<P> def praxis(n: Int, x: Array[Double], method:
+numal.AP_praxis_method, in: Array[Double], out: Array[Double]) =</P>
+<P>   numal.Analytic_problems.praxis(n, x, method, in, out)</P>
+<P><BR><BR>
+</P>
+<P> def rnk1min(n: Int, x: Array[Double], g: Array[Double], h:
+Array[Double], method: numal.AP_linemin_method, in: Array[Double],
+out: Array[Double]) =</P>
+<P>   numal.Analytic_problems.rnk1min(n, x, g, h, method, in, out)</P>
+<P><BR><BR>
+</P>
+<P> def flemin(n: Int, x: Array[Double], g: Array[Double], h:
+Array[Double], method: numal.AP_linemin_method, in: Array[Double],
+out: Array[Double] ) =</P>
+<P>   numal.Analytic_problems.flemin(n, x, g, h, method, in, out)</P>
+<P><BR><BR>
+</P>
+<P>  def marqurdt(m: Int, n: Int, par: Array[Double], g:
+Array[Double], v: Array[Array[Double]], method:
+numal.AP_marquardt_methods, in: Array[Double], out: Array[Double]) =</P>
+<P>    numal.Analytic_problems.marquardt(m, n, par, g, v, method, in,
+out)</P>
+<P><BR><BR>
+</P>
+<P>  def gssnewton(m: Int, n: Int, par: Array[Double], rv:
+Array[Double], jjinv: Array[Array[Double]], method:
+numal.AP_gssnewton_methods, in: Array[Double], out: Array[Double]) =</P>
+<P>    numal.Analytic_problems.gssnewton(m, n, par, rv, jjinv,
+method, in, out)</P>
+<P><BR><BR>
+</P>
+<P>  def rk1(x: Array[Double], a: Double, b: Double, y:
+Array[Double], ya: Double, method: numal.AP_rk1_method,</P>
+<P>     e: Array[Double], d: Array[Double], fi: Boolean, xout:
+java.util.Vector[Double], yout: java.util.Vector[Double]) =</P>
+<P>       numal.Analytic_problems.rk1(x, a, b, y, ya, method, e, d,
+fi, xout, yout)</P>
+<P><BR><BR>
+</P>
+<P>   def rke(x: Array[Double], xe: Array[Double], n: Int, y:
+Array[Double], method: numal.AP_rke_methods,</P>
+<P>     data: Array[Double], fi: Boolean, xout:
+java.util.Vector[Double], yout: java.util.Vector[Double]) =</P>
+<P>       numal.Analytic_problems.rke(x, xe, n, y, method, data, fi,
+xout, yout)</P>
+<P><BR><BR>
+</P>
+<P>  def rk4a(x: Array[Double], xa: Double, method:
+numal.AP_rk4a_methods, y: Array[Double], ya: Double, e:
+Array[Double],</P>
+<P>    d: Array[Double], fi: Boolean, xdir: Boolean, pos: Boolean) =</P>
+<P>      numal.Analytic_problems.rk4a(x, xa, method, y, ya, e, d, fi,
+xdir, pos)</P>
+<P><BR><BR>
+</P>
+<P> def rk4na(x: Array[Double], xa: Array[Double], method:
+numal.AP_rk4na_methods, e: Array[Double], d: Array[Double],</P>
+<P>             fi: Boolean, n: Int, l: Int, pos: Boolean, xout:
+java.util.Vector[Double]) =</P>
+<P>               numal.Analytic_problems.rk4na(x, xa, method, e, d,
+fi, n, l, pos, xout)</P>
+<P><BR><BR>
+</P>
+<P>def rk5na(x: Array[Double], xa: Array[Double], method:
+numal.AP_rk5na_methods, e: Array[Double], d: Array[Double],</P>
+<P>             fi: Boolean, n: Int, l: Int, pos: Boolean) =</P>
+<P>               numal.Analytic_problems.rk5na(x, xa, method, e, d,
+fi, n, l, pos)</P>
+<P>  
+</P>
+<P>def multistep(x: Array[Double], xend: Double, y: Array[Double],
+hmin: Double, hmax: Double, ymax: Array[Double],</P>
+<P>   eps: Double, first: Array[Boolean], save: Array[Double],
+method: numal.AP_multistep_methods,</P>
+<P>   jacobian: Array[Array[Double]], stiff: Boolean, n: Int, btmp:
+Array[Boolean], itmp: Array[Int],</P>
+<P>   xtmp: Array[Double], xout: java.util.Vector[Double], yout:
+java.util.Vector[Double]) =</P>
+<P>     numal.Analytic_problems.multistep(x, xend, y, hmin, hmax,
+ymax, eps, first, save, method, jacobian, stiff, n, btmp, itmp, xtmp,
+xout, yout)</P>
+<P><BR><BR>
+</P>
+<P>  
+</P>
+<P>def diffsys(x: Array[Double], xe: Double, n: Int, y:
+Array[Double], method: numal.AP_diffsys_methods,</P>
+<P>    aeta: Double, reta: Double, s: Array[Double], h0: Double,
+xout: java.util.Vector[Double], yout: java.util.Vector[Double]) =</P>
+<P>      numal.Analytic_problems.diffsys(x, xe, n, y, method, aeta,
+reta, s, h0, xout, yout)</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

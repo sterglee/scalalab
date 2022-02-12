@@ -1,0 +1,23 @@
+
+import scalaExec.scalaLab.net.ScalaLabNet._
+
+
+// specify the IP of the ScalaLab computation server
+specifyServerIP("195.130.94.125") 
+
+  // initialize the client subsystem
+initClient
+
+// perform now a remote SVD then a local and compare times
+var N = 1000
+
+var x = rand(N,N)
+
+tic
+var svdx = scalaExec.scalaLab.net.ScalaLabNet.netSVD(x)
+var tmnet = toc
+
+
+tic
+var lsvd = svd(x)
+var tmlocal = toc 

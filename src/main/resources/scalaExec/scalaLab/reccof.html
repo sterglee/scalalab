@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15091500">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>Gaussian
+quadrature – General weights</B></FONT></P>
+<P STYLE="text-decoration: none"><FONT SIZE=6 STYLE="font-size: 22pt"><B>reccof</B></FONT></P>
+<P>Evaluate the coefficients c_1, c_2 in the recursion 
+</P>
+<P>C_{k+1}(x) = x C_{k}(x) – c_k C_{k-1}(x) (k=1,2)</P>
+<P>for the Chebyshev polynomials of the second kind which are
+orthogonal over [-1, 1] with respect to the weight function w(x) =
+(1-x^2)^{1/2}</P>
+<P><BR><BR>
+</P>
+<P><B>Example: Can be run with F9 within the ScalaLab Editor (Ctrl-E
+to open the editor)</B></P>
+<P><BR><BR>
+</P>
+<P><A NAME="__DdeLink__4_1363190756"></A><FONT SIZE=2 STYLE="font-size: 11pt">import
+java.text.DecimalFormat;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">import numal.*;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public class Test_reccof
+extends Object implements AE_reccof_method {</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public static void
+main(String args[]) {</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double x;</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double b[] = new double[3];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double c[] = new double[3];</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">double l[] = new double[3];</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">Test_reccof testreccof = new
+Test_reccof();</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">DecimalFormat threeDigit =
+new DecimalFormat(&quot;0.000&quot;);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">Analytic_eval.reccof(2,200,testreccof,b,c,l,true);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">System.out.println(&quot;Delivers:
+&quot; + threeDigit.format(c[1]) +</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">&quot; &quot; +
+threeDigit.format(c[2]));</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">public double wx(double x) {</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">return Math.sqrt(1.0-x*x);</FONT></P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=2 STYLE="font-size: 11pt">}</FONT></P>
+</BODY>
+</HTML>

@@ -1,0 +1,89 @@
+
+// NUMAL related imports
+     import _root_.java.util.Vector ; 
+    import _root_.numal._ ; 
+    import _root_.numal.Algebraic_eval._;
+    import _root_.numal.Analytic_eval._
+    import _root_.numal.Analytic_problems._
+    import _root_.numal.Approximation._
+    import _root_.numal.Basic._;
+    import _root_.numal.FFT._;
+    import  _root_.numal.Linear_algebra._; 
+    import _root_.numal.Special_functions._;
+    import java.text.DecimalFormat 
+
+
+/*  ROUTINE:  lsqsol
+
+ Determines the least squares solution of the overdetermined system Ax=b, where A
+ is an nXm matrix (n >= m). 
+t is assumed that A has been decomposed by calling lsqortdec successfully.
+The least squares solutions of seeral overdetermined systems with the same 
+coefficient matrix can be solved by successive calls of lsqsol with different right-hand sides.
+
+Procedure parameters:
+      def   lsqsol(a: AAD, n: Int, m: Int, aid: AD, ci: AI, b: AD)
+
+ a, n, m, aid, ci: see lsqortdec; the contents of the arrays a, aid, and ci should be produced 
+      by a successful call of lsqortdec
+b:  AD(1:n);
+     entry:  contains the right-hand side of a linear least squares problem
+     exit:  b(1:m)  contains the solution of the problem
+             b(m+1:n)  contains a vector with Euclidean length equal to the Euclidean length of the residual vector
+*/
+
+/*  EXAMPLE
+Derive the least squares solution of the system of equations:
+    -2*x1 + x2 = 0
+    -x1 + x2 = 1
+    x1 + x2 = 2
+   2*x1+x2 = 2
+   x1+2*x2 = 3
+*/
+
+
+var piv = new AI(3)
+var (b, x, diag) = (new AD(6), new AD(6), new AD(3))
+var (aid, aux, a, c) = (new AD(3), new AD(6), Array.ofDim[Double](6,3), Array.ofDim[Double](6,3))
+
+var tmp=0.0
+
+aux(2) = 1.0e-6;  
+a(1)(1) = -2.0;  c(1)(1) = -2.0 
+a(2)(1) = -1.0;  c(2)(1) = -1.0
+a(3)(1) = 1.0;  c(3)(1) = 1.0
+a(4)(1) = 2.0;  c(4)(1) = 2.0
+a(5)(1) = 1.0; c(5)(1) = 1.0
+a(1)(2) = 1.0; a(2)(2) =1.0; a(3)(2) = 1.0; a(4)(2) = 1.0; c(1)(2)=1.0; c(2)(2)=1.0; c(3)(2) = 1.0; c(4)(2) = 1.0
+a(5)(2) = 2.0; c(5)(2) = 2.0;
+b(1) = 0.0; x(1) = 0.0
+b(2) = 1.0; x(2) = 1.0
+b(3) = 2.0; x(3) = 2.0; b(4) = 2.0; x(4) = 2.0
+b(5) = 3.0; x(5)=3.0
+
+
+lsqortdec(a, 5, 2, aux, aid, piv)
+
+var sum=0.0
+if (aux(3) == 2) {
+    lsqsol(a, 5, 2, aid, piv, x)
+    lsqdglinv(a, 2, aid, piv, diag)
+    sum = 0.0
+    for (i<-1 to 5) {
+      tmp = b(i)-c(i)(1)*x(1) - c(i)(2)*x(2)
+      sum += tmp*tmp
+ }
+}
+
+var fiveDigit = new DecimalFormat("0.00000E0")
+println("Aux[2,3,5] = "+fiveDigit.format(aux(2)) + "  "+fiveDigit.format(aux(3))+"  "+fiveDigit.format(aux(5))+
+     "\nLSQ solution : "+ fiveDigit.format(x(1)) + "  "+
+     fiveDigit.format(x(2))+"\nResidue (delivered) : "+
+     fiveDigit.format(Math.sqrt(Basic.vecvec(3, 5, 0, x, x))) +
+     "\nResidue (checked) : "+fiveDigit.format(Math.sqrt(sum))+
+     "\nDiagonal of inverse M'M : "+ fiveDigit.format(diag(1))+" "+
+    fiveDigit.format(diag(2)))
+
+  
+
+

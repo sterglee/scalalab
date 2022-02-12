@@ -1,0 +1,34 @@
+  
+
+var fs = 1000;
+maxNf =20;
+linlog = "log";
+stepfac=16; 
+df0=3;
+fmax = (double)fs/2;
+
+// the saved signal variable for processing should be named x
+//matFileName =  getFile("Specify your  .mat file name to process");
+//load(matFileName);
+
+t=inc(0, 0.01, 20);
+N=t.length();
+
+x = rand(1, N);  // random component, i.e. noisy
+y = 5.6*sin(0.12*t)+0.9*cos(0.8*t);   // signal
+
+xall = x+y;  
+
+ycwt = new wavelets.CWT(xall,  fs, fmax, maxNf, linlog, stepfac, df0);
+
+
+ed = ycwt.ed();  // energy density coefficients as a double[][] vector
+
+edm = new Matrix(ed);
+subsampledEdm = edm.resample(5, 1);  // subsample matrix before displaying it in contour plot
+figure(1); 
+subplot(2,1,1);
+plot2d_scalogram(subsampledEdm, "scalogram")
+subplot(2,1,2);
+plot2d_contour(subsampledEdm, "contour")
+

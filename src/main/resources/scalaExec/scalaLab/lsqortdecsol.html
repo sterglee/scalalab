@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101230;15441400">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>lsqortdecsol</B></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US">Determines the least squares solution of the overdetermined system Ax=b, and computes the principal diagonal elements of the inverse of A^T A,</SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US">for details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public class Test_lsqortdecsol extends Object {</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">	</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">	public static void main(String args[]) {</SPAN></FONT>
+
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">int i;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double sum,temp;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double b[] = new double[6];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double x[] = new double[6];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double diag[] = new double[3];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double aux[] = new double[6];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double a[][] = new double[6][3];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double c[][] = new double[6][3];</SPAN></FONT>
+    
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">aux[2]=1.0e-6;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">a[1][1]=c[1][1] = -2.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">a[2][1]=c[2][1] = -1.0; </SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">a[3][1]=c[3][1]=1.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">a[4][1]=c[4][1]=2.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">a[5][1]=c[5][1]=1.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">a[1][2]=a[2][2]=a[3][2]=a[4][2]=c[1][2]=c[2][2]=c[3][2]=c[4][2]=1.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">a[5][2]=c[5][2]=2.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">b[1]=x[1]=0.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">b[2]=x[2]=1.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">b[3]=x[3]=b[4]=x[4]=2.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">b[5]=x[5]=3.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Linear_algebra.lsqortdecsol(a,5,2,aux,diag,x);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">if (aux[3] == 2) {</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">sum=0.0;</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (i=1; i&lt;=5; i++) {</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">temp=b[i]-c[i][1]*x[1]-c[i][2]*x[2];</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">sum += temp*temp;</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">System.out.println(&quot;Aux[2, 3, 5] =  &quot; + </SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(aux[2]) +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;  &quot; + fiveDigit.format(aux[3]) + &quot;  &quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(aux[5]) +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;\nLSQ solution :  &quot; + fiveDigit.format(x[1]) + &quot;  &quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(x[2]) + &quot;\nResidue (delivered) :  &quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(Math.sqrt(Basic.vecvec(3,5,0,x,x))) +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;\nResidue (checked)   :  &quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fiveDigit.format(Math.sqrt(sum)) +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;\nDiagonal of inverse M'M :  &quot; + fiveDigit.format(diag[1]) +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;  &quot; + fiveDigit.format(diag[2]));</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">	}</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+</PRE>
+</BODY>
+</HTML>

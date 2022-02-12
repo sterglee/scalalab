@@ -1,0 +1,15 @@
+
+var N = 100
+var a = Rand(N,N)
+
+
+var ac = a.copy
+
+var b = Rand(N, 1)
+
+var bc = b.copy
+
+NR.gaussj.gaussj(a, b)
+
+
+a*ac

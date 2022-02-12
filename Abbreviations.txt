@@ -1,0 +1,44 @@
+aad,Array[Array[Double]] 
+aaf,Array[Array[Float]] 
+aai,Array[Array[Int]]
+ad,Array[Double]
+af,Array[Float]
+ai,Array[Int]
+amat,scalaSci.CommonMaths.Mat
+bo,Boolean 
+ch,Char 
+cl,class
+do,Double
+e,else
+emat,scalaSci.EJML.Mat
+Ex,Exception 
+ex,extends
+f,for (
+fi,figure(
+fl,Float
+i,if (
+in,Integer
+iof,instanceof
+jmat,scalaSci.JBLAS.Mat
+l,List
+li,linspace(
+lo,logspace(
+mat,scalaSci.Mat
+mmat,scalaSci.MTJ.Mat
+p,plot(
+pr,println
+pr,private 
+pu,public 
+ra,rand(
+rd,RichDouble2DArray
+re,return
+st,static 
+str,String
+su,subplot(
+th,throw
+thn,throw new
+ths,throws 
+v,var 
+vec,scalaSci.Vec
+w,while (
+wi,with

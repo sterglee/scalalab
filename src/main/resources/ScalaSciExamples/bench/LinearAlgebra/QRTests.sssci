@@ -1,0 +1,23 @@
+// QR test
+
+// test Apache Common Maths
+var N=500; var M=N; 
+var x = rand(N, M)
+tic
+var acx = aqr(x)  // perform QR-Decomposition with Apache-Commons library
+var tmac = toc()
+
+ var zorthAC = acx.Q* (acx.Q~)-eye(N, N)  // matrix Q is orthogonal, should be 0
+ var shouldBeZeroAC = x-(acx.Q)*acx.R  // matrix Q is stored transposed by Apache Commons
+ 
+
+// test Numerical Recipes
+tic
+var nrx = nrqr(x)  // perform SVD
+var tmnr = toc()
+
+var zorthNR = nrx.Q*(nrx.Q~) - eye(N,N)
+var shouldBeZeroNR = x-(nrx.Q~)*nrx.R  // matrix V is orthogonal
+
+
+println("time for QR decomposition with Apache Commons = "+tmac + ", time with Numerical Recipes QR = "+tmnr)

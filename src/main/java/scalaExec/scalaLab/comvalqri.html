@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110101;14514600">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>Comvalqri, comvenches</B></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">Deterimes the real and complex eigenvalues by double QR iteration of Frances,</SPAN></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">for</SPAN> details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+
+<SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN>
+<SPAN LANG="en-US">import numal.*;</SPAN>
+
+<SPAN LANG="en-US">public class Test_comvalqri extends Object {</SPAN>
+<SPAN LANG="en-US">	</SPAN>
+<SPAN LANG="en-US">	public static void main(String args[]) {</SPAN>
+
+    <SPAN LANG="en-US">int i,j,m,k;</SPAN>
+    <SPAN LANG="en-US">double re[] = new double[5];</SPAN>
+    <SPAN LANG="en-US">double im[] = new double[5];</SPAN>
+    <SPAN LANG="en-US">double u[] = new double[5];</SPAN>
+    <SPAN LANG="en-US">double v[] = new double[5];</SPAN>
+    <SPAN LANG="en-US">double em[] = new double[10];</SPAN>
+    <SPAN LANG="en-US">double a[][] = new double[5][5];</SPAN>
+  
+    <SPAN LANG="en-US">em[0]=1.0e-6;  em[2]=1.0e-6;  em[1]=4.0;  em[4]=40.0;</SPAN>
+    <SPAN LANG="en-US">em[6]=1.0e-5;  em[8]=5.0;</SPAN>
+    <SPAN LANG="en-US">for (i=1; i&lt;=4; i++)</SPAN>
+      <SPAN LANG="en-US">for (j=1; j&lt;=4; j++)</SPAN>
+        <SPAN LANG="en-US">a[i][j] = (i == 1) ? -1.0 : ((i-j == 1) ? 1.0 : 0.0);</SPAN>
+    <SPAN LANG="en-US">m=Linear_algebra.comvalqri(a,4,em,re,im);</SPAN>
+    <SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;The number of not calculated eigenvalues: &quot; +</SPAN>
+      <SPAN LANG="en-US">m + &quot;\n\nThe eigenvalues and eigenvectors:&quot;);</SPAN>
+    <SPAN LANG="en-US">for (j=m+1; j&lt;=4; j++) {</SPAN>
+      <SPAN LANG="en-US">for (i=1; i&lt;=4; i++)</SPAN>
+        <SPAN LANG="en-US">for (k=1; k&lt;=4; k++)</SPAN>
+          <SPAN LANG="en-US">a[i][k] = (i == 1) ? -1.0 : ((i-k == 1) ? 1.0 : 0.0);</SPAN>
+      <SPAN LANG="en-US">Linear_algebra.comveches(a,4,re[j],im[j],em,u,v);</SPAN>
+      <SPAN LANG="en-US">System.out.println(&quot;\n  &quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(re[j]) + &quot;    &quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(im[j]) + &quot;\n\n\t&quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(u[1]) + &quot;\t&quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(v[1]) + &quot;\n\t&quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(u[2]) + &quot;\t&quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(v[2]) + &quot;\n\t&quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(u[3]) + &quot;\t&quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(v[3]) + &quot;\n\t&quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(u[4]) + &quot;\t&quot; +</SPAN>
+        <SPAN LANG="en-US">fiveDigit.format(v[4]));</SPAN>
+    <SPAN LANG="en-US">}</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;\nEM[3] =  &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(em[3]) +</SPAN>
+      <SPAN LANG="en-US">&quot;\nEM[7] =  &quot; + fiveDigit.format(em[7]) +</SPAN>
+      <SPAN LANG="en-US">&quot;\nEM[5] =  &quot; + (int)em[5] +</SPAN>
+      <SPAN LANG="en-US">&quot;\nEM[9] =  &quot; + (int)em[9]);</SPAN>
+<SPAN LANG="en-US">	}</SPAN>
+<SPAN LANG="en-US">}</SPAN>
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,378 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110205;16202900">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.27in 11.69in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=CENTER><FONT SIZE=4 STYLE="font-size: 16pt"><B>The
+JFreeChart interface in ScalaLab</B></FONT></P>
+<P ALIGN=JUSTIFY>The <I>JFreeChart </I><SPAN STYLE="font-style: normal">plotting
+library is one of the most famous Java plotting libraries. This
+library is provided with ScalaLab within the s</SPAN><I>calaLabLibs.jar</I>
+<SPAN STYLE="font-style: normal">library file. Therefore, </SPAN><I>JFreeChart
+</I><SPAN STYLE="font-style: normal">can be utilized in ScalaLab
+either from </SPAN><I>ScalaSci</I> <SPAN STYLE="font-style: normal">or
+with Java code. However, the default interface is not very
+convenient; so in ScalaLab we implement an alternative Matlab-like
+interface. </SPAN>
+</P>
+<P ALIGN=JUSTIFY><SPAN STYLE="font-style: normal">We should not as a
+general rule that plotting routines based on JFreeChart are similar
+to the default plotting routines but they start with j, e.g. </SPAN><I>jsubplot
+</I><SPAN STYLE="font-style: normal">instead of </SPAN><I>subplot.</I></P>
+<P ALIGN=JUSTIFY>The figure system is implemented by keeping an array
+of <I>JFrame </I><SPAN STYLE="font-style: normal">objects to keep the
+set of active figure frames. Also, a 3-D array of </SPAN><I>jPlot
+</I><SPAN STYLE="font-style: normal">objects keeps references to the
+subplots, i.e. each </SPAN><I>JFrame</I> <SPAN STYLE="font-style: normal">maps
+to a 2-D array of </SPAN><I>jPlot</I> <SPAN STYLE="font-style: normal">objects
+that keep the subplots of that figure frame.</SPAN></P>
+<P ALIGN=JUSTIFY STYLE="text-decoration: none"><FONT SIZE=4><B>The
+JPlot class</B></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3>A
+basic component of the plotting machinery is the <I>jPlot </I><SPAN STYLE="font-style: normal">class.
+This class encapsulates JfreeChart's XY charts. It simplifies the
+utilization of JfreeChart by providing an interface similar to
+Matlab's plot. </SPAN></FONT>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><SPAN STYLE="font-style: normal">To
+create a chart, we need X and Y values stored in Array[Double].</SPAN>
+<SPAN STYLE="font-style: normal">This procedure is illustrated by the
+following example:</SPAN></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><A NAME="__DdeLink__175_1655320101"></A><A NAME="__DdeLink__16_1655320101"></A><A NAME="__DdeLink__5_1655320101"></A>
+<FONT SIZE=3><I>var x = Inc(0, 0.01, 10) // sample from 0 to 10 with
+0.01 step, collecting values in the Array[Double] x</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>var
+y = sin(0.23*x)+2.4*cos(0.87*x) // construct a sinusoidal function</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>var
+jchart = new jPlot(); // create a chart object</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>jchart.jplot(x,y)
+// plot the function</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>jchart.showInNewFrame
+// show the plot in the internal Jframe that the jPlot class
+maintains</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>jchart.setTitle(&quot;Plot
+of sin(0.23*x)+2.4*cos(0.87*x) &quot;) // set a title for the plot</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>jchart.setXLabel(&quot;x-axis&quot;)
+// label for x-axis</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>jchart.setYLabel(&quot;
+sin(0.23*x)+2.4*cos(0.87*x&quot;) // label for y-axis</I></FONT></P>
+<P><BR><BR>
+</P>
+<P>If we want to display a chart in an existing window, we can get a
+<I>JPanel </I>object that will contain the chart by calling the
+method <I>getPanel() </I>
+</P>
+<P STYLE="font-style: normal">For example we can place the chart that
+we constructed with the previous code in a new JFrame as:</P>
+<P><BR><BR>
+</P>
+<P><A NAME="__DdeLink__8_1655320101"></A><I>var newFrame = new
+JFrame(<SPAN STYLE="text-decoration: none"><FONT SIZE=3><SPAN STYLE="font-weight: normal">&quot;
+</SPAN></FONT></SPAN>Another plot frame<SPAN STYLE="text-decoration: none"><FONT SIZE=3><SPAN STYLE="font-weight: normal">&quot;
+)</SPAN></FONT></SPAN></I></P>
+<P STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>newFrame.add(jchart.getPanel())
+// add our chart to the new window</I></FONT></P>
+<P STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>newFrame.setSize(800,
+800)</I></FONT></P>
+<P STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>newFrame.setVisible(true)</I></FONT></P>
+<P><BR><BR>
+</P>
+<P ALIGN=JUSTIFY>We can configure chart properties (colors, axis
+ranges...) by setter methods. Most <I>set...()</I> methods may be
+called before or after <I>plot() </I>and <I>addPlot() </I>methods.
+The exception to this rule are methods, which set color and style of
+lines. They all have <I>lineIndex</I> or <I>lineId</I> as first
+parameter. These methods may be called only after the line with the
+given index or id has been drawn. 
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal">As in Matlab we can set
+the “hold” state of a plot. When hold state is on, additional
+plots are drawn without erasing the existing plots. The hold state is
+adjusted by the <I>setHold(holdState: Boolean)</I> method, i.e.</P>
+<P STYLE="font-weight: normal"><A NAME="__DdeLink__20_1655320101"></A><A NAME="__DdeLink__10_1655320101"></A>
+<I>jchart.setHold(true) // sets the hold state on</I></P>
+<P STYLE="font-weight: normal"><I>jchart.setHold(false) // sets the
+hold state off</I></P>
+<P><BR><BR>
+</P>
+<P><B>Examples:</B></P>
+<P ALIGN=JUSTIFY>We draw a green, dashed line, with 'x' markers and
+legend 'temperature' to the chart of the previous example:</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><A NAME="__DdeLink__22_1655320101"></A><A NAME="__DdeLink__14_1655320101"></A><A NAME="__DdeLink__12_1655320101"></A>
+<FONT SIZE=3><I>var temperature = 0.8+ sin(0.9*x) // take as
+temperature an arbitrary function</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>jchart.setHold(true)
+// adjust the hold state</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>var
+lineId = jchart.jplot(x, temperature, &quot;g--x&quot;,
+&quot;temperature&quot;)</I></FONT></P>
+<P><BR><BR>
+</P>
+<P ALIGN=JUSTIFY>Note that we used <I>lineId</I> to store id for use
+in the next statement, where we'll change the line style of the line
+with index 0, and color to red dotted line with diamond  * markers.
+Width will be 5 pixels:</P>
+<P><A NAME="__DdeLink__25_1655320101"></A>
+<I>jchart.setLineSpec(lineId(0), &quot;r:d&quot;, 5)</I></P>
+<P><BR><BR>
+</P>
+<P>The same can be done by specifying the last plotted line (we
+change it to BLUE color):</P>
+<P><A NAME="__DdeLink__27_1655320101"></A>
+<I>jchart.setLineSpec(jPlot.LAST_IDX, &quot;b:d&quot;, 5)</I></P>
+<P><BR><BR>
+</P>
+<P>As we said, we can have more than one line on the chart at the
+same time. This can be achieved in one of three ways:</P>
+<P>1.   by specifying all lines in a single plot command, for example
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><A NAME="__DdeLink__62_1655320101"></A><A NAME="__DdeLink__56_1655320101"></A><A NAME="__DdeLink__48_1655320101"></A><A NAME="__DdeLink__40_1655320101"></A><A NAME="__DdeLink__38_1655320101"></A><A NAME="__DdeLink__32_1655320101"></A><A NAME="__DdeLink__30_1655320101"></A>
+<FONT SIZE=3><I>var x = inc(0, 0.01, 10) // sample from 0 to 10 with
+0.01 step, collecting values in a Vec x</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>var
+y1 = sin(0.23*x)+2.4*cos(0.87*x) // construct a sinusoidal function</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>var
+y2  = cos(0.78*x)-7.8*sin(0.12*x)  // a second sinusoidal signal</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><A NAME="__DdeLink__42_1655320101"></A>
+<FONT SIZE=3><I>var jchart = new jPlot(); // create a chart object</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>jchart.jplot(x,
+y1, x, y2) // plot all the Vectors</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><A NAME="__DdeLink__64_1655320101"></A>
+<FONT SIZE=3><I>jchart.showInNewFrame // show the plot in the
+internal JFrame that the jPlot class maintains</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><A NAME="__DdeLink__66_1655320101"></A>
+<FONT SIZE=3><I>jchart.setTitle(&quot;Multiple plots&quot;) // set a
+title for the plot</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>jchart.setXLabel(&quot;x-axis&quot;)
+// label for x-axis</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><A NAME="__DdeLink__68_1655320101"></A>
+<FONT SIZE=3><I>jchart.setYLabel(&quot; y-axis&quot;) // label for
+y-axis</I></FONT></P>
+<P> 
+</P>
+<P>2.   by calling 
+</P>
+<P>     <I>jchart.setHold(true)</I></P>
+<P> before calling next plot commands</P>
+<P><BR><BR>
+</P>
+<P>3.   by calling method  <I>addPlot()</I>  instead of  <I>j</I><I>plot(),
+</I><I> </I><SPAN STYLE="font-style: normal">for example:</SPAN></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><A NAME="__DdeLink__201_1655320101"></A><A NAME="__DdeLink__161_1655320101"></A><A NAME="__DdeLink__158_1655320101"></A><A NAME="__DdeLink__153_1655320101"></A><A NAME="__DdeLink__143_1655320101"></A><A NAME="__DdeLink__139_1655320101"></A><A NAME="__DdeLink__135_1655320101"></A><A NAME="__DdeLink__123_1655320101"></A><A NAME="__DdeLink__108_1655320101"></A><A NAME="__DdeLink__40_16553201011"></A>
+<FONT SIZE=3><I>var x = inc(0, 0.01, 10) // sample from 0 to 10 with
+0.01 step, collecting values in a Vec x</I></FONT></P>
+<P><SPAN STYLE="text-decoration: none"><FONT SIZE=3><I><SPAN STYLE="font-weight: normal">var
+y</SPAN></I></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=3><I><SPAN STYLE="font-weight: normal">1</SPAN></I></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=3><I><SPAN STYLE="font-weight: normal">
+ = cos(0.</SPAN></I></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=3><I><SPAN STYLE="font-weight: normal">1</SPAN></I></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=3><I><SPAN STYLE="font-weight: normal">*x)-</SPAN></I></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=3><I><SPAN STYLE="font-weight: normal">1</SPAN></I></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=3><I><SPAN STYLE="font-weight: normal">.8*sin(0.12*x)
+ // a second sinusoidal signal</SPAN></I></FONT></SPAN></P>
+<P><A NAME="__DdeLink__92_1655320101"></A><A NAME="__DdeLink__82_1655320101"></A>
+<SPAN STYLE="text-decoration: none"><FONT SIZE=3><I><SPAN STYLE="font-weight: normal">var
+y2  = cos(0.78*x)-7.8*sin(0.12*x)  // a second sinusoidal signal</SPAN></I></FONT></SPAN></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><A NAME="__DdeLink__42_16553201011"></A>
+<FONT SIZE=3><I>var jchart = new jPlot(); // create a chart object</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><A NAME="__DdeLink__145_1655320101"></A>
+<FONT SIZE=3><I>jchart.jplot(x, y1)   // plot the first line</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><A NAME="__DdeLink__173_1655320101"></A><A NAME="__DdeLink__165_1655320101"></A>
+<FONT SIZE=3><I>var dummy = 0   // a dummy parameter for
+disambiguation of overloaded definitions</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>jchart.addPlot(x,
+y2, dummy)   // add the second line</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>jchart.showInNewFrame
+// show the plot in the internal JFrame that the jPlot class
+maintains</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><A NAME="__DdeLink__66_16553201011"></A>
+<FONT SIZE=3><I>jchart.setTitle(&quot;Multiple plots&quot;) // set a
+title for the plot</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><FONT SIZE=3><I>jchart.setXLabel(&quot;x-axis&quot;)
+ // label for x-axis</I></FONT></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal; text-decoration: none"><A NAME="__DdeLink__68_16553201011"></A>
+<FONT SIZE=3><I>jchart.setYLabel(&quot; y-axis&quot;)  // label for
+y-axis</I></FONT></P>
+<P>  
+</P>
+<P ALIGN=LEFT><FONT SIZE=4><B>Line specification</B></FONT></P>
+<P ALIGN=JUSTIFY>Methods <I>j</I><I>plot()</I>, <I>addPlot()</I>, and
+<I>setLineSpec() </I>have  parameter <I>lineSpec</I>, which defines
+line color, style, and markers. Any combination of color, marker and
+style is allowed. The following properties can be specified: 
+</P>
+<P><U><B>Colors:</B></U></P>
+<P>r 				 red</P>
+<P>g 				 green</P>
+<P>b 				 blue</P>
+<P>c 				 cyan</P>
+<P>y 				 yellow</P>
+<P>m 				 magenta</P>
+<P>k 				 black</P>
+<P><BR><BR>
+</P>
+<P><U><B>Markers:</B></U></P>
+<P>+  				 Plus sign</P>
+<P>o 				 Circle</P>
+<P>* 				 Asterisk</P>
+<P>. 				 Point</P>
+<P>x 				 Cross</P>
+<P>^ 				 Upward-pointing triangle</P>
+<P>v 				 Downward-pointing triangle</P>
+<P>&gt; 				 Right-pointing triangle</P>
+<P>&lt; 				 Left-pointing triangle</P>
+<P>'square' or s 			 Square</P>
+<P>'diamond' or 	d 		 Diamond</P>
+<P>'pentagram' or p 		 Five-pointed star (pentagram)</P>
+<P>'hexagram' or h 		- Six-pointed star (hexagram)</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><U><B>Styles:</B></U></P>
+<P>-				solid line 
+</P>
+<P>–				dashed line</P>
+<P>:				dotted line</P>
+<P>-.				dash-dot line</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4><B>Examples:</B></FONT></P>
+<P>&quot;yx--&quot; 				 yellow dashed line with crosses at points</P>
+<P>&quot;:c&quot; 				dotted cyan line without markers</P>
+<P>&quot;w&quot; 				white solid line (the same as &quot;w-&quot;)</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=6 STYLE="font-size: 22pt"><U><B>Plotting routines</B></U></FONT></P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4><B>jfigure( figId: Int)</B></FONT></P>
+<P STYLE="font-weight: normal">Create figure window.</P>
+<P STYLE="font-weight: normal"><B>figure</B>, by itself, creates a
+new figure window, and returns its handle.</P>
+<P STYLE="font-weight: normal"><B>figure</B>(H) makes H the current
+figure, forces it to become visible, and raises it above all other
+figures on the screen. If Figure H does not exist, and H is an
+integer, a new figure is created with handle H.</P>
+<P><BR><BR>
+</P>
+<P><FONT SIZE=4><B>jsubplot(m: Int, n: Int, p: Int)</B></FONT></P>
+<P STYLE="font-weight: normal">Create axes in tiled positions.</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal">subplot(m,n,p), breaks
+the Figure window into an m-by-n matrix of small axes, selects the
+p-th axes for the current plot, and returns the axis handle. The axes
+are counted along the top row of the Figure window, then the second
+row, etc. For example,</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><A NAME="__DdeLink__8_1167602419"></A><A NAME="__DdeLink__6_1167602419"></A><A NAME="__DdeLink__2_1167602419"></A><A NAME="__DdeLink__0_1167602419"></A>
+<I>var t = inc(0,0.01,10)</I></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: normal"><I>var x = sin(0.13*t);
+var y= cos(3.4*t)</I></P>
+<P STYLE="font-weight: normal"><I>jfigure(1)</I></P>
+<P STYLE="font-weight: normal"><I>jsubplot(2,1,1); jplot(t, x); </I>
+</P>
+<P STYLE="font-weight: normal"><I>jsubplot(2,1,2); jplot(t, y)</I></P>
+<P STYLE="font-weight: normal">plots <B>x</B> on the top half of the
+window and <B>y</B> on the bottom half.</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><B>JFreeChart plotting demo</B></P>
+<P><A NAME="__DdeLink__12_1167602419"></A><BR><BR>
+</P>
+<P STYLE="font-weight: normal"><I>jfigure(1)</I></P>
+<P STYLE="font-weight: normal"><I>var t = inc(0, 0.01, 10); var x =
+sin(0.23*t)</I></P>
+<P STYLE="font-weight: normal"><I>var lineSpecs = &quot;.&quot;</I></P>
+<P STYLE="font-weight: normal"><I>jplot(t,x, lineSpecs)</I></P>
+<P STYLE="font-weight: normal"><I>jtitle(&quot;drawing multiple line
+styles&quot;)</I></P>
+<P STYLE="font-weight: normal"><I>jhold(true) // hold axis</I></P>
+<P STYLE="font-weight: normal"><I>var SX = 5 // subsample factor</I></P>
+<P STYLE="font-weight: normal"><I>var tsub = t(1, SX, t.length-SX) //
+subsampe</I></P>
+<P STYLE="font-weight: normal"><I>var xsub = x(1, SX, x.length-SX)</I></P>
+<P STYLE="font-weight: normal"><I>jplot(tsub, 0.4*xsub, lineSpecs)</I></P>
+<P STYLE="font-weight: normal"><I>lineSpecs = &quot;:r+&quot;</I></P>
+<P STYLE="font-weight: normal"><I>jplot(tsub, 0.1*xsub, lineSpecs)</I></P>
+<P STYLE="font-weight: normal"><I>// redefine the color of line 2</I></P>
+<P STYLE="font-weight: normal"><I>jlineColor(2, Color.BLUE)</I></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: normal"><I>jfigure(2)</I></P>
+<P STYLE="font-weight: normal"><I>jsubplot(222)</I></P>
+<P STYLE="font-weight: normal"><I>var x11 = sin(8.23*t)</I></P>
+<P STYLE="font-weight: normal"><I>jplot(t,x11)</I></P>
+<P STYLE="font-weight: normal"><I>jhold(true)</I></P>
+<P STYLE="font-weight: normal"><I>lineSpecs = &quot;:g&quot;</I></P>
+<P STYLE="font-weight: normal"><I>jplot(t,sin(5*x11), lineSpecs)</I></P>
+<P STYLE="font-weight: normal"><I>jsubplot(223)</I></P>
+<P STYLE="font-weight: normal"><I>lineSpecs = &quot;:r&quot;</I></P>
+<P STYLE="font-weight: normal"><I>jplot(t,x11, lineSpecs)</I></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: normal"><I>// create a new figure and preform
+a plot at subplot 3,2,1</I></P>
+<P STYLE="font-weight: normal"><I>var nf = jfigure</I></P>
+<P STYLE="font-weight: normal"><I>jsubplot(3,2,1)</I></P>
+<P STYLE="font-weight: normal"><I>var t2 = inc(0, 0.01, 10); var x2 =
+sin(3.23*t2)+2*cos(0.23*t2)</I></P>
+<P STYLE="font-weight: normal"><I>jplot(t2,x2, &quot;.-&quot;)</I></P>
+<P STYLE="font-weight: normal"><I>jsubplot(3,2,3)</I></P>
+<P STYLE="font-weight: normal"><I>var x3 = cos(2.3*t2)+9*sin(4.5*t2)</I></P>
+<P STYLE="font-weight: normal"><I>jplot(t2, x3)</I></P>
+<P STYLE="font-weight: normal"><I>jlineColor(1, Color.RED)</I></P>
+<P STYLE="font-weight: normal"><I>jsubplot(3,2,5)</I></P>
+<P STYLE="font-weight: normal"><I>var x4 = cos(12.3*t2)+9*sin(2.5*t2)</I></P>
+<P STYLE="font-weight: normal"><I>jplot(t2, x4+x3)</I></P>
+<P STYLE="font-weight: normal"><I>jlineColor(1, Color.GREEN)</I></P>
+<P STYLE="font-weight: normal"><I>jsubplot(3,2,6)</I></P>
+<P STYLE="font-weight: normal"><I>jplot(t2, 6*x4+x3)</I></P>
+<P STYLE="font-weight: normal"><I>jtitle(&quot;6*x4+x3&quot;)</I></P>
+<P STYLE="font-weight: normal"><I>jlineColor(1, Color.BLUE)</I></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: normal"><I>// now plot again at figure 2</I></P>
+<P STYLE="font-weight: normal"><I>jfigure(2) // concetrate on figure
+2</I></P>
+<P STYLE="font-weight: normal"><I>jsubplot(2, 2, 1)</I></P>
+<P STYLE="font-weight: normal"><I>var vr = vrand(2000)</I></P>
+<P STYLE="font-weight: normal"><I>jplot(vr)</I></P>
+<P STYLE="font-weight: normal"><I>jtitle(&quot;A Random Vector&quot;)</I></P>
+<P STYLE="font-weight: normal"><I>var td = t.getv // get time as
+Array[Double]</I></P>
+<P STYLE="font-weight: normal"><I>jsubplot(224)</I></P>
+<P STYLE="font-weight: normal"><I>jplot(td, sin(1.34*td).getv, td,
+sin(3.6*td).getv, td, (cos(7.8*td)+2.3*sin(3.2*td)).getv)</I></P>
+<P STYLE="font-weight: normal"><I>jtitle(&quot;Multiple Plots&quot;)</I></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: normal"><I>// demonstrate PieDataChart</I></P>
+<P><BR><BR>
+</P>
+<P STYLE="font-weight: normal"><I>var categories = Array(&quot;Class1&quot;,
+&quot;Class2&quot;, &quot;Class3&quot;)</I></P>
+<P STYLE="font-weight: normal"><I>var values = Array(5.7, 9.8, 3.9)</I></P>
+<P STYLE="font-weight: normal"><I>var pieChartName = &quot;Test Pie
+Chart&quot;</I></P>
+<P STYLE="font-weight: normal"><I>var myPie = jplot(pieChartName,
+categories, values)</I></P>
+</BODY>
+</HTML>

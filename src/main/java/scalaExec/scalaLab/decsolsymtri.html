@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110101;14110700">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>decsolsymtri</B></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US">Given the <I>nXn </I><SPAN STYLE="font-style: normal"> symmetric tridiagonal matrix T (</SPAN><I>T_{i,j}=0 </I><SPAN STYLE="font-style: normal">for |i-j| &gt;1) attempts to obtain a unit bidiagonal matrix U and a diagonal matrix D such that UJ^T D U = T,</SPAN></SPAN></FONT>
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">f</SPAN><SPAN STYLE="font-style: normal">or</SPAN> details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+<SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN>
+<SPAN LANG="en-US">import numal.*;</SPAN>
+
+<SPAN LANG="en-US">public class Test_decsolsymtri extends Object {</SPAN>
+<SPAN LANG="en-US">	</SPAN>
+<SPAN LANG="en-US">	public static void main(String args[]) {</SPAN>
+
+    <SPAN LANG="en-US">int i;</SPAN>
+    <SPAN LANG="en-US">double d[] = new double[101];</SPAN>
+    <SPAN LANG="en-US">double co[] = new double[101];</SPAN>
+    <SPAN LANG="en-US">double b[] = new double[101];</SPAN>
+    <SPAN LANG="en-US">double aux[] = new double[6];</SPAN>
+    
+    <SPAN LANG="en-US">for (i=1; i&lt;=100; i++) {</SPAN>
+      <SPAN LANG="en-US">d[i]=i;</SPAN>
+      <SPAN LANG="en-US">co[i]=i*2;</SPAN>
+      <SPAN LANG="en-US">b[i]=0.0;</SPAN>
+    <SPAN LANG="en-US">}</SPAN>
+    <SPAN LANG="en-US">b[1]=b[2]=2.0;  b[3]=4.0;</SPAN>
+    <SPAN LANG="en-US">aux[2]=1.0e-6;</SPAN>
+    <SPAN LANG="en-US">Linear_algebra.decsolsymtri(d,co,100,aux,b);</SPAN>
+    <SPAN LANG="en-US">b[2]--;</SPAN>
+    <SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;AUX[3] and AUX[5]:  &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(aux[3]) + &quot;  &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(aux[5]) +</SPAN>
+      <SPAN LANG="en-US">&quot;\nError in the solution:  &quot; +</SPAN>
+      <SPAN LANG="en-US">fiveDigit.format(Math.sqrt(Basic.vecvec(1,100,0,b,b))));</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+<SPAN LANG="en-US">}</SPAN></PRE>
+</BODY>
+</HTML>

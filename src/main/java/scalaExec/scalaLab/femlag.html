@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101229;14383000">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>femlag</B></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US">Solves a second order <SPAN STYLE="font-style: normal">self-adjoint linear two point boundary value problem by means of  Galerkin's method with continous piecewise polynomials.</SPAN></SPAN></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public class Test_femlag extends Object</SPAN></FONT>
+                         <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">implements AP_femlag_methods {</SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">	public static void main(String args[]) {</SPAN></FONT>
+
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">int n,i,order;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double rho,d;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double x[] = new double[21];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double y[] = new double[21];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double e[] = new double[7];</SPAN></FONT>
+
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Test_femlag testfemlag = new Test_femlag();</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">DecimalFormat twoDigit = new DecimalFormat(&quot;0.00E0&quot;);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">System.out.println(&quot;FEMLAG delivers:\n&quot;);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (n=10; n&lt;=20; n += 10) {</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">e[1]=e[4]=1.0;</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">e[2]=e[3]=e[5]=e[6]=0.0;</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (i=0; i&lt;=n; i++) x[i]=Math.PI*i/n;</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">System.out.println(&quot;N=&quot; + n);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (order=2; order&lt;=6; order += 2) {</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Analytic_problems.femlag(x,y,n,testfemlag,order,e);</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">rho=0.0;</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (i=0; i&lt;=n; i++) {</SPAN></FONT>
+          <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">d=Math.abs(y[i]-Math.sin(x[i]));</SPAN></FONT>
+          <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">if (rho &lt; d) rho=d;</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">System.out.println(&quot;     ORDER = &quot; + order +</SPAN></FONT>
+          <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;    MAX.ERROR = &quot; + twoDigit.format(rho));</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public double r(double x)</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">return Math.exp(x);</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public double f(double x)</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">return Math.sin(x)*(1.0+Math.exp(x));</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT></PRE>
+</BODY>
+</HTML>

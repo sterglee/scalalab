@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101228;16505400">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>rk2n</B></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US">Solves an initial value problem, for a <SPAN STYLE="font-style: normal">system of second order ordinary differential equations.</SPAN></SPAN></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public class Test_rk2n extends Object implements AP_rk2n_method {</SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">	public static void main(String args[]) {</SPAN></FONT>
+
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">boolean fi;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">int k;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double b,expx;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double y[] = new double[3];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double ya[] = new double[3];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double z[] = new double[3];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double za[] = new double[3];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double e[] = new double[9];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double d[] = new double[8];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double x[] = new double[1];</SPAN></FONT>
+
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Test_rk2n testrk2n = new Test_rk2n();</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">System.out.println(&quot;Results from RK2N :&quot;);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (k=1; k&lt;=8; k++) e[k]=1.0e-5;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">ya[1]=za[2]=1.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">ya[2]=za[1]=0.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">b=1.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">do {</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">fi=(b == 1.0);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Analytic_problems.rk2n(x,0.0,b,y,ya,z,za,testrk2n,e,d,fi,2);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">expx=Math.exp(-x[0]);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">ya[1] = -expx*(expx*(expx*(expx/3.0+0.5)-1.0)-5.0/6.0);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">ya[2] = -expx*(expx*(expx*(expx/3.0-0.5)+1.0)-5.0/6.0);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">za[1]=expx*(expx*(expx*(expx/0.75+1.5)-2.0)-5.0/6.0);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">za[2]=expx*(expx*(expx*(expx/0.75-1.5)+2.0)-5.0/6.0);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">System.out.println(&quot;\n  X = &quot; + fiveDigit.format(x[0]) +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;\nY[1]-YEXACT[1] = &quot; + fiveDigit.format(y[1]-ya[1]) +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;    Y[2]-YEXACT[2] = &quot; + fiveDigit.format(y[2]-ya[2]) +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;\nZ[1]-ZEXACT[1] = &quot; + fiveDigit.format(z[1]-za[1]) +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;    Z[2]-ZEXACT[2] = &quot; + fiveDigit.format(z[2]-za[2]));</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">b += 1.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">} while (b &lt; 5.0);</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">	}</SPAN></FONT>
+
+
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public double fxyzj(int n, int j, double x[],</SPAN></FONT>
+                      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double y[], double z[])</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">return -5.0*(y[j]+z[j])+((j == 1) ? y[2] : y[1]);</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT></PRE>
+</BODY>
+</HTML>

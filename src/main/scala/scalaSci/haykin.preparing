@@ -1,0 +1,55 @@
+//def   halfmoon(rad:  Double, width: Double, d: Double,  ,n_samp: Int) = 
+//(data, data_shuffled) % A function to generate the halfmoon data
+// where Input:
+//         rad  - central radius of the half moon
+//        width - width of the half moon
+//           d  - distance between two half moon
+//      n_samp  - total number of the samples
+//       Output:
+//         data - output data
+// data_shuffled - shuffled data
+// For example
+// halfmoon(10,2,0,1000) will generate 1000 data of 
+// two half moons with radius [9-11] and space 0.
+
+var rad  =  30
+var width = 40
+var d = 50
+var n_sampl = 1000
+
+if (rad < width/2) {
+    println("The radius should be at least larger than half the width");
+    return
+}
+
+if (n_sampl % 2 != 0) { 
+ println('Please make sure the number of samples is even')
+ return
+}
+
+var aa = rand(2,n_sampl/2)
+var  radius = (rad-width/2) + width*aa(0,::)
+var theta = java.lang.Math.PI*aa(1,::)
+
+
+var x     = radius cross cos(theta)
+var y     = radius cross sin(theta)
+var label = 1*ones(1, x.length)   // label for Class 1
+
+var x1    = radius cross cos(-theta) + rad
+var y1    = radius cross sin(-theta) - d
+var label1= -1 * ones(1, x.length)  //  label for Class 2
+
+data  = [x, x1;
+         y, y1;
+         label, label1];
+     
+[n_row, n_col] = size(data);
+
+shuffle_seq = randperm(n_col);
+
+for i = (1:n_col),
+    data_shuffled(:,i) = data(:,shuffle_seq(i));
+end;
+
+)

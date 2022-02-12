@@ -1,0 +1,22 @@
+tic; 
+var N=1000; 
+var add = false; 
+var sm = 0.0; 
+var k=0; 
+var l=0; 
+var nreps = 1
+while (k<N) 
+{ 
+l=0; 
+  while (l<N) 
+  { 
+ if (add) sm += (0.12*k*l)
+   else sm -= (0.13*k*l)
+  l += 1
+  add = !add
+  nreps+=1
+  } 
+k+=1 } 
+var tm = toc()
+ println("sm = "+sm+", Scala time = "+tm+" nreps = "+nreps);
+// 0.09 P7

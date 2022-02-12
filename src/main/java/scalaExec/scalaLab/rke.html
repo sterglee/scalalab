@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15102500">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE> <FONT SIZE=5><SPAN LANG="en-US"><B>rke</B></SPAN></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US">Solves an initial value problem for a system of first order ordinary differential equations </SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>dy/dx=f(x,y)</I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">, from </SPAN></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>x=x0 </I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">to </SPAN></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>x=xe </I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">where </SPAN></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>y(x0)=y0, </I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">by means of a 5-th order Runge-Kutta method. The system is assumed to be nonstiff.</SPAN></SPAN></FONT>
+
+       <FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal"><U>Procedure  parameters:</U></SPAN></SPAN></FONT>
+<SPAN STYLE="text-decoration: none">                        </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>def  rke( x, xe, n, y, method, data, fi): Unit</B></I></SPAN></FONT></SPAN>
+
+<SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>x</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>:  Array[Double](0:0)</I></SPAN></FONT></SPAN>
+         <FONT SIZE=5><SPAN LANG="en-US"><I>entry: the independent variable; the initial value x0</I></SPAN></FONT>
+<SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>xe</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>: Array[Double](0:0)</I></SPAN></FONT></SPAN>
+         <FONT SIZE=5><SPAN LANG="en-US"><I>entry: the final value of x</I></SPAN></FONT>
+<SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>n</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>: Int;</I></SPAN></FONT></SPAN>
+        <FONT SIZE=5><SPAN LANG="en-US"><I>entry: the number of equations of the system;</I></SPAN></FONT>
+<SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>y</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>: Array[Double](1:n);</I></SPAN></FONT></SPAN>
+        <FONT SIZE=5><SPAN LANG="en-US"><I>entry: the dependent variable; the initial values at x=x0;</I></SPAN></FONT>
+        <FONT SIZE=5><SPAN LANG="en-US"><I>exit: the values of the solution at x=xe;</I></SPAN></FONT>
+<SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>method</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>: a class that defines two procedures </I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>der</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>and </I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>out, </B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>this class must implement the </I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>AP_rke_methods</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>interface (trait);</I></SPAN></FONT></SPAN>
+   <FONT SIZE=5><SPAN LANG="en-US"><I><B>def der(n: Int, t: Double, u: Array[Double]): Unit</B></I></SPAN></FONT>
+      <FONT SIZE=5><SPAN LANG="en-US"><I>this procedure performs an evaluation of the right-hand side of the system with dependent variables u[1:n] and independent variable t; upon completion of der the right-hand side should be overwritten on u[1:n];</I></SPAN></FONT>
+<SPAN STYLE="text-decoration: none">  </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>def out(n: Int, x: Array[Double], xe: Array[Double], y: Array[Double], data: Array[Double])</B></I></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">     </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>after each integration step performed, </I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>out</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>can be used to obtain information from the solution process, e.g., the values of </I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>x, y[1:n], </B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>and </I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>data[3:6]; </B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>out can also be used to update </I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>data</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>, but </I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>x</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>and </I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>xe </B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>remain unchanged</I></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">        </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>data:</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none">  </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>Array[1:6];</I></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">                </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>in array </I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>data</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>one should give:</I></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">                        </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>data[1]:</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none">   </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>the relative tolerance;</I></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">                        </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>data[2]:</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none">  </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I>the absolute tolerance;</I></SPAN></FONT></SPAN>
+
+<FONT SIZE=5><SPAN LANG="en-US"><I>after each step data[3:6] contains:</I></SPAN></FONT>
+<SPAN STYLE="text-decoration: none">    </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>data[3]:</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none">  </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">the steplength used for the last step;</SPAN></I></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">    </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>data[4]:  </B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">the number of integration steps performed;</SPAN></I></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">    </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>data[5]:</B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none">  </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">the number of integration steps rejected;</SPAN></I></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">    </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>data[6]: </B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">the number of integration steps skipped;</SPAN></I></SPAN></FONT></SPAN>
+
+<SPAN STYLE="text-decoration: none">  </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">if upon completion of </SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>rke </B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">data[6] &gt; 0, then results should be considered most critically;</SPAN></I></SPAN></FONT></SPAN>
+
+<SPAN STYLE="text-decoration: none">  </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>fi: </B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">Boolean;</SPAN></I></SPAN></FONT></SPAN>
+<SPAN STYLE="text-decoration: none">    </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">entry:  if </SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>fi </B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"> </SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">is true then the integration starts at x0 with a trial step xe-x0; if </SPAN></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><B>fi </B></I></SPAN></FONT></SPAN><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US"><I><SPAN STYLE="font-weight: normal">is false then the integration is continued with a step; length data[3]*sign(xe-x0)</SPAN></I></SPAN></FONT></SPAN>
+
+<B><SPAN STYLE="text-decoration: none"><FONT SIZE=5><SPAN LANG="en-US">Example: Can be run with F9 within the ScalaLab Editor  </SPAN></FONT></SPAN></B>
+
+
+
+
+
+
+import java.text.DecimalFormat;
+import numal.*;
+
+import java.util.Vector;
+public class Test_rke extends Object
+                              implements AP_rke_methods {
+        
+        public static void main(String args[]) {
+      int n=3;
+
+    double t[] = new double[1];
+    double te[] = new double[1];
+    double y[] = new double[n+1];
+    double data[] = new double[7];
+
+    Test_rke testrke = new Test_rke();
+    te[0]=80;
+       // DP eps=1.0e-4,h1=0.01,hmin=0.0,x1=0,x2=80.0;
+    
+    
+      y[1]=0.7; y[2]=1;
+      y[3]=0.5;
+      t[0]=0.0;
+      data[1]=data[2]=1.0e-4;
+
+      Vector xOut = new Vector();
+      Vector yOut = new Vector();
+      long start = System.currentTimeMillis();
+ for (int k=0; k&lt;10; k++) {
+      Analytic_problems.rke(t, te, n, y, testrke,  data, true,  xOut, yOut);
+}
+      long end =  System.currentTimeMillis();
+      long runTime = end-start;
+      int compVecLen = yOut.size();
+      System.out.println(&quot;Lorenz up  from time 0 up to time &quot;+te[0] + &quot; runTime = &quot; +runTime+&quot; milliseconds # points = &quot;+ compVecLen );    
+
+       /*for (int k=0; k&lt;yOut.size();k++) {
+          for (int l=1; l&lt;=n; l++)
+           System.out.print( ((double[])(yOut.elementAt(k)))[l]+&quot;  &quot;);
+         System.out.println() ;
+         
+      }*/
+        }
+
+/*
+public void der(int n, double t, double []y)
+{
+ double xx, yy, zz, ff;
+    xx=y[1];    yy=y[2];    zz=y[3]; ff=y[4];
+            
+ y[1]= -yy;
+ y[2]=xx-(1.0/t)*yy;
+ y[3]=yy-(2.0/t)*zz;
+ y[4]=zz-(3.0/t)*ff;
+}
+
+*/              
+  public void der(int n, double t, double y[])
+  {
+    double xx,yy,zz;
+
+    xx=y[1];
+    yy=y[2];
+    zz=y[3];
+    y[1] = 10*(yy-xx);
+    y[2] = -xx*zz+143*xx - yy;
+    y[3] = xx*yy - 2.66667*zz;
+  }
+
+
+  /*
+  public void der(int n, double t, double y[])
+  {
+    double xx,yy,zz;
+
+    xx=y[1];
+    yy=y[2];
+    zz=y[3];
+    y[1]=yy-zz;
+    y[2]=xx*xx+2.0*yy+4.0*t;
+    y[3]=xx*(xx+5.0)+2.0*zz+4.0*t;
+  }
+*/
+
+  public void out(int n, double t[], double te[], double y[],
+                  double data[])
+  {
+   /* double et,t2,aex,aey,aez,rex,rey,rez;
+
+    for (int k=0; k&lt;y.length; k++)
+        System.out.print(y[k]+&quot;  , &quot;);
+    System.out.println();
+    
+    DecimalFormat oneDigit = new DecimalFormat(&quot;0.0E0&quot;);
+    if (t[0] == te[0]) {
+      et=Math.exp(t[0]);
+      t2=2.0*t[0];
+      rex = -et*Math.sin(t2);
+      aex=rex-y[1];
+      rex=Math.abs(aex/rex);
+      rey=et*et*(8.0+2.0*t2-Math.sin(2.0*t2))/8.0-t2-1.0;
+      rez=et*(Math.sin(t2)+2.0*Math.cos(t2))+rey;
+      aey=rey-y[2];
+      rey=Math.abs(aey/rey);
+      aez=rez-y[3];
+      rez=Math.abs(aez/rez);
+      System.out.println(&quot;\nT =  &quot; + t[0] +
+        &quot;\nRelative and absolute errors in x, y and z:\n&quot; +
+        &quot;   RE(X)    RE(Y)    RE(Z)    AE(X)    AE(Y)    AE(Z)&quot; +
+        &quot;\n  &quot; + oneDigit.format(rex) + &quot;   &quot; +
+        oneDigit.format(rey) + &quot;   &quot; +
+        oneDigit.format(rez) + &quot;   &quot; +
+        oneDigit.format(Math.abs(aex)) + &quot;   &quot; +
+        oneDigit.format(Math.abs(aey)) + &quot;   &quot; +
+        oneDigit.format(Math.abs(aez)) + 
+        &quot;\nNumber of integration steps performed :  &quot; +
+        (int)data[4] +
+        &quot;\nNumber of integration steps skipped   :  &quot; +
+        (int)data[6] +
+        &quot;\nNumber of integration steps rejected  :  &quot; +
+        (int)data[5]);
+    }
+  } */
+ }
+  
+}
+
+    </PRE>
+</BODY>
+</HTML>

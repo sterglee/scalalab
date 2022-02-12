@@ -1,0 +1,20 @@
+import org.apache.commons.math3.distribution.GumbelDistribution
+
+
+var mu = 7.8
+var beta = 2.3
+
+
+var gd = new GumbelDistribution(mu, beta)
+
+
+var x =  0::0.01::30
+
+var ydensity = x map  gd.density
+
+ figure(1)
+ plot(x, ydensity, "Gumbel Density")
+
+var ydistribution = x map gd.cumulativeProbability
+ figure(2)
+ plot(x, ydistribution, "Gumbel Cumulatve Probability")

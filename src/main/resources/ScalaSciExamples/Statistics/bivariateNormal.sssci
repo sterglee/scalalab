@@ -1,0 +1,27 @@
+
+
+// Create and seed a RandomGenerator (could use any of the generators in the random package here)
+var rg = new JDKRandomGenerator()
+rg.setSeed(17399225432l)  // Fixed seed means same results every time
+
+// Create a GaussianRandomGenerator using rg as its source of randomness
+var  rawGenerator = new GaussianRandomGenerator(rg)
+
+var mean = Array(1.0, 2.0)
+var c = -2.0
+var covDarr = Array( Array(9, c), Array(c, 16))
+var covariance = new Array2DRowRealMatrix(covDarr)
+// Create a CorrelatedRandomVectorGenerator using rawGenerator for the components
+var  generator =      new CorrelatedRandomVectorGenerator(mean, covariance, 1.0e-12 * covariance.getNorm(), rawGenerator)
+
+// Use the generator to generate correlated vectors
+var Nvecs = 500
+var vecsAll = Array.ofDim[Double](2, Nvecs)
+for (k<-0 until Nvecs) {
+ var  randomVector = generator.nextVector()
+ vecsAll(0)(k) = randomVector(0)
+ vecsAll(1)(k) = randomVector(1)
+ } 
+
+figure(1); subplot(3,1,1);  plot(vecsAll(0)); subplot(3,1,2); plot(vecsAll(1));
+   subplot(3,1,3); scatterPlotsOn; plot(vecsAll(0), vecsAll(1)) 

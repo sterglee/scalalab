@@ -1,0 +1,53 @@
+
+var N=4000
+var x = rand0(N,N)
+
+// parallel sin
+tic
+var xx = x.psin
+var tmsinp = toc
+
+
+// parallel cos
+tic
+var xxy = x.pcos
+var tmcosp = toc
+
+
+// serial sin
+tic
+xx = x.sin
+var tmsin = toc
+
+
+// serial cos
+tic
+xxy = x.cos
+var tmcos = toc
+
+
+// parallel in-place sin
+tic
+x.pisin
+var tmsinpi = toc
+
+
+// parallel in-place cos
+tic
+x.picos
+var tmcospi = toc
+
+
+// serial in-place sin
+tic
+x.sini
+var tmsini = toc
+
+
+// serial cos
+tic
+ x.cosi
+var tmcosi = toc
+
+
+

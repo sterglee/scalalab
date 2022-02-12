@@ -1,0 +1,27 @@
+// perform SVD using a SciLab - ScalaLab connection 
+
+import org.scilab.modules.types.ScilabDouble;
+
+initSciLabConnection()    // init a connection wth SciLab
+
+
+var x = rand(500,500)  // create a random vector
+var s = "tic(); [ux, wx, vx] = svd(x); tmsci = toc();"    // string to evaluate in SciLab
+
+tic
+@MATLAB
+scieval( s, Array("x"), Array("ux", "wx", "vx", "tmsci"))  // Array("x") is the list of input parameters from ScalaLab to SciLab
+@MATLAB                                                  // Array("ux", "wx", "vx") is the list of result parameters from SciLab to ScalaLab
+var tmsciExtern = toc
+
+var uxd = ux.asInstanceOf[ScilabDouble].getRealPart()  
+var wxd = wx.asInstanceOf[ScilabDouble].getRealPart()
+var vxd = vx.asInstanceOf[ScilabDouble].getRealPart()
+
+var sbz = uxd*wxd*(vxd~)-x    // should be zero
+max(max(sbz))   
+
+// test now time for Java SVD
+tic
+var svdx = svd(x)
+var tmj = toc

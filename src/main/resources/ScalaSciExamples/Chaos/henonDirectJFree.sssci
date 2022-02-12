@@ -1,0 +1,24 @@
+
+
+close("all")
+  val  A_CHAOS=1.4;
+  val  B_CHAOS=0.3;
+    
+var N=12000 // getInt("Number of points for Henon");
+  
+tic;
+var x = Array.ofDim[Double](2, N)
+x(0)(0)=0.12; x(1)(0) = 0.2;
+
+for (k<-1 to N-1) {
+  x(0)(k) = 1.0-A_CHAOS*x(0)(k-1)*x(0)(k-1)+x(1)(k-1)
+  x(1)(k) = B_CHAOS*x(0)(k-1)
+  }
+
+var tm = toc();
+jplot(x, ".");
+
+
+// Matlab:    0.5903, 150000
+//
+  

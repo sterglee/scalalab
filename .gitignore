@@ -1,0 +1,10 @@
+project
+target
+out 
+scalalab.props
+scalalabFavoritePaths.log
+recentsPaneFile.txt
+scalalabUserPaths.txt
+ScalaLabPr/build
+ScalaLabPr/dist
+.idea

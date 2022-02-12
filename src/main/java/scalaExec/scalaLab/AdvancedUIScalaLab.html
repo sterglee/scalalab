@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1253">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110303;7560483">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P>The ScalaLab Editor is a simple programmer's editor, that is
+integrated with the system. It provides support in the following
+basic ways:</P>
+<P><BR><BR>
+</P>
+<P><B>a. Coloring of the text.</B></P>
+<P ALIGN=JUSTIFY>The Scala reserved words are automatically detected
+and are colored. Also, the basic library functions (e.g. <I>fft(),
+linspace(), logspace(), inc() </I><SPAN STYLE="font-style: normal">etc)
+are detected and are colored differently to aid the appearance of the
+text. Also, variables that currently have </SPAN><SPAN STYLE="font-style: normal"><B>values
+defined </B></SPAN><SPAN STYLE="font-style: normal">are colored
+differently, in order to facilitate the programmer visually.</SPAN></P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal">The coloring is
+accomplished with the aid of the JTextPane Java's Swing component
+that offers the functionality to implement effective cross-platform
+editors with advanced styled capabilities. 
+</P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal"><B>b. Autocompletion</B></P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">The
+Scala interpreter offers an API that allows IDEs (Integrated
+Development Environments) to obtain information in order to implement
+code completion functionality. The editor supports TAB completion for
+global workspace variables and for the members of object variables.</P>
+<P ALIGN=JUSTIFY><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal"><B>c. Selective execution
+of program parts</B></P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">The
+editor allows the selective execution of the code by providing
+options like (see also the popup menu):</P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">*
+Execute the whole text in editor (<B>F8</B>)</P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">*
+Execute the text from the beginning to the cursor location (<B>F9</B>)</P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">*
+Execute the text up to the previous location (<B>F7</B>)</P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">The
+executed parts of the program are marked gray. The user can reset the
+text coloring at any time by pressing <B>F3</B>.</P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">This
+is accomplished by feeding the program text to the Scala interpreter
+for execution. We should note at this point that the integration with
+the Scala Compiler is not tight in the sense that the editor does not
+retrieve the ASTs (Abstract Syntax Trees) of the compiled code
+chunks. Such a design will be very complicated since it is not an
+easy task to map the compiled ASTs to source code lines. 
+</P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal"><B>d. Integration with
+both the Java and the Scala Compiler</B></P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">The
+editor provides a popup menu option to compile and run the source
+text, both with the Scala compiler and the Java compiler, which one
+is appropriate. Therefore, the user is facilitated to develop both
+Java and Scala applications, that can utilize the ScalaLab libraries
+without the separate installation of external Java and Scala
+compilers.</P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal"><B>e. Wizards for
+application types.</B></P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium">The
+editor provides skeleton for various application types that utilize
+standard toolboxes, e.g. BioJava application, WEKA application. The
+skeleton code is in the form of the construction of the proper import
+statements.</P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal; font-weight: medium"><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-style: normal"><BR><BR>
+</P>
+<P ALIGN=JUSTIFY><B>The AutoCompletion System</B></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium">The autocompletion
+system keeps in a <I>scanMethodsScalaSci </I><SPAN STYLE="font-style: normal">Vector
+the items available for completion. That vector (i.e.
+</SPAN><I>scanNethodsScalaSci</I><SPAN STYLE="font-style: normal">) 
+is kept sorted in order to retrieve effectively the matched items. </SPAN>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium"><SPAN STYLE="font-style: normal">The
+</SPAN><I>ListOfAllMethodsScalaSci </I><SPAN STYLE="font-style: normal">array
+of Strings is set to the entries of the </SPAN><I>scanMethodsScalaSci
+</I><SPAN STYLE="font-style: normal">array, therefore allowing to
+view them as a list.</SPAN></P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium"><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium"><BR><BR>
+</P>
+<P ALIGN=JUSTIFY STYLE="font-weight: medium"><BR><BR>
+</P>
+</BODY>
+</HTML>

@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110101;15095300">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>Complex upper-Hessenberg matrices</B></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US"><B>qricom</B></SPAN></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">for</SPAN> details see book of Hang T. Lau, “A Java Numerical Library for Scientists and engineers|”, Chapman &amp; Hall, 2004</SPAN></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+
+
+
+import java.text.DecimalFormat;
+import numal.*;
+
+public class Test_qricom extends Object {
+	
+	public static void main(String args[]) {
+
+    int i;
+    double b[] = new double[4];
+    double val1[] = new double[5];
+    double val2[] = new double[5]; 
+    double em[] = new double[6];
+    double a1[][] = new double[5][5];
+    double a2[][] = new double[5][5];
+    double vec1[][] = new double[5][5];
+    double vec2[][] = new double[5][5];
+
+    Basic.inimat(1,4,1,4,a1,0.0);
+    Basic.inimat(1,4,1,4,a2,0.0);
+    a1[1][1] = -4.0;  a1[1][2] = -5.0;
+    a1[1][3] = a2[1][1] = a2[1][4] = -2.0;
+    a2[1][2] = a2[1][3] = -6.0;
+    b[1]=b[2]=b[3]=1.0;
+    em[0]=5.0e-6;  em[1]=27.0;  em[2]=1.0e-6;  em[4]=15.0;
+    DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);
+    System.out.println(&quot;QRICOM:  &quot; + 
+      Linear_algebra.qricom(a1,a2,b,4,em,val1,val2,vec1,vec2));
+    System.out.println(&quot;\nEigenvalues:\n\t&quot; +
+      &quot;Real part\tImaginary part&quot;);
+    for (i=1; i&lt;=4; i++)
+      System.out.println(&quot;\t&quot; + fiveDigit.format(val1[i]) +
+        &quot;\t&quot; + fiveDigit.format(val2[i]));
+    Basic.sclcom(vec1,vec2,4,1,4);
+    System.out.println(&quot;\nFirst eigenvector:\n\t&quot; +
+      &quot;Real part\tImaginary part&quot;);
+    for (i=1; i&lt;=4; i++)
+      System.out.println(&quot;\t&quot; + fiveDigit.format(vec1[i][1]) +
+        &quot;\t&quot; + fiveDigit.format(vec2[i][1]));
+    System.out.println(&quot;\nEM[3]:  &quot; + 
+      fiveDigit.format(em[3]) + &quot;\nEM[5]:  &quot; + (int)em[5]);
+	}
+}
+
+</PRE>
+</BODY>
+</HTML>

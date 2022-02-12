@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101229;15011400">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>nonlinfemlagskew</B></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US">Solves a nonlinear two point <SPAN STYLE="font-style: normal">boundary value problem with </SPAN><SPAN STYLE="font-style: normal">spherical coordinates</SPAN></SPAN></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+<SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN>
+<SPAN LANG="en-US">import numal.*;</SPAN>
+
+<SPAN LANG="en-US">public class Test_nonlinfemlagskew extends Object</SPAN>
+                        <SPAN LANG="en-US">implements AP_nonlinfemlagskew_methods {</SPAN>
+
+  <SPAN LANG="en-US">static int nc;</SPAN>
+
+<SPAN LANG="en-US">	public static void main(String args[]) {</SPAN>
+
+    <SPAN LANG="en-US">int n,i;</SPAN>
+    <SPAN LANG="en-US">double rho,d;</SPAN>
+    <SPAN LANG="en-US">double x[] = new double[51];</SPAN>
+    <SPAN LANG="en-US">double y[] = new double[51];</SPAN>
+    <SPAN LANG="en-US">double e[] = new double[7];</SPAN>
+
+    <SPAN LANG="en-US">Test_nonlinfemlagskew testnonlinfemlagskew = </SPAN>
+                          <SPAN LANG="en-US">new Test_nonlinfemlagskew();</SPAN>
+    <SPAN LANG="en-US">DecimalFormat twoDigit = new DecimalFormat(&quot;0.00E0&quot;);</SPAN>
+    <SPAN LANG="en-US">System.out.println(&quot;NONLINFEMLAGSKEW delivers:\n&quot;);</SPAN>
+    <SPAN LANG="en-US">for (nc=0; nc&lt;=2; nc++)</SPAN>
+      <SPAN LANG="en-US">for (n=25; n&lt;=50; n += 25) {</SPAN>
+        <SPAN LANG="en-US">e[2]=e[4]=1.0;</SPAN>
+        <SPAN LANG="en-US">e[1]=e[3]=e[5]=e[6]=0.0;</SPAN>
+        <SPAN LANG="en-US">for (i=0; i&lt;=n; i++) {</SPAN>
+          <SPAN LANG="en-US">x[i]=(double)(i)/(double)(n);</SPAN>
+          <SPAN LANG="en-US">y[i]=0.0;</SPAN>
+        <SPAN LANG="en-US">}</SPAN>
+        <SPAN LANG="en-US">System.out.print(&quot; N = &quot; + n + &quot;    NC = &quot; + nc);</SPAN>
+        <SPAN LANG="en-US">Analytic_problems.nonlinfemlagskew(x,y,n,</SPAN>
+                          <SPAN LANG="en-US">testnonlinfemlagskew,nc,e);</SPAN>
+        <SPAN LANG="en-US">rho=0.0;</SPAN>
+        <SPAN LANG="en-US">for (i=0; i&lt;=n; i++) {</SPAN>
+          <SPAN LANG="en-US">d=Math.abs(y[i]-1.0+x[i]*x[i]);</SPAN>
+          <SPAN LANG="en-US">if (rho &lt; d) rho=d;</SPAN>
+          <SPAN LANG="en-US">}</SPAN>
+        <SPAN LANG="en-US">System.out.println(&quot;    MAX.ERROR = &quot; +</SPAN>
+          <SPAN LANG="en-US">twoDigit.format(rho));</SPAN>
+      <SPAN LANG="en-US">}</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public double f(double x, double y, double z)</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">return Math.exp(y)+Math.exp(z)-Math.exp(1.0-x*x)-</SPAN>
+           <SPAN LANG="en-US">Math.exp(-2.0*x)-2.0-2*nc;</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public double fy(double x, double y, double z)</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">return Math.exp(y);</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+
+
+  <SPAN LANG="en-US">public double fz(double x, double y, double z)</SPAN>
+  <SPAN LANG="en-US">{</SPAN>
+    <SPAN LANG="en-US">return Math.exp(z);</SPAN>
+  <SPAN LANG="en-US">}</SPAN>
+<SPAN LANG="en-US">}</SPAN></PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,31 @@
+// NUMAL related imports
+     import _root_.java.util.Vector ; 
+    import _root_.numal._ ; 
+    import _root_.numal.Algebraic_eval._;
+    import _root_.numal.Analytic_eval._
+    import _root_.numal.Analytic_problems._
+    import _root_.numal.Approximation._
+    import _root_.numal.Basic._;
+    import _root_.numal.FFT._;
+    import  _root_.numal.Linear_algebra._; 
+    import _root_.numal.Special_functions._;
+    import java.text.DecimalFormat 
+
+var   ri = new Array[Int](5)
+var  ci = new Array[Int](5)
+
+var  aux = new Array[Double](8)
+var  a = Array.ofDim[Double](5,5)
+
+ for (i <- 1 to 4)
+  for (j <- 1 to 4) a(i)(j) = 1.0/(i+j-1)
+ 
+   aux(2) = 1.0e-5
+   aux(4) = 87
+   gsselm(a ,4, aux, ri, ci)
+   var d = 0.0
+   if (aux(3) == 4) 
+    d =  determ(a, 4, aux(1).asInstanceOf[Int]) 
+   
+   println("Determinant = " + d)
+

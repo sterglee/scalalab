@@ -1,0 +1,23 @@
+
+var m = 400; var n =  500
+var a = Rand(m, n)
+
+var ac = a.copy
+
+tic
+var ncsvd1 = scalaSci.NR.SVD.svd(a)
+var tm=toc
+
+scalaSci.NR.SVD.getU
+
+tic
+var gg = svd(a)
+var tmO = toc
+
+gg._1
+a
+ac
+w
+a*w*(v~)
+
+ac

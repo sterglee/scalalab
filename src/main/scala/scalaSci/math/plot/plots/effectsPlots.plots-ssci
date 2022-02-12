@@ -1,0 +1,14 @@
+
+         var t = inc(0, 0.01, 20)
+         var x = sin(0.2*t)
+         Figure(1); 
+        Plot(t.v, x.v,  Color.GREEN, "sin(0.2*t)")
+// the xlabel(), ylabel() here refer to the axis of the current plot (i.e. PlotPanel object)
+         Xlabel("t-Time axis")
+         Ylabel("y=f(x) axis")
+         var  y = sin(0.2*t)+5*cos(0.23*t)
+         Hold("on")
+         Plot(t.v,y.v, new Color(0, 0, 30), "sin(0.2*t)+5*cos(0.23*t)" )
+
+
+         

@@ -1,0 +1,28 @@
+import _root_.javax.swing._ 
+ 
+// demonstrates 3-D surface plot
+
+val N = 100
+var x = linspace(-2.0, 2.0, N)
+var y = linspace(-2.0, 2.0, N)
+
+var z1 = Array.ofDim[Double](N, N)
+var z2 = Array.ofDim[Double](N,N)
+
+for (n<-0 until N)
+  for (m<-0 until N) {
+    z1(n)(m) = cos( x(n)*y(m))*(x(n)*x(n)-y(m)*y(m))
+    z2(n)(m) = cos( x(n)*y(m))*sin(x(n)*x(n)-y(m)*y(m))
+  }
+
+figure3d(1)
+surf( x, y, z1, Color.RED,  "Surface Plot 1")      
+hold("on")
+surf( x, y, z2, Color.GREEN, "Surface Plot 2")      
+    
+      //  a new  figure at which we control some figure properties
+figure3d(2)
+var drawLines = false
+var drawShape = false
+surf( x, y, z1, Color.RED, drawLines,  drawShape, "Surface Plot with drawLines: "+drawLines+", drawShape: "+drawShape) 
+    

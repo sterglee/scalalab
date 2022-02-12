@@ -1,0 +1,257 @@
+
+  import java.net._
+  import java.net.Socket
+  import scalaUtils.ScalaUtilitiesObject._
+  import java.io.PrintWriter
+  import java.io._
+  import java.util.Scanner
+
+import scalaExec.Interpreter.GlobalValues
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants
+import org.fife.ui.rtextarea.RTextScrollPane
+
+import javax.swing._
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+
+
+// ScalalabServer performs computations using socket based communication
+object ScalalabServer {
+ 
+ val exitCode = -1
+ val eigCode = 1
+ 
+ // reads the array bd from the input stream reader
+def       readArray(reader: DataInputStream, da: Array[Double], len: Int) = {
+     var k = 0
+     while (k< len) {
+         da(k) = reader.readDouble
+         k += 1
+            //println("readed "+bd(k))
+          }
+    }        
+ 
+ 
+ // reads the array bd from the input stream writer
+def       readArray(reader: DataInputStream, da: Array[Array[Double]], Nrows: Int, Ncols: Int) = {
+     var r = 0; var c = 0
+     while (r < Nrows) {
+         c = 0
+         while (c < Ncols) {
+          da(r)(c) = reader.readDouble
+          c += 1
+         }
+         r += 1
+         }
+            //println("readed "+bd(k))
+    }        
+
+  // reads the array bd from the input stream reader
+def       writeArray(writer: DataOutputStream, da: Array[Double], len: Int) = {
+     var k = 0
+     while (k< len) {
+         writer.writeDouble(da(k))
+         k += 1
+            //println("readed "+bd(k))
+          }
+       }        
+ 
+ 
+ // writes the array bd onto the output stream writer
+def       writeArray(writer: DataOutputStream, bd: Array[Array[Double]], Nrows: Int, Ncols: Int) = {
+     var r = 0; var c = 0
+     while (r < Nrows) {
+         c = 0
+         while (c < Ncols) {
+          writer.writeDouble(bd(r)(c))
+          c += 1
+         }
+         r += 1
+         }
+            //println("readed "+bd(k))
+    }        
+ 
+  // init the ScalaLab server
+  def init = {
+scalaUtils.ScalaUtilitiesObject.thread {  // init server with a seperate thread
+    GlobalValues.scalalabServerSocket =  new ServerSocket( GlobalValues.scalaLabServerPort)
+     
+    var saccepted = GlobalValues.scalalabServerSocket.accept   // accept a connection from the client
+    
+      //println("Server accepted socket "+saccepted.toString) 
+    var serverReadStream = saccepted.getInputStream   // input stream
+    var serverWriteStream = saccepted.getOutputStream // output stream
+    
+    var reader = new DataInputStream(new BufferedInputStream(serverReadStream))
+    var writer = new DataOutputStream( new BufferedOutputStream(serverWriteStream))
+    
+      var hasFinished = false
+    while (!hasFinished) {
+        var operationCode = reader.readInt
+        operationCode match {
+         case `exitCode` => 
+              hasFinished = true
+         case `eigCode` =>        
+          compEig(reader, writer)
+          }
+          
+     }  // hasFinished
+     
+    
+   }  // server thread
+  } // init
+ 
+ 
+ // compute eigenvalues/eigenvectors 
+ // reads the matrix from the reader stream and outputs the results to the writer stream
+ def   compEig(reader: DataInputStream, writer: DataOutputStream) = {
+          // read size of the matrix
+          var Nrows = reader.readInt
+          var Ncols = reader.readInt
+          println("Nrows ="+  Nrows + "Ncols = "+Ncols)
+          
+          var da =  Array.ofDim[Double](Nrows, Ncols)
+
+          readArray( reader, da, Nrows, Ncols)   // read the array from the client              
+          println("data array for eigenvalue computation readed")
+          
+          var  ejmlda = new scalaSci.EJML.Mat(da)
+          var eigsVecsVal = ejmlda.eig
+          var evecs = eigsVecsVal._1.getv  // eigenvectors
+          var evals = eigsVecsVal._2.getv  // eigenvalues
+          
+          // write the computed eigenvalues to client
+          println(" writing evecs")
+          writeArray( writer, evecs, Nrows, Ncols)
+          println(" writing evals")
+          writeArray( writer, evals, Nrows)
+          
+          writer.flush
+        } 
+          
+ 
+}
+
+
+import ScalalabServer._
+
+ ScalalabServer.init
+
+// direct test
+var sclient = new Socket(InetAddress.getLoopbackAddress, GlobalValues.scalaLabServerPort)
+var clientReadStream = sclient.getInputStream
+var clientWriteStream = sclient.getOutputStream
+
+var reader = new DataInputStream(clientReadStream)
+var writer = new DataOutputStream(clientWriteStream)
+
+var N=4
+var x = Rand(N, N)
+var nx = x.length
+tic
+writer.writeInt(eigCode)  
+writer.writeInt(nx)
+writer.writeInt(nx)
+
+// write the matrix to the server
+writeArray( writer,x,  nx, nx)  
+
+writer.flush
+// retrieve the results
+var evals = new Array[Double](nx)
+var evecs = Array.ofDim[Double](nx,nx)
+readArray( reader, evecs, nx, nx)
+readArray( reader, evals, nx)
+ var tm=toc
+
+
+
+// compute eigenvalue of a matrix
+writer.println("A  20")
+writer.println("20")
+writer.write("eig\r\n")
+                            
+
+var clientFrame = new JFrame("Client Frame")
+ val jtxtpane = new org.fife.ui.rsyntaxtextarea.RSyntaxTextArea
+ jtxtpane.setFont(new java.awt.Font( GlobalValues.paneFontName,  java.awt.Font.PLAIN, GlobalValues.paneFontSize))
+      
+      var menuBar = new JMenuBar();
+      var serverMenu = new JMenu("Server")
+      var serverIPItem = new JMenuItem("Server IP")
+      serverMenu.add(serverIPItem)
+    
+       
+      var executeMenu = new JMenu("Execute")
+      var execTextItem = new JMenuItem("Execute text")
+      
+      serverIPItem.addActionListener( new ActionListener() {
+           def actionPerformed( e: ActionEvent) {
+               var serverIp = getString("Enter ScalaLab server IP")
+                sclient = new Socket(InetAddress.getLoopbackAddress, GlobalValues.scalaLabServerPort)
+                //println("client socket = "+sclient.toString)
+            }
+               })
+               
+       execTextItem.addActionListener( new ActionListener() {
+           def actionPerformed( e: ActionEvent) {
+               var cmdText = jtxtpane.getText
+              
+              var params = "v"
+              
+            var clientWriteStream = sclient.getOutputStream
+            var writer = new PrintWriter(clientWriteStream, true)
+            
+            writer.println(params)   //  parameters  for computation 
+            
+            println("ex text =  "+ cmdText)
+            writer.println(cmdText)
+ 
+                             }
+               })
+      
+      executeMenu.add(execTextItem)
+      menuBar.add(serverMenu)
+      menuBar.add(executeMenu)
+      
+      var sclient:Socket = null
+      
+               
+      clientFrame.setJMenuBar(menuBar);
+   
+      
+ jtxtpane.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SCALA)
+ jtxtpane.setCodeFoldingEnabled(true)
+clientFrame.add(jtxtpane)
+ clientFrame.pack
+ clientFrame.setSize(300, 300)
+ clientFrame.setVisible(true)     
+ 
+ /*
+ 
+            //var params = reader.nextLine
+    // println("server params for computation = "+params)
+     
+     //var line = reader.nextLine
+     
+   /* println("FROM CLIENT "+line)
+
+       line match  {
+       case "eig"  => 
+          println("eigenvalue")
+          var asize = reader.nextDouble
+          println(" number  = "+ asize)
+       case _ => 
+          println("other ")
+          }  
+
+*/
+       /*
+      if (line.equals("exit"))
+      hasFinished = true
+    else {    // server executes the command
+      //GlobalValues.globalInterpreter.interpret(line)
+              }
+      }
+    
+  }*/

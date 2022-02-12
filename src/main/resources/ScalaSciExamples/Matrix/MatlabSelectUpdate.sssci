@@ -1,0 +1,39 @@
+
+// create a random matrix
+var xx = rand(20, 20)
+
+var rowS = 1; var rowE = 16; var rowI = 2
+var colS = 1; var colE = 16; var colI = 2
+
+// select a row range
+var ff = xx(rowS::rowE, ::)
+
+// update that row range
+xx(rowS::rowE, ::)=8.8
+
+// reselect the updated range
+var ff2 = xx(rowS::rowE, ::)
+
+
+// select a column range
+var ffc = xx(::, colS::colE)
+
+// update that column range
+xx(::, colS::colE)= -99.9
+
+// reselect the updated range
+var ff2c = xx( ::, colS::colE)
+
+// some more select operations
+
+var sel1 = xx(rowS::2::rowE, 3::2::colE)+5.7
+var sel2 = xx(rowS::rowE, 3::2::colE)+57.9
+var sel3 = xx(rowS::rowE, 3::colE)
+var sel4 = xx(rowS::rowE, 3::2::colE)
+var sel5 = xx(rowS::rowE, ::)
+var sel6 = xx(::, 3::colE)
+// And some update operations:
+
+var x = rand0(20); x(1::2::6, 2::3)= 150.4
+var x2 = rand0(20); x2(3::5, 2::2::12)= 50.4
+var x3 = rand0(9); x3(2::3, 5::6)=88

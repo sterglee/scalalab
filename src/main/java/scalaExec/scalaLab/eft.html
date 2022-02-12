@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101228;16361600">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE LANG="en-US"><FONT SIZE=5><B>eft</B></FONT>
+
+<FONT SIZE=4><SPAN LANG="en-US">Solves an initial value problem, given as a system of  first order differential equations, by means of <SPAN STYLE="font-style: normal">a third order, first order consistent, exponentially fitted Taylor series method.</SPAN></SPAN></FONT>
+
+
+<FONT SIZE=4><SPAN LANG="en-US"><B>Example 1: Can be run with F9 within the ScalaLab Editor  </B></SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US">public class Test_eft_1 extends Object implements AP_eft_methods {</SPAN></FONT>
+
+  <FONT SIZE=3><SPAN LANG="en-US">static double expt,lnt,u0,u1,u2,accuracy;</SPAN></FONT>
+   
+        <FONT SIZE=3><SPAN LANG="en-US">public static void main(String args[]) {</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">int j,l;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">int k[] = new int[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double te,te1,te2;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double u[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double t[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double eta[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double rho[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">double hs[] = new double[1];</SPAN></FONT>
+
+    <FONT SIZE=3><SPAN LANG="en-US">Test_eft_1 testeft = new Test_eft_1();</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat oneDigit = new DecimalFormat(&quot;0.0E0&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">System.out.println(&quot;The results with EFT are:\n&quot; +</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">&quot; K\tU(TE1)\t\tK\tU(TE2)\t\tRETA&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">te1=Math.exp(1.0);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">te2=Math.exp(2.0);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">accuracy=1.0;</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">for (j=1; j&lt;=4; j++) {</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">accuracy *= 1.0e-1;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">t[0]=0.01;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">u[0]=Math.log(t[0]);</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">k[0]=0;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">hs[0]=0.0;</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">for (l=1; l&lt;=2; l++) {</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">te = (l == 1) ? te1 : te2;</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">Analytic_problems.eft(t,te,0,0,u,testeft,Math.PI,k,</SPAN></FONT>
+                              <FONT SIZE=3><SPAN LANG="en-US">1.5,2,eta,rho,1.0e-4,hs);</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">System.out.println(oneDigit.format(accuracy));</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void derivative(double t[], int m0, int m, int i, double u[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">if (i == 1) {</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">expt=Math.exp(t[0]);</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">lnt=Math.log(t[0]);</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">u0=u[0];</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">u1=u[0]=expt*(lnt-u0)+1.0/t[0];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">} else if (i == 2)</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">u2=u[0]=expt*(lnt-u0-u1+1.0/t[0])-1.0/t[0]/t[0];</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">else</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">u[0]=expt*(lnt-u0-2.0*u1-u2+2.0/t[0]-1.0/t[0]/t[0])+</SPAN></FONT>
+           <FONT SIZE=3><SPAN LANG="en-US">2.0/t[0]/t[0]/t[0];</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public double sigma(double t[], int m0, int m)</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">return Math.exp(t[0]);</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public double diameter(double t[], int m0, int m)</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">return 2.0*Math.exp(2.0*t[0]/3.0);</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public double aeta(double t[], int m0, int m)</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">return accuracy/10.0;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public double reta(double t[], int m0, int m)</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">return accuracy;</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=3><SPAN LANG="en-US">public void out(double t[], double te, int m0, int m, double u[],</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">int k[], double eta[], double rho[])</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">DecimalFormat sixDigit = new DecimalFormat(&quot;0.000000E0&quot;);</SPAN></FONT>
+    <FONT SIZE=3><SPAN LANG="en-US">if (t[0] == te)</SPAN></FONT>
+      <FONT SIZE=3><SPAN LANG="en-US">System.out.print(k[0] + &quot;\t&quot; +</SPAN></FONT>
+        <FONT SIZE=3><SPAN LANG="en-US">sixDigit.format(u[0]) + &quot;\t&quot;);</SPAN></FONT>
+  <FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=3><SPAN LANG="en-US">}</SPAN></FONT>
+
+<FONT SIZE=3><SPAN LANG="en-US"><B>Example 2:</B></SPAN></FONT>
+
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">import java.text.DecimalFormat;</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">import numal.*;</SPAN></FONT>
+
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public class Test_eft_2 extends Object implements AP_eft_methods {</SPAN></FONT>
+
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">static double expt,lnt,u0,u1,u2,accuracy;</SPAN></FONT>
+   
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">	public static void main(String args[]) {</SPAN></FONT>
+
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">int j,l;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">int k[] = new int[1];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double te,te1,te2;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double u[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double t[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double eta[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double rho[] = new double[1];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">double hs[] = new double[1];</SPAN></FONT>
+
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Test_eft_2 testeft = new Test_eft_2();</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">DecimalFormat oneDigit = new DecimalFormat(&quot;0.0E0&quot;);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">System.out.println(&quot;Results of EFT &quot; +</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot;with relaxed accuracy conditions for t &gt; 3 :\n&quot; +</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">&quot; K\tU(TE1)\t\tK\tU(TE2)\t\tRETA&quot;);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">te1=Math.exp(1.0);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">te2=Math.exp(2.0);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">accuracy=1.0;</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (j=1; j&lt;=4; j++) {</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">accuracy *= 1.0e-1;</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">t[0]=0.01;</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">u[0]=Math.log(t[0]);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">k[0]=0;</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">hs[0]=0.0;</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">for (l=1; l&lt;=2; l++) {</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">te = (l == 1) ? te1 : te2;</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Analytic_problems.eft(t,te,0,0,u,testeft,Math.PI,k,</SPAN></FONT>
+                              <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">1.5,2,eta,rho,1.0e-4,hs);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">System.out.println(oneDigit.format(accuracy));</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">	}</SPAN></FONT>
+
+
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public void derivative(double t[], int m0, int m, int i, double u[])</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">if (i == 1) {</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">expt=Math.exp(t[0]);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">lnt=Math.log(t[0]);</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">u0=u[0];</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">u1=u[0]=expt*(lnt-u0)+1.0/t[0];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">} else if (i == 2)</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">u2=u[0]=expt*(lnt-u0-u1+1.0/t[0])-1.0/t[0]/t[0];</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">else</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">u[0]=expt*(lnt-u0-2.0*u1-u2+2.0/t[0]-1.0/t[0]/t[0])+</SPAN></FONT>
+           <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">2.0/t[0]/t[0]/t[0];</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public double sigma(double t[], int m0, int m)</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">return Math.exp(t[0]);</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public double diameter(double t[], int m0, int m)</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">return 2.0*Math.exp(2.0*t[0]/3.0);</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public double aeta(double t[], int m0, int m)</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">return accuracy/10.0*((t[0] &lt; 3.0) ? 1.0 :</SPAN></FONT>
+           <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Math.exp(2.0*(t[0]-3.0)));</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public double reta(double t[], int m0, int m)</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">return accuracy*((t[0] &lt; 3.0) ? 1.0 :</SPAN></FONT>
+           <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">Math.exp(2.0*(t[0]-3.0)));</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+
+
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">public void out(double t[], double te, int m0, int m, double u[],</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">int k[], double eta[], double rho[])</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">{</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">DecimalFormat sixDigit = new DecimalFormat(&quot;0.000000E0&quot;);</SPAN></FONT>
+    <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">if (t[0] == te)</SPAN></FONT>
+      <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">System.out.print(k[0] + &quot;\t&quot; +</SPAN></FONT>
+        <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">sixDigit.format(u[0]) + &quot;\t&quot;);</SPAN></FONT>
+  <FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT>
+<FONT SIZE=2 STYLE="font-size: 11pt"><SPAN LANG="en-US">}</SPAN></FONT></PRE>
+</BODY>
+</HTML>

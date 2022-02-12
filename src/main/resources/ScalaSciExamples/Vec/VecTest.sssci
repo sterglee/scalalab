@@ -1,0 +1,26 @@
+var N = 100
+
+// creates a vector of size N initialized to zeros
+var v1 = new Vec(N)
+
+// gets the vector length
+var l = v1.length
+
+// size  also returns the vector size
+var sl = v1.size
+
+// clone the vector
+var cv = v1.clone
+
+// define a function that adds 1000 
+def add1000(x: Double) = x+1000
+
+// apply that function to the vector's elements
+var v1p1000 = v1 map add1000
+
+// set some nonzero values and compute the 1-norm
+v1(2)=2; v1(5) = -6.7
+var nrm1v1 = v1.norm1
+
+
+

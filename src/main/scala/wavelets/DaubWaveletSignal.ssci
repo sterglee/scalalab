@@ -1,0 +1,38 @@
+
+import wavelets.DaubW;
+import static scalaSci.math.array.Matrix.*
+import static scalaSci.math.plot.plot.*
+import java.awt.*;
+import javax.swing.*;
+import scalaSci.math.plot.*;
+import scalaSci.math.plot.render.*;
+
+
+N=2000;
+freq=0.12; 
+a = new double[1][N];
+origSignal = new double[1][N];
+
+for (k in 0..N-1) {
+  a[0][k] = Math.sin(freq*k);
+  origSignal[0][k] = Math.sin(freq*k);
+}
+
+//  origSignal = a.clone();  // keep the original signal
+ 
+  DaubW  daubWavelet = new DaubW();
+     
+  daubWavelet.daubTrans(a[0]);
+ 
+Plot2DPanel plotP = new Plot2DPanel();
+  
+figure(1);  title("Signal and its Daubechies Wavelet Transform");
+subplot(2,1,1) ;
+plot(origSignal[0],  Color.RED, "original signal");  
+
+
+subplot(2,1,2); plot(a[0],  Color.GREEN, "Daubechies Wavelet transformed"); 
+
+
+
+

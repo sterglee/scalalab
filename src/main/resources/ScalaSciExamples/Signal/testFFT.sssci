@@ -1,0 +1,13 @@
+var t = linspace(0, 10, 2048 )
+
+var (f1, f2) = (0.123, 8.8)
+var (a1, a2) = (1.3, 5.8)
+var x =  a1*sin(f1*t)+a2*sin(f2*t)
+
+var fftX = fft(x)
+var (refft, imfft) = (fftX._1, fftX._2)
+
+var absfftX = absFFT(x)
+
+figure(1); subplot(2,1,1); plot(refft); title("FFT")
+subplot(2,1,2); plot(absfftX); title("norm of Fourier coefficients")

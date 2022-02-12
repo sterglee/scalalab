@@ -1,0 +1,10 @@
+#output-area .content {
+  -fx-background-color: #ffffda;
+  -fx-font-smoothing-type: lcd;
+}
+
+#errorMsg {
+  -fx-text-fill: red;
+}
+
+.text, .text-area { -fx-font-smoothing-type: lcd; }

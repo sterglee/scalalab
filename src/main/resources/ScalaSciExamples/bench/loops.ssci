@@ -1,0 +1,30 @@
+
+
+tic()
+var sm = largeLoop(2)
+var tm = toc()
+println("time  = "+tm)
+
+def  largeLoop( reps: Int) = {
+   var   sm=0.0
+   var   cnt=0
+  var  r = 1.0; var i=1.0;
+ for (rep <- 1 to  reps) {
+ r = 1.0
+ while (r< 200) {
+  i=1.0
+  while (i < 300) {
+          cnt+=1
+          sm += 1/(400.5*i*r*rep)
+         sm = Math.sin(sm)
+         i += 1.0
+     }
+   r += 1.0
+   }
+}
+     sm
+  }
+
+
+
+

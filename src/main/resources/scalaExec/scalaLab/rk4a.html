@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20101227;15094500">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		PRE { font-family: "Times New Roman" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="el-GR" DIR="LTR">
+<PRE> <FONT SIZE=5><SPAN LANG="en-US"><B>rk4a</B></SPAN></FONT>
+
+<FONT SIZE=5><SPAN LANG="en-US">Solves an initial value problem for a system of first order ordinary differential equations </SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>dy/dx=f(x,y)</I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">, where f(x,y) may become large, e.g., in the neighborhood of a singularity, from </SPAN></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>x=x0 </I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">to </SPAN></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>x=xe </I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">where </SPAN></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><I>y(x0)=y0, </I></SPAN></FONT><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">by means of a 5-th order Runge-Kutta method. The system is assumed to be nonstiff.</SPAN></SPAN></FONT>
+
+<B><FONT SIZE=5><SPAN LANG="en-US"><SPAN STYLE="font-style: normal">Example: Can be run with F9 within the ScalaLab Editor  </SPAN></SPAN></FONT></B>
+
+
+import java.text.DecimalFormat;
+import numal.*;
+
+public class Test_rk4a extends Object
+                               implements AP_rk4a_methods {
+        
+        public static void main(String args[]) {
+
+    double x[] = new double[1];
+    double y[] = new double[1];
+    double d[] = new double[5];
+    double e[] = new double[6];
+
+    DecimalFormat fiveDigit = new DecimalFormat(&quot;0.00000E0&quot;);
+    Test_rk4a testrk4a = new Test_rk4a();
+    e[0]=e[1]=e[2]=e[3]=e[4]=e[5]=1.0e-4;
+    Analytic_problems.rk4a(x,0.0,testrk4a,y,0.0,e,d,true,true,true);
+    System.out.println(&quot;x =  &quot; +
+    fiveDigit.format(x[0]) + &quot;        Exactly : 2.00000\ny = &quot; +
+    fiveDigit.format(y[0]) + &quot;\ny-x*(1-x) = &quot; +
+    fiveDigit.format(y[0]-x[0]*(1-x[0])));
+        }
+
+
+  public double b(double x[], double y[])
+  {
+    return x[0]+y[0];
+  }
+
+
+  public double fxy(double x[], double y[])
+  {
+    return 1.0-2.0*(x[0]*x[0]+y[0]);
+  }
+}</PRE>
+</BODY>
+</HTML>

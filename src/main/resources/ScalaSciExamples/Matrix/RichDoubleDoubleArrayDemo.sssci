@@ -1,0 +1,16 @@
+
+// demonstrates rich ScalaLab's Array[Array[Double]] type
+
+var A = Rand(8,12)
+
+def inc5(x: Double) = x+5
+
+
+
+var A5 = A map inc5   // map a function
+
+var A5m = -A5  // unary minus
+
+var A10 = 10*A  // 10 is converted to a RichNumber and then the multiplication with the Array[Array[Double]] is performed
+
+var A20 = A*20.0  // A is converted to a RichDouble2DArray and then multiplication is performed

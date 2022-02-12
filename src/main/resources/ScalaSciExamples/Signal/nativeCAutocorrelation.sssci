@@ -1,0 +1,14 @@
+
+
+var t = 0::0.01::1500
+var x = sin(0.34*t)+0.45*cos(0.445*t)
+
+
+var NLags = 500  // lags over which to evaluate autocorrelation
+var ax = ccautcor(x, NLags)
+
+figure(1);
+subplot(2,1,1); plot(x, "time series for autocorrelation evaluation")
+subplot(2,1,2);
+plot(ax, "autocorelation demo")
+xlabel("lag")

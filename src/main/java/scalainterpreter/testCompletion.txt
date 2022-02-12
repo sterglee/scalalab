@@ -1,0 +1,174 @@
+
+
+
+import java.awt.event.ActionEvent
+import scalaExec.Interpreter.GlobalValues
+import javax.swing.event.ListSelectionEvent
+import javax.swing.event.ListSelectionListener
+import scalaExec.gui.AutoCompletionFrame
+import scala.tools.nsc.interpreter.Parsed
+import javax.swing.JList
+
+class ScalaCompletionA   {
+   
+
+   var strAll = " var ff = 99;  var jf = new javax.swing.JFrame(); var cc = new ScalaCompletionA(); jf.set"
+   
+
+      
+      def actionP() {
+  // val  target = GlobalValues.editorPane;    var cstr = target.getText
+  var cstr = strAll
+                        // get the starting point of the current command start                    
+  var  lastNewLineCommandStartIdx = cstr.lastIndexOf('\n')+1
+  var posAutoCompletion = lastNewLineCommandStartIdx
+  var  frozeneditorPaneContents = strAll
+  //target.getText
+                         
+  // check for multiple commands per line       
+  val endCommandChar = ';'   // character denoting the end of the previous command
+  val previousSemicolonCommandStartIdx = cstr.lastIndexOf(endCommandChar)+1
+  if (previousSemicolonCommandStartIdx > lastNewLineCommandStartIdx)  {  // multiple commands per line separated by ';''
+    posAutoCompletion = previousSemicolonCommandStartIdx  // update index after ';'
+    }
+    println("previousSemicolonCommandStartIdx = "+previousSemicolonCommandStartIdx)
+    
+    val   toksToCheckForLastIndex = "= +*-"
+    val   toksCnt = toksToCheckForLastIndex.length
+    for ( k <- 0 until toksCnt)  {
+      var tokIndex = cstr.lastIndexOf(toksToCheckForLastIndex.charAt(k))+1  // index of token  (in order to match the text after it)
+      if (tokIndex > posAutoCompletion)  {
+        posAutoCompletion = tokIndex
+                 }
+        }
+                   
+         var str = cstr.substring(posAutoCompletion, cstr.length()).trim()
+                     
+    println("trying to autocomplete cstr  = "+str)
+                     
+// check for '.' that marks that the user requests to know the members of a structure
+         var    iString = str   //= text.substring(startPos, text.length());
+         var  afterDot=""   // the completion text after the dot
+         var  membersRequested = false;  // when the user presses dot, we imply that the completion should provide the members of a structure
+       
+         var  dotIndex = cstr.indexOf('.')
+         println("dotIndex = "+dotIndex)
+         if (dotIndex != -1)    {    // members of a structure should be provided
+            membersRequested = true
+            var  tabDotIndex = frozeneditorPaneContents.lastIndexOf('.')
+            frozeneditorPaneContents = frozeneditorPaneContents.substring(0, tabDotIndex+1)
+            afterDot = iString.substring(dotIndex+1, iString.length());    // get member typed after dot
+            afterDot = afterDot.trim();   // strip any blanks
+            iString = iString.substring(0, dotIndex)  // remove the dot
+          }
+          var  afterDotCharsExist = false
+          if (afterDot.length() > 0)
+            afterDotCharsExist = true
+
+                    // create a completion object                    
+            var completion = new  scala.tools.nsc.interpreter.JLineCompletion(scalaExec.Interpreter.GlobalValues.globalInterpreter);
+
+                 println("istring = "+iString)
+                 
+            if (membersRequested == false)   {   // provide the top level elements
+               var   ps = Parsed.apply(iString)
+               var   scalaResultsList = completion.topLevelFor(ps)
+               var   matchedSize = scalaResultsList.length
+               if (matchedSize > 0) {  // top level elements exist, edit them
+                     val    dmatches =  new Array[Object](matchedSize)
+                     val    complResults = scalaResultsList.iterator
+                     var    k=0
+                     while (complResults.hasNext)  {   // collect the matched results
+                         var  currentCompletion =  complResults.next().asInstanceOf[String]
+                         dmatches(k) = currentCompletion
+                         k += 1
+                  }
+                    
+                var topLevelResultsList = new JList(dmatches)
+                topLevelResultsList.addListSelectionListener(new ListSelectionListener() {
+                     override def  valueChanged(lse: ListSelectionEvent ) {
+                             
+                             var selValue = topLevelResultsList.getSelectedValue().toString()
+                             
+                             var  currentText = scalaExec.Interpreter.GlobalValues.editorPane.getText()
+                             var  posPreviousText  =  currentText.lastIndexOf('\n') + 1
+                             var  posEndPreviousCommand = currentText.lastIndexOf(endCommandChar)+1
+                             if  (posEndPreviousCommand > posPreviousText)
+                                 posPreviousText = posEndPreviousCommand;
+                             //int lastEqualsIdx = currentText.lastIndexOf('=')+1;
+                             if (posAutoCompletion > posPreviousText)
+                                 posPreviousText = posAutoCompletion
+                             scalaExec.Interpreter.GlobalValues.editorPane.setText(currentText.substring(0,posPreviousText)+selValue)
+                             GlobalValues.selectedStringForAutoCompletion = selValue
+                             scalaExec.Interpreter.GlobalValues.editorPane.setCaretPosition(scalaExec.Interpreter.GlobalValues.editorPane.getText().length())   	// set cursor at the end of the text area
+                             
+	                 }
+                     }
+         );
+        
+           GlobalValues.autoCompletionFrame = new AutoCompletionFrame("scalalabConsole AutoCompletion, Workspace variables");
+           GlobalValues.autoCompletionFrame.displayMatches(topLevelResultsList);
+                     }     //  top level elements exist, edit them
+                    }   //  // provide the top level elements
+                   
+                    else   {   // a dot pressed which implies that the completion should provide members of a structure
+
+                        println("istring = "+iString)
+                    //  see if we have methods available
+                    var  scalaComplResultsList = completion.completions(iString)
+
+                   var classOfItem = scalaExec.Interpreter.GlobalValues.globalInterpreter.classOfTerm(iString);
+                   
+                        if (classOfItem.toString().equalsIgnoreCase("None") == false )  {
+                    // completion.
+                    var  ccomplResults = scalaComplResultsList.iterator
+                    var  membersSize = ccomplResults.length
+                    if (membersSize > 0)  {   // member elements exist, edit them 
+                        var  memberMatches = new java.util.Vector[String]()
+                        var  complResults = scalaComplResultsList.iterator
+                        while (complResults.hasNext)  {   // collect the matched results
+                            var  currentCompletion =  complResults.next().asInstanceOf[String]
+                            currentCompletion = currentCompletion.trim()
+                            if (afterDotCharsExist)  {   // user typed after "."
+                             if (currentCompletion.startsWith(afterDot))  {
+                                var  classMatchedMethods =  scalaExec.gui.ConsoleKeyHandler.getMethodsOfClass(classOfItem, currentCompletion)
+                                var  classMatchedMethodsLen = classMatchedMethods.length
+                                
+                                for ( matchedCnt <- 0  until classMatchedMethodsLen)
+                                   memberMatches.add(classMatchedMethods(matchedCnt).asInstanceOf[String])
+                                }
+                            }
+                            else  {
+                                var  classMatchedMethods =  scalaExec.gui.ConsoleKeyHandler.getMethodsOfClass(classOfItem, currentCompletion)
+                                var  classMatchedMethodsLen = classMatchedMethods.length
+                                
+                                for ( matchedCnt <- 0  until classMatchedMethodsLen)
+                                  memberMatches.add(classMatchedMethods(matchedCnt).asInstanceOf[String])
+                              }
+                          }   // collect the matched results
+                        
+                    var membersResultList = new JList(memberMatches)
+                    membersResultList.addListSelectionListener(new ListSelectionListener() {
+                override  def  valueChanged(lse: ListSelectionEvent ) {
+                          var  selValueObj = membersResultList.getSelectedValue()
+                          if (selValueObj != null)  {
+                            var  selValue =  selValueObj.asInstanceOf[String]
+                            scalaExec.Interpreter.GlobalValues.editorPane.setText(frozeneditorPaneContents+selValue)
+                            GlobalValues.selectedStringForAutoCompletion = selValue;
+                            scalaExec.Interpreter.GlobalValues.editorPane.setCaretPosition(scalaExec.Interpreter.GlobalValues.editorPane.getText().length());   	// set cursor at the end of the text area  
+                          }
+                          
+                    }
+                 }
+         );             
+             GlobalValues.autoCompletionFrame = new AutoCompletionFrame(" Members of "+iString);
+             GlobalValues.autoCompletionFrame.displayMatches(membersResultList);
+                            }   // a dot pressed which implies that the completion should provide members of a structure
+                        }   // member elements exist, edit them 
+                   }    // a dot pressed which implies that the completion should provide members of a structure
+         }  // F3_consumed==false               
+  }
+
+
+ var cc = new ScalaCompletionA();
+ cc.actionP

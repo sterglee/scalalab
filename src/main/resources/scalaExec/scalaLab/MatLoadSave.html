@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1253">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20110713;435748">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21.01cm 29.69cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<P><FONT SIZE=5><U><B>Matlab .mat file compatibility functions</B></U></FONT></P>
+<P><FONT SIZE=4>ScalaLab can easily read Matlab .mat files.</FONT></P>
+<P><FONT SIZE=4>Use:</FONT></P>
+<P><FONT SIZE=4>a. <B>load(filename:String) </B></FONT>
+</P>
+<P STYLE="font-weight: medium"><FONT SIZE=4>to read the contents of a
+.mat file </FONT>
+</P>
+<P>Suppose that we have the Matlab workspace created with the Matlab
+script:</P>
+<P STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><FONT SIZE=2>Matr
+= rand(8, 9)</FONT></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><FONT SIZE=2>OnesM
+= ones(9, 15)</FONT></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><FONT SIZE=2>randV
+= rand(90)</FONT></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P>We save that workspace with the Matlab save command in <A HREF="/C:/testMat">c:\testMat</A>
+directory. Matlab creates the file <I>matlab.mat </I><SPAN STYLE="font-style: normal">in
+that directory.</SPAN></P>
+<P><SPAN STYLE="font-style: normal">Then we load the file from
+ScalaLab as:</SPAN></P>
+<P STYLE="font-weight: medium"> <FONT SIZE=3>load(&ldquo;c:\\testMat\\</FONT></P>
+<P STYLE="font-weight: medium"><FONT SIZE=4>b. <B>save (filename:
+String, v: Vec, vname: String)</B></FONT></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>
